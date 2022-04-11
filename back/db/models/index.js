@@ -43,6 +43,8 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+// Post 테이블이 없는 경우 생성 해준다.
+// db.Post.drop()으로 테이블 삭제 가능
 db.Post.sync();
 
 module.exports = db;

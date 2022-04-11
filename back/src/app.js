@@ -1,8 +1,11 @@
 import express from "express";
+import { postRouter } from "../routes/postRouter";
 
-const app = express()
+const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-export {app}
+app.use(postRouter);
+
+export { app };
