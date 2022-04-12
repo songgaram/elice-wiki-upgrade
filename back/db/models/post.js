@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       week: { type: DataTypes.INTEGER, allowNull: false },
       tag: { type: DataTypes.STRING, allowNull: false },
       title: { type: DataTypes.STRING, allowNull: false },
-      body: { type: DataTypes.STRING, allowNull: false },
     },
     {
       sequelize,
