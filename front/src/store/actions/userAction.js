@@ -1,16 +1,15 @@
 import { AUTH_USER, LOGOUT_USER } from "./actionTypes";
-// import * as Api from "";
 
-export const authUser = () => {
+export const authUser = (user) => {
   return {
     type: AUTH_USER,
-    // payload: user
+    payload: user,
   };
 };
 
-export const logoutUser = () => {
-  return {
-    type: LOGOUT_USER,
-    // payload: user
-  };
-};
+// export const logoutUser = (user) => {
+//   return {
+//     type: LOGOUT_USER,
+//     payload: user
+//   };
+// };
