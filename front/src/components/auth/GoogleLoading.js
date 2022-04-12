@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 // import { DispatchContext } from '../../App';
 // import { useContext } from 'react';
 
-const GoogleLogin = () => {
+const GoogleLoading = () => {
   const navigate = useNavigate();
   const { userDispatch } = useContext(DispatchContext);
 
@@ -30,4 +30,4 @@ const GoogleLogin = () => {
   return <div>로딩중...</div>;
 };
 
-export default GoogleLogin;
+export default GoogleLoading;
