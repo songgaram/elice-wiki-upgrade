@@ -5,6 +5,7 @@ const postRouter = Router();
 
 postRouter.post("/addPost", postController.addPost);
 
-postRouter.post("/postByTag", postController.getPostByTag);
+// 태그로 검색: params로 tag받기
+postRouter.get("/getPost/:tag", postController.getPostByTag);
 
 export { postRouter };

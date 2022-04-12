@@ -21,7 +21,8 @@ class postController {
 
   static async getPostByTag(req, res, next) {
     try {
-      const posts = await postService.findPostByTag(req.body.tag);
+      const tag = req.params.tag;
+      const posts = await postService.findPostByTag(tag);
       res.status(200).json(posts);
     } catch (error) {
       console.log(error.message);
