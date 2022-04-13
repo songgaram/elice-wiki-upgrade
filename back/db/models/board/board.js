@@ -34,13 +34,13 @@ class boardModel {
   }
   // boardID로 삭제
   static async deleteByBoardId({ boardId }) {
-    const result = await models.Board.deleteOne({ boardId });
+    const result = await models.Board.destroy({  where: { boardId } });
     const deletedResult = (result.deletedCount == 1) //Boolean
     return deletedResult;
   }
   // userId로 삭제
-  static async deleteByUserId({ user_id }) {
-    const result = await models.Board.deleteMany({ userId });
+  static async deleteByUserId({ userId }) {
+    const result = await models.Board.destroy({ where: { userId } });
     return result;
   }
 

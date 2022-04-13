@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      borderId: {
+      boardId: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -19,10 +19,6 @@ module.exports = {
       postId: {
         allowNull: false,
         type: Sequelize.STRING
-      },
-      date: {
-        allowNull: false,
-        type: Sequelize.DATE
       },
       title: {
         allowNull: false,

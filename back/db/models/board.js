@@ -14,10 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Board.init({
-    borderId: DataTypes.STRING,
+    boardId: DataTypes.STRING,
     userId: DataTypes.STRING,
     postId: DataTypes.STRING,
-    date: DataTypes.DATE,
     title: DataTypes.STRING,
     body: DataTypes.STRING
   }, {
