@@ -1,6 +1,9 @@
+import React, { useState } from "react";
+
 import styled from "../../styles/user.module.css";
 
 const User = () => {
+    const [isEditable, setIsEditable] = useState(true);
     const user = {
         id: "70f9e61f-092f-438b-a268-c8c38369a0a3",
         name: "KIM HYUNSEO",
@@ -47,9 +50,17 @@ const User = () => {
     ];
     return (
         <>
-            <article className={styled.user_container}></article>
+            <article className={styled.user_container}>
+                <img className={styled.user_image} src={user.image} alt={`${user.name}'s Profile`}></img>
+                <h1 className={styled.user_name}>{user.name}</h1>
+                <h4 className={styled.user_description}>{user.description}</h4>
+                {isEditable && <button className={styled.user_button}>Edit Profile</button>}
+                <span className={styled.user_like}>
+                    ⭐&nbsp;&nbsp;<strong>{user.likes.length}</strong>&nbsp;likes
+                </span>
+            </article>
             <article className={styled.post_container}>
-                {posts.map((posts) => (
+                {posts.slice(0, 5).map((posts) => (
                     <div className={styled.post}>
                         {posts.tags.map((tags) => (
                             <button className={styled.post_tag}>{tags}</button>

@@ -2,10 +2,52 @@
 
 * {
     font-family: "Noto Sans KR", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.user_container {
+    width: 300px;
+    height: 100vh;
+    float: left;
+    padding: 80px;
+    border-right: #e5e5e5 20px solid;
+}
+
+.user_image {
+    width: 300px;
+    height: 300px;
+    border-radius: 150px;
+}
+
+.user_name {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.user_description {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.user_button {
+    width: 300px;
+    height: 36px;
+    background-color: #e5e5e5;
+    border: gray 1px solid;
+    margin: 10px 0;
+}
+
+.user_like {
+    width: 300px;
+    height: 300px;
+    font-size: 18px;
+    border-radius: 150px;
 }
 
 .post_container {
     width: 980px;
+    margin-left: 480px;
 }
 
 .post {
@@ -17,6 +59,7 @@
     width: 107px;
     height: 35px;
     font-size: 15px;
+    font-weight: 400;
     color: #ffffff;
     background-color: #524fa1;
     border: 0;
