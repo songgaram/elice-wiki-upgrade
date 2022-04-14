@@ -51,9 +51,15 @@ class postService {
     return insertedPost;
   }
 
-  static async findPostByTag(tag) {
-    const getPosts = await postModel.findByTag(tag);
-    return getPosts;
+  // **tag 기반 검색은 tag에서 처리
+  // static async findPostByTag(tag) {
+  //   const getPosts = await postModel.findByTag(tag);
+  //   return getPosts;
+  // }
+
+  static async getPostByPostId({ postId }) {
+    const getOnePost = await postModel.getPostByPostId({ postId });
+    return getOnePost;
   }
 }
 
