@@ -20,7 +20,7 @@ class postController {
         body,
         title,
       });
-      res.status(201).json(body).end();
+      res.status(201).json(newPost).end();
     } catch (error) {
       console.log(error.message);
     }

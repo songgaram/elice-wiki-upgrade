@@ -1,7 +1,7 @@
 import models, { Sequelize } from "../index";
 const Op = Sequelize.Op;
 
-class tag {
+class tagModel {
   // 찾은 태그가 없으면 자동으로 생성, 있으면 찾기와 같은 동작
   static async findOrCreate({ tag }) {
     const findTag = await models.Tag.findOrCreate({
@@ -13,7 +13,8 @@ class tag {
 
   static async getAllTag({ tag }) {
     const postId = await models.Tag.findOne({ where: { tag: tag } });
-    return postId;
+    const postIdList = postId.postId.trim().split(" ");
+    return postIdList;
   }
 
   static async insertPostId({ tag, postId }) {
@@ -30,4 +31,4 @@ class tag {
   }
 }
 
-export { tag };
+export { tagModel };

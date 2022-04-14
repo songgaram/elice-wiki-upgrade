@@ -1,5 +1,5 @@
 import models, { Sequelize } from "../index";
-import { tag } from "../tag/index";
+import { tagModel } from "../tag/index";
 
 const Op = Sequelize.Op;
 
@@ -14,11 +14,11 @@ class postModel {
       storedTag += `#${ele}`;
 
       // tag 테이블에 저장하기, 테이블에 존재하지 않으면 생성(findOrCreate)
-      const getTag = await tag.findOrCreate({ tag: ele });
+      const getTag = await tagModel.findOrCreate({ tag: ele });
       let oldValue = getTag.postId;
       oldValue += ` ${newPost.postId}`;
-      oldValue = oldValue.replace("undefined", "");
-      const update = await tag.update({ tag: ele, postId: oldValue });
+      oldValue = oldValue.replace("null", "");
+      const update = await tagModel.update({ tag: ele, postId: oldValue });
     });
 
     const insertPost = await models.Post.create({
