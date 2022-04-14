@@ -59,7 +59,14 @@ class postService {
 
   static async getPostByPostId({ postId }) {
     const getOnePost = await postModel.getPostByPostId({ postId });
-    return getOnePost;
+    const tagList = getOnePost.tag.replaceAll("#", " ").trim().split(" ");
+    const postInfo = {
+      title: getOnePost.title,
+      week: getOnePost.week,
+      tags: tagList,
+      userId: getOnePost.userId,
+    };
+    return postInfo;
   }
 }
 
