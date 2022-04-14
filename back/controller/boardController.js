@@ -54,5 +54,29 @@ class boardController {
             next(error);
         }
     }
+
+    static async setBoard(req, res, next) {
+        try {
+            const { boardId } = req.params;
+            const postId = req.body.postId ?? null;
+            const title = req.body.title ?? null;
+            const body = req.body.body ?? null;
+
+            const toUpdate = { postId, title, body };
+
+            const updatedBoard = await boardService.setBoard({
+                boardId,
+                toUpdate,
+            });
+
+            //   if (updatedBoard.errorMessage) {
+            //     throw new Error(updatedBoard.errorMessage);
+            //   }
+
+            res.status(200).json(updatedBoard);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 export { boardController };

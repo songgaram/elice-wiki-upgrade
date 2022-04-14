@@ -25,11 +25,11 @@ class boardModel {
         const filter = { boardId };
         const update = { [fieldToUpdate]: newValue };
         // const option = { returnOriginal: false };
-
-        const updatedBoard = await models.Board.update(
-            { update },
-            { where: { filter } }
-        );
+        console.log(filter, update);
+        const updatedBoard = await models.Board.update(update, {
+            where: filter,
+        });
+        console.log(updatedBoard);
         return updatedBoard;
     }
     // boardID로 삭제
