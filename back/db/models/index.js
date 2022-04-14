@@ -48,8 +48,9 @@ db.Sequelize = Sequelize;
 
 // --------db sync drop----------
 // db.Post.sync();
-// db.Post.drop();
-
 // db.Tag.sync();
+
+// db.Post.drop();
+// db.Tag.drop();
 
 module.exports = db;

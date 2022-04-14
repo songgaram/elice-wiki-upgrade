@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     "Tag",
     {
       tag: { type: DataTypes.STRING, allowNull: false },
-      postId: { type: DataTypes.STRING, allowNull: false },
+      postId: { type: DataTypes.STRING },
     },
     {
       sequelize,

@@ -32,7 +32,7 @@ class postService {
     const savePath = "../_post";
     // postId는 라우팅 경로로 사용될 수 있으므로 shortId로 만드는 것도 괜찮을 듯
     fs.writeFile(
-      `${savePath}/${year}-${month}-${day}-${postId}.md`,
+      `${year}-${month}-${day}-${postId}.md`,
       "\ufeff" + body,
       {
         encoding: "utf-8",

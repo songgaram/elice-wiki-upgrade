@@ -14,7 +14,6 @@ module.exports = {
       },
       postId: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       createdAt: {
         allowNull: false,
