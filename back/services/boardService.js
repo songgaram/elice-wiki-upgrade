@@ -1,5 +1,6 @@
 import { boardModel } from "../db/models/board/board";
 import { v4 as uuidv4 } from "uuid";
+import { findError } from "../utils/errorMessages";
 
 class boardService {
     static async addBoard({ userId, postId, title, body }) {

@@ -25,17 +25,16 @@ class boardModel {
         const filter = { boardId };
         const update = { [fieldToUpdate]: newValue };
         // const option = { returnOriginal: false };
-        console.log(filter, update);
         const updatedBoard = await models.Board.update(update, {
             where: filter,
         });
-        console.log(updatedBoard);
+
         return updatedBoard;
     }
     // boardID로 삭제
     static async deleteByBoardId({ boardId }) {
         const result = await models.Board.destroy({ where: { boardId } });
-        const deletedResult = result.deletedCount == 1; //Boolean
+        const deletedResult = result == 1; //Boolean
         return deletedResult;
     }
     // userId로 삭제

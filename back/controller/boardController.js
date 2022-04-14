@@ -34,9 +34,9 @@ class boardController {
         try {
             const { boardId } = req.params;
             const foundBoard = await boardService.getBoard({ boardId });
-            //   if (foundBoard.errorMessage) {
+            // if (foundBoard.errorMessage) {
             //     throw new Error(foundBoard.errorMessage);
-            //   }
+            // }
 
             res.status(200).send(foundBoard);
         } catch (error) {
@@ -74,6 +74,21 @@ class boardController {
             //   }
 
             res.status(200).json(updatedBoard);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async deleteBoard(req, res, next) {
+        try {
+            const { boardId } = req.params;
+            const deletedResult = await boardService.deleteBoard({ boardId });
+
+            if (deletedResult.errorMessage) {
+                throw new Error(deletedResult.errorMessage);
+            }
+
+            res.status(200).end();
         } catch (error) {
             next(error);
         }
