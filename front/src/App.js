@@ -4,6 +4,7 @@ import * as Api from "./api";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./store/actions/userAction";
 import Home from "./components/view/home/Home";
+import EliceUserAuth from "./components/auth/EliceUserAuth";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function App() {
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/users/:userId" element={<Home />} />
+        <Route path="/auth" element={<EliceUserAuth />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/test" element={<GoogleLoading />} />
         <Route path="*" element={<Home />} />
