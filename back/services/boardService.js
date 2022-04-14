@@ -21,11 +21,11 @@ class boardService {
     }
 
     static async getBoardList({ userId }) {
-        const boardList = await Award.findByUserId({ userId });
+        const boardList = await boardModel.findByUserId({ userId });
         return boardList;
     }
 
-    static async setAward({ boardId, toUpdate }) {
+    static async setBoard({ boardId, toUpdate }) {
         let board = await boardModel.findByBoardId({ boardId });
         if (!board) {
             const errorMessage = findError("게시판");
@@ -55,7 +55,7 @@ class boardService {
         if (toUpdate.body) {
             const fieldToUpdate = "body";
             const newValue = toUpdate.body;
-            board = await Award.update({
+            board = await boardModel.update({
                 boardId,
                 fieldToUpdate,
                 newValue,
@@ -65,7 +65,7 @@ class boardService {
         return board;
     }
 
-    static async deleteAward({ boardId }) {
+    static async deleteBoard({ boardId }) {
         const deletedResult = await boardModel.deleteByBoardId({ boardId });
         if (!deletedResult) {
             const errorMessage = findError("게시판");

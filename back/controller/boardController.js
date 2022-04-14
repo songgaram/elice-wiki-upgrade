@@ -35,10 +35,21 @@ class boardController {
             const { boardId } = req.params;
             const foundBoard = await boardService.getBoard({ boardId });
             //   if (foundBoard.errorMessage) {
-            //     throw new Error(foundAward.errorMessage);
+            //     throw new Error(foundBoard.errorMessage);
             //   }
 
             res.status(200).send(foundBoard);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async getBoardList(req, res, next) {
+        try {
+            const { userId } = req.params;
+            const foundList = await boardService.getBoardList({ userId });
+
+            res.status(200).send(foundList);
         } catch (error) {
             next(error);
         }
