@@ -1,9 +1,9 @@
-import { AUTH_USER, LOGOUT_USER } from "./actionTypes";
+import { LOGIN_USER /*LOGOUT_USER*/ } from "./actionTypes";
 
-export const authUser = (user) => {
+export const loginUser = (user) => {
   return {
-    type: AUTH_USER,
-    payload: user,
+    type: LOGIN_USER,
+    user: user,
   };
 };
 
