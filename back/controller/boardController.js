@@ -20,10 +20,6 @@ class boardController {
                 body,
             });
 
-            // if (newBoard.errorMessage) {
-            //   throw new Error(newBoard.errorMessage);
-            // }
-
             res.status(201).end();
         } catch (error) {
             next(error);
@@ -34,9 +30,6 @@ class boardController {
         try {
             const { boardId } = req.params;
             const foundBoard = await boardService.getBoard({ boardId });
-            // if (foundBoard.errorMessage) {
-            //     throw new Error(foundBoard.errorMessage);
-            // }
 
             res.status(200).send(foundBoard);
         } catch (error) {
@@ -69,10 +62,6 @@ class boardController {
                 toUpdate,
             });
 
-            //   if (updatedBoard.errorMessage) {
-            //     throw new Error(updatedBoard.errorMessage);
-            //   }
-
             res.status(200).json(updatedBoard);
         } catch (error) {
             next(error);
@@ -83,10 +72,6 @@ class boardController {
         try {
             const { boardId } = req.params;
             const deletedResult = await boardService.deleteBoard({ boardId });
-
-            if (deletedResult.errorMessage) {
-                throw new Error(deletedResult.errorMessage);
-            }
 
             res.status(200).end();
         } catch (error) {

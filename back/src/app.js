@@ -2,7 +2,9 @@ import cors from "cors";
 import express from "express";
 import { boardRouter } from "../routes/boardRouter";
 
-const app = express()
+import { errorMiddleware } from "../middlewares/errorMiddleware";
+
+const app = express();
 // CORS 에러 방지
 app.use(cors());
 
@@ -14,6 +16,9 @@ app.get("/", (req, res) => {
     res.send("Elice Wiki");
 });
 
-app.use(boardRouter)
+app.use(boardRouter);
 
-export {app}
+// 에러 핸들링
+app.use(errorMiddleware);
+
+export { app };

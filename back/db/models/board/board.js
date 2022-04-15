@@ -5,9 +5,7 @@ import models, { Sequelize } from "../index";
 class boardModel {
     // board 추가
     static async insertBoard({ newBoard }) {
-        const insertBoard = await models.Board.create(newBoard)
-            .then(() => console.log("board is created"))
-            .catch((err) => console.log(err.message));
+        const insertBoard = await models.Board.create(newBoard);
         return insertBoard;
     }
     // boardId로 조회

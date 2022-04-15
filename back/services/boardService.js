@@ -1,13 +1,21 @@
 import { boardModel } from "../db/models/board/board";
 import { v4 as uuidv4 } from "uuid";
-import { findError } from "../utils/errorMessages";
+import { addError, findError } from "../utils/errorMessages";
 
 class boardService {
     static async addBoard({ userId, postId, title, body }) {
+        if (
+            userId == undefined ||
+            postId == undefined ||
+            title == undefined ||
+            body == undefined
+        ) {
+            const errorMessage = addError("게시판");
+            throw new Error(errorMessage);
+        }
         const boardId = uuidv4();
         const newBoard = { boardId, userId, postId, title, body };
         const insertedBoard = await boardModel.insertBoard({ newBoard });
-        // insertedBoard.errorMessage = null;
 
         return insertedBoard;
     }
@@ -16,7 +24,7 @@ class boardService {
         const board = await boardModel.findByBoardId({ boardId });
         if (!board) {
             const errorMessage = findError("게시판");
-            return { errorMessage };
+            throw new Error(errorMessage);
         }
         return board;
     }
@@ -30,7 +38,7 @@ class boardService {
         let board = await boardModel.findByBoardId({ boardId });
         if (!board) {
             const errorMessage = findError("게시판");
-            return { errorMessage };
+            throw new Error(errorMessage);
         }
 
         if (toUpdate.postId) {
@@ -70,7 +78,7 @@ class boardService {
         const deletedResult = await boardModel.deleteByBoardId({ boardId });
         if (!deletedResult) {
             const errorMessage = findError("게시판");
-            return { errorMessage };
+            throw new Error(errorMessage);
         }
 
         return deletedResult;
