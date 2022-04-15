@@ -62,6 +62,7 @@ class postService {
     const tagList = getOnePost.tag.replaceAll("#", " ").trim().split(" ");
     const postInfo = {
       title: getOnePost.title,
+      date: getOnePost.date,
       week: getOnePost.week,
       tags: tagList,
       userId: getOnePost.userId,

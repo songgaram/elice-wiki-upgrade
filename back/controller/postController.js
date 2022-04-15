@@ -26,21 +26,15 @@ class postController {
     }
   }
 
-  // ** tag 기반 검색은 tag에서 처리
-  // static async getPostByTag(req, res, next) {
-  //   try {
-  //     const tag = req.params.tag;
-  //     const posts = await postService.findPostByTag(tag);
-  //     res.status(200).json(posts);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // }
-
   static async getPostByPostId(req, res, next) {
     const postId = req.params.postId;
     const getSinglePost = await postService.getPostByPostId({ postId });
     res.status(200).json(getSinglePost);
+  }
+
+  static async updatePost(req, res, next) {
+    // post의 정보를 받아와야 한다
+    // postId로 받아온다??
   }
 }
 export { postController };
