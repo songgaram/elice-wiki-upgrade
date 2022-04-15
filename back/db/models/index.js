@@ -20,25 +20,28 @@ if (config.use_env_variable) {
   );
 }
 
-fs.readdirSync(__dirname)
-  .filter((file) => {
-    return (
-      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
-    );
-  })
-  .forEach((file) => {
-    const model = require(path.join(__dirname, file))(
-      sequelize,
-      Sequelize.DataTypes
-    );
-    db[model.name] = model;
-  });
+// fs.readdirSync(__dirname)
+//   .filter((file) => {
+//     return (
+//       file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+//     );
+//   })
+//   .forEach((file) => {
+//     const model = require(path.join(__dirname, file))(
+//       sequelize,
+//       Sequelize.DataTypes
+//     );
+//     db[model.name] = model;
+//   });
 
-Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
+// Object.keys(db).forEach((modelName) => {
+//   if (db[modelName].associate) {
+//     db[modelName].associate(db);
+//   }
+// });
+
+const Post = require("./post")(sequelize, Sequelize.DataTypes);
+const Tag = require("./tag")(sequelize, Sequelize.DataTypes);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
@@ -47,6 +50,24 @@ db.Sequelize = Sequelize;
 // db.Post.drop()으로 테이블 삭제 가능
 
 // --------db sync drop----------
+
+// Post(sequelize, Sequelize.DataTypes).sync();
+// Tag(sequelize, Sequelize.DataTypes).sync();
+
+// TODO: 외래키 지정해보기 - 성공
+
+Post.hasMany(Tag, {
+  foreignKey: "postId",
+  allowNull: false,
+  onDelete: "cascade",
+});
+Tag.belongsTo(Post, {
+  foreignKey: "postId",
+});
+
+Post.sync();
+Tag.sync();
+
 // db.Post.sync();
 // db.Tag.sync();
 

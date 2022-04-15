@@ -5,11 +5,11 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
       },
       tag: {
         type: Sequelize.STRING,
+        primaryKey: true,
         allowNull: false,
       },
       postId: {
