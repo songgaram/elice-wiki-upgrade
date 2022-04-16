@@ -29,16 +29,21 @@ class postService {
     const postId = uuidv4();
 
     // 테스트 경로
-    const savePath = "../_post";
+    const savePath_post = "../../../front/src/_post";
+    const savePath = `${__dirname}`;
     // postId는 라우팅 경로로 사용될 수 있으므로 shortId로 만드는 것도 괜찮을 듯
+
+    // front/src/_post에 md파일이 저장된다
     fs.writeFile(
-      `${year}-${month}-${day}-${postId}.md`,
+      `${savePath}/${savePath_post}/${year}-${month}-${day}-${postId}.md`,
       "\ufeff" + body,
       {
         encoding: "utf-8",
       },
       (err, data) => {
-        console.log(data);
+        if (err) {
+          console.log(err);
+        }
       }
     );
 
