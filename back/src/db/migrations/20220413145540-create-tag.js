@@ -1,27 +1,19 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Tags", {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        type: Sequelize.INTEGER,
-      },
-      tag: {
+    await queryInterface.createTable("Tag", {
+      tag_id: {
         type: Sequelize.STRING,
         primaryKey: true,
         allowNull: false,
       },
-      postId: {
+      tag: {
         type: Sequelize.STRING,
-      },
-      createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
       },
-      updatedAt: {
+      post_id: {
+        type: Sequelize.STRING,
         allowNull: false,
-        type: Sequelize.DATE,
       },
     });
   },

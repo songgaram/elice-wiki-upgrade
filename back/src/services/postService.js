@@ -1,14 +1,33 @@
 import { postModel } from "../db/models/post/post";
+import { tagModel } from "../db/models/tag/index";
+
 import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
 
 class postService {
   // 값 req에서 받아와 추가 하기
   // tag 여러개 가져오는 방법은 프론트와 함께 얘기해봐야 함 #tag 이런식??
-  static async addPost({ userId, week, tag, title, body }) {
-    // body에서 받은 text를 md파일로 저장
-    // TODO: const savePath = '../../front/post' -> 저장하게될 예상 경로
+  static writePost(date, postId, body) {
+    const savePath_post = "../../../front/src/_post";
+    const savePath = `${__dirname}`;
+    // postId는 라우팅 경로로 사용될 수 있으므로 shortId로 만드는 것도 괜찮을 듯
 
+    // front/src/_post에 md파일이 저장된다
+    fs.writeFile(
+      `${savePath}/${savePath_post}/${date}-${postId}.md`,
+      "\ufeff" + body,
+      {
+        encoding: "utf-8",
+      },
+      (err, data) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
+  }
+
+  static getNowDateToString() {
     // 현재 시간을 받아오기
     const nowDate = new Date();
     const year = nowDate.getUTCFullYear();
@@ -24,30 +43,39 @@ class postService {
         ? `0${nowDate.getUTCDate()}`
         : nowDate.getUTCDate();
 
-    const date = `${year}.${month}.${day}`;
+    const date = `${year}-${month}-${day}`;
 
-    const postId = uuidv4();
+    const dateDot = `${year}.${month}.${day}`;
+    return { date, dateDot };
+  }
 
-    // 테스트 경로
-    const savePath_post = "../../../front/src/_post";
-    const savePath = `${__dirname}`;
-    // postId는 라우팅 경로로 사용될 수 있으므로 shortId로 만드는 것도 괜찮을 듯
+  static async addPost({ user_id, week, tag, title, body }) {
+    // body에서 받은 text를 md파일로 저장
+    // TODO: const savePath = '../../front/post' -> 저장하게될 예상 경로
 
-    // front/src/_post에 md파일이 저장된다
-    fs.writeFile(
-      `${savePath}/${savePath_post}/${year}-${month}-${day}-${postId}.md`,
-      "\ufeff" + body,
-      {
-        encoding: "utf-8",
-      },
-      (err, data) => {
-        if (err) {
-          console.log(err);
-        }
-      }
-    );
+    const { date, dateDot } = this.getNowDateToString();
+    const post_id = uuidv4();
+    this.writePost(date, post_id, body);
 
-    const newPost = { postId, userId, date, week, tag, title };
+    // tag 테이블에 추가하기
+    let storedTag = "";
+
+    tag.forEach(async (tag) => {
+      const tag_id = uuidv4();
+      storedTag += `#${tag}`;
+
+      const newPostTag = { tag_id, tag, post_id };
+      const insertPostIdInTag = await tagModel.insertPostId({ newPostTag });
+    });
+
+    const newPost = {
+      post_id,
+      user_id,
+      date: dateDot,
+      week,
+      tag: storedTag,
+      title,
+    };
     const insertedPost = await postModel
       .insertPost({ newPost })
       .then(() => console.log("post created"))
@@ -55,12 +83,6 @@ class postService {
 
     return insertedPost;
   }
-
-  // **tag 기반 검색은 tag에서 처리
-  // static async findPostByTag(tag) {
-  //   const getPosts = await postModel.findByTag(tag);
-  //   return getPosts;
-  // }
 
   static async getPostByPostId({ postId }) {
     const getOnePost = await postModel.getPostByPostId({ postId });

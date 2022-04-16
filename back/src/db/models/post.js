@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
     "Post",
     {
       // allowNull: false -> NOT NULL
-      postId: { type: DataTypes.STRING, allowNull: false },
-      userId: { type: DataTypes.STRING, allowNull: false },
+      post_id: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
+      user_id: { type: DataTypes.STRING, allowNull: false },
       date: { type: DataTypes.DATE, allowNull: false },
       week: { type: DataTypes.INTEGER, allowNull: false },
       tag: { type: DataTypes.STRING, allowNull: false },

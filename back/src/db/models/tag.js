@@ -3,8 +3,9 @@ module.exports = (sequelize, DataTypes) => {
   const tag = sequelize.define(
     "Tag",
     {
+      tag_id: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
       tag: { type: DataTypes.STRING, allowNull: false },
-      postId: { type: DataTypes.STRING },
+      post_id: { type: DataTypes.STRING, allowNull: false },
     },
     {
       sequelize,

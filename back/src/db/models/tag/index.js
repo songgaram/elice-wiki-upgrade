@@ -17,8 +17,8 @@ class tagModel {
     return postIdList;
   }
 
-  static async insertPostId({ tag, postId }) {
-    const insert = await models.Tag.create({ tag, postId });
+  static async insertPostId({ newPostTag }) {
+    const insert = await models.Tag.create(newPostTag);
     return insert;
   }
 

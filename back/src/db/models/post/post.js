@@ -6,29 +6,7 @@ const Op = Sequelize.Op;
 class postModel {
   // post 추가
   static async insertPost({ newPost }) {
-    const tagList = [...newPost.tag];
-    let storedTag = "";
-
-    tagList.forEach(async (ele) => {
-      // 저장될 태그를 #이 붙은 문자열로 합친다
-      storedTag += `#${ele}`;
-
-      // tag 테이블에 저장하기, 테이블에 존재하지 않으면 생성(findOrCreate)
-      const getTag = await tagModel.findOrCreate({ tag: ele });
-      let oldValue = getTag.postId;
-      oldValue += ` ${newPost.postId}`;
-      oldValue = oldValue.replace("null", "");
-      const update = await tagModel.update({ tag: ele, postId: oldValue });
-    });
-
-    const insertPost = await models.Post.create({
-      postId: newPost.postId,
-      userId: newPost.userId,
-      date: newPost.date,
-      week: newPost.week,
-      tag: storedTag,
-      title: newPost.title,
-    });
+    const insertPost = await models.Post.create(newPost);
 
     return insertPost;
   }
