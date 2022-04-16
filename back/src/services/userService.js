@@ -24,7 +24,7 @@ class userService {
     }
 
     const secretKey = process.env.JWT_SECRET_KEY || 'jwt-secret-key';
-    const token = jwt.sign({ user_id: user.__id }, secretKey);
+    const token = jwt.sign({ user_id: user.__id, authorized: user.authorized, admin: user.admin }, secretKey);
     const { __id, admin, authorized, track } = user;
 
     const loginUser = {
@@ -38,6 +38,12 @@ class userService {
     };
 
     return loginUser;
+  }
+
+  static async findAll() {
+
+    const users = await userModel.findAll();
+    return users;
   }
 
 }

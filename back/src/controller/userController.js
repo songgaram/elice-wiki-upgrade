@@ -8,7 +8,6 @@ class userController {
       const { data } = await axios.get(
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`
       );
-        console.log(data)
       const user = await userService.findOrCreate({ data });
       res.status(201).json({ user });
     } catch (error) {
@@ -18,13 +17,17 @@ class userController {
 
   static async getAllUsers(req, res, next) {
     try {
-      const { accessToken } = req.body;
-      const { data } = await axios.get(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`
-      );
-        console.log(data)
-      const user = await userService.findOrCreate({ data });
-      res.status(201).json({ user });
+      const users = await userService.findAll();
+      res.status(200).json({ users });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async auth(req, res, next) {
+    try {
+      const users = await userService.findAll();
+      res.status(200).json({ users });
     } catch (error) {
       next(error);
     }

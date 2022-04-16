@@ -16,6 +16,13 @@ class userModel {
     return user;}
     catch (err) {console.log(err.message)}
   }
+
+  static async findAll() {
+    try
+    {const user = await models.User.findAll()
+    return user;}
+    catch (err) {console.log(err.message)}
+  }
   
 }
 

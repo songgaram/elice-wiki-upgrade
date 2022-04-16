@@ -1,4 +1,4 @@
-import * as Api from "";
+import * as Api from "../../api";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../store/actions/userAction";
@@ -14,7 +14,7 @@ const GoogleLoading = () => {
     try {
       const {
         data: { user },
-      } = await Api.post("loading/google", { accessToken });
+      } = await Api.post("user/sign", { accessToken });
       const jwtToken = user.token;
       sessionStorage.setItem("userToken", jwtToken);
       dispatch(loginUser(user));
