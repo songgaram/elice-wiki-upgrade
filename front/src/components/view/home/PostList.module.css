@@ -1,0 +1,15 @@
+.wrapper-post {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  width: 1008px;
+  height: 287px;
+}
+
+.tag {
+}
+
+.title {
+  font-size: 40px;
+}
