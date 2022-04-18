@@ -29,6 +29,11 @@ class tagModel {
     );
     return update;
   }
+
+  static async getTagId({ tag }) {
+    const tagId = await models.Tag.findOne({ where: { tag } });
+    return tagId;
+  }
 }
 
 export { tagModel };

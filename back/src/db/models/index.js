@@ -31,17 +31,8 @@ db["Tag"] = Tag;
 
 // --------db sync drop----------
 
-// Post.hasMany(Tag, {
-//   foreignKey: "postId",
-//   allowNull: false,
-//   onDelete: "cascade",
-// });
-// Tag.belongsTo(Post, {
-//   foreignKey: "postId",
-// });
-
-// db.Post.sync();
-// db.Tag.sync();
+db.Post.sync();
+db.Tag.sync();
 
 // db.Post.drop();
 // db.Tag.drop();

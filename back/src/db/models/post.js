@@ -7,7 +7,12 @@ module.exports = (sequelize, DataTypes) => {
     "Post",
     {
       // allowNull: false -> NOT NULL
-      post_id: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
+      post_index: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      post_id: { type: DataTypes.STRING, allowNull: false },
       user_id: { type: DataTypes.STRING, allowNull: false },
       date: { type: DataTypes.DATE, allowNull: false },
       week: { type: DataTypes.INTEGER, allowNull: false },

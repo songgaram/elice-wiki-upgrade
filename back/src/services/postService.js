@@ -73,7 +73,7 @@ class postService {
 
   static async addPost({ user_id, week, tag, title, body }) {
     // body에서 받은 text를 md파일로 저장
-    // TODO: const savePath = '../../front/post' -> 저장하게될 예상 경로
+    // todo: 함수 다이어트 필요
 
     const { date, dateDot } = this.getNowDateToString();
     const post_id = uuidv4();
@@ -83,11 +83,19 @@ class postService {
     let storedTag = "";
 
     tag.forEach(async (tag) => {
-      const tag_id = uuidv4();
       storedTag += `#${tag}`;
-
+      const getTagId = await tagModel.getTagId({ tag });
+      let tag_id = "";
+      if (getTagId === null) {
+        // tag가 존재하지 않으면 추가
+        tag_id = uuidv4();
+      } else {
+        tag_id = getTagId.tag_id;
+      }
       const newPostTag = { tag_id, tag, post_id };
-      const insertPostIdInTag = await tagModel.insertPostId({ newPostTag });
+      const insertPostIdInTag = await tagModel.insertPostId({
+        newPostTag,
+      });
     });
 
     const newPost = {
