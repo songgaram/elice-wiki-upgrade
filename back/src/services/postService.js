@@ -31,6 +31,8 @@ class postService {
 
   static getNowDateToString() {
     // 현재 시간을 받아오기
+    // fixme: 날짜를 그냥 시간 빼고 문자열로 저장 하는것 생각해보기
+
     const nowDate = new Date();
     const year = nowDate.getUTCFullYear();
 
