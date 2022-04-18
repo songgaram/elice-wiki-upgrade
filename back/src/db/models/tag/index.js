@@ -15,7 +15,18 @@ class tagModel {
   }
 
   static async findPostsByTag({ tag }) {
-    const postList = await models.Tag.findAll({ where: { tag } });
+    // tag 클릭 시 post 반환
+    // tag 기반 검색 시 join연산 필요
+    const postList = await models.Tag.findAll({
+      where: { tag },
+      include: [
+        {
+          model: "Post",
+          required: false,
+        },
+      ],
+      attributes: ["post_id", "tag"],
+    });
     return postList;
   }
 }
