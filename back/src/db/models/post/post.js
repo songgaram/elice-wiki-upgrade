@@ -19,6 +19,12 @@ class postModel {
   }
 
   // static async updatePost({})
+
+  static async findByWeek({ week }) {
+    // week를 기준으로 post 검색
+    const postList = await models.Post.findAll({ where: { week: week } });
+    return postList;
+  }
 }
 
 export { postModel };

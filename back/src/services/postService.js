@@ -7,7 +7,9 @@ import fs from "fs";
 class postService {
   // 값 req에서 받아와 추가 하기
   // tag 여러개 가져오는 방법은 프론트와 함께 얘기해봐야 함 #tag 이런식??
+
   static writePost(date, postId, body) {
+    // post  추가 시 content를 파일로 만들어 폴더에 저장
     const savePath_post = "../../../front/src/_post";
     const savePath = `${__dirname}`;
     // postId는 라우팅 경로로 사용될 수 있으므로 shortId로 만드는 것도 괜찮을 듯
@@ -49,6 +51,24 @@ class postService {
     return { date, dateDot };
   }
 
+  static getTagList(tagString) {
+    // find 동작 시 post의 태그를 리스트로 변환
+    const tagList = tagString.replaceAll("#", " ").trim().split(" ");
+    return tagList;
+  }
+
+  static getSinglePostInfo(post_data) {
+    // 하나의 post 정보를 받아와 필요한 정보만 반환
+    const postInfo = {
+      title: post_data.title,
+      date: post_data.date,
+      week: post_data.week,
+      user_id: post_data.user_id,
+      tag: this.getTagList(post_data.tag),
+    };
+    return postInfo;
+  }
+
   static async addPost({ user_id, week, tag, title, body }) {
     // body에서 받은 text를 md파일로 저장
     // TODO: const savePath = '../../front/post' -> 저장하게될 예상 경로
@@ -84,17 +104,22 @@ class postService {
     return insertedPost;
   }
 
-  static async getPostByPostId({ postId }) {
-    const getOnePost = await postModel.getPostByPostId({ postId });
-    const tagList = getOnePost.tag.replaceAll("#", " ").trim().split(" ");
-    const postInfo = {
-      title: getOnePost.title,
-      date: getOnePost.date,
-      week: getOnePost.week,
-      tags: tagList,
-      userId: getOnePost.userId,
-    };
+  static async getPostByPostId({ post_id }) {
+    // post_id를 기준으로 검색
+    const getOnePost = await postModel.getPostByPostId({ post_id });
+    const postInfo = this.getSinglePostInfo(getOnePost);
     return postInfo;
+  }
+
+  static async getPostByWeek({ week }) {
+    // week 기준으로 post 검색
+    const getPosts = await postModel.findByWeek({ week });
+    const postList = [];
+    getPosts.forEach((element) => {
+      const singlePost = this.getSinglePostInfo(element);
+      postList.push(singlePost);
+    });
+    return postList;
   }
 }
 
