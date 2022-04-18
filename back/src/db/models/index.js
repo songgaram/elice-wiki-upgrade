@@ -23,6 +23,8 @@ if (config.use_env_variable) {
 const Post = require("./post")(sequelize, Sequelize.DataTypes);
 const Tag = require("./tag")(sequelize, Sequelize.DataTypes);
 
+// Tag.hasMany(Post, { as: "Post" });
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

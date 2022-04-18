@@ -53,24 +53,6 @@ class postService {
     return { date, dateDot };
   }
 
-  static getTagList(tagString) {
-    // find 동작 시 post의 태그를 리스트로 변환
-    const tagList = tagString.replaceAll("#", " ").trim().split(" ");
-    return tagList;
-  }
-
-  static getSinglePostInfo(post_data) {
-    // 하나의 post 정보를 받아와 필요한 정보만 반환
-    const postInfo = {
-      title: post_data.title,
-      date: post_data.date,
-      week: post_data.week,
-      user_id: post_data.user_id,
-      tag: this.getTagList(post_data.tag),
-    };
-    return postInfo;
-  }
-
   static async addPost({ user_id, week, tag, title, body }) {
     // body에서 받은 text를 md파일로 저장
     // todo: 함수 다이어트 필요
@@ -117,19 +99,13 @@ class postService {
   static async getPostByPostId({ post_id }) {
     // post_id를 기준으로 검색
     const getOnePost = await postModel.getPostByPostId({ post_id });
-    const postInfo = this.getSinglePostInfo(getOnePost);
-    return postInfo;
+    return getOnePost;
   }
 
   static async getPostByWeek({ week }) {
     // week 기준으로 post 검색
     const getPosts = await postModel.findByWeek({ week });
-    const postList = [];
-    getPosts.forEach((element) => {
-      const singlePost = this.getSinglePostInfo(element);
-      postList.push(singlePost);
-    });
-    return postList;
+    return getPosts;
   }
 }
 
