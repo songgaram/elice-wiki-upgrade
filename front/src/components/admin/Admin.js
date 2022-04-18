@@ -3,13 +3,13 @@ import React, { useState, useEffect, createContext } from "react";
 import King from "./King";
 
 const User = () => {
-    const AdminContext = createContext();
+    // const AdminContext = createContext();
 
     return (
         <>
-            <AdminContext.Provider>
-                <King />
-            </AdminContext.Provider>
+            {/* <AdminContext.Provider> */}
+            <King />
+            {/* </AdminContext.Provider> */}
         </>
     );
 };

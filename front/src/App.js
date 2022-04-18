@@ -10,7 +10,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/users/:userId" element={<User />} />
-                <Route path="/users/:userId/admin" element={<Admin />} />
+                <Route path="/admin/:userId" element={<Admin />} />
             </Routes>
         </Router>
     );
