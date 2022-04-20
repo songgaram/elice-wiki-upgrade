@@ -26,7 +26,8 @@ class userController {
 
   static async auth(req, res, next) {
     try {
-      const users = await userService.findAll();
+      const { userId } = req.params;
+      const users = await userService.authUser({ userId });
       res.status(200).json({ users });
     } catch (error) {
       next(error);

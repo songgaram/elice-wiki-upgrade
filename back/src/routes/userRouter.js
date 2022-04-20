@@ -7,6 +7,6 @@ const userRouter = Router();
 
 userRouter.post("/user/sign", userController.sign);
 // userRouter.get('/users', loginRequired, adminRequired, userController.getAllUsers);
-// userRouter.post("/user/auth", loginRequired, userController.auth);
+userRouter.post("/user/auth", loginRequired, userController.auth);
 
 export { userRouter };
