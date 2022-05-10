@@ -3,9 +3,13 @@ import { postController } from "../controller/postController";
 
 const postRouter = Router();
 
+// new post
 postRouter.post("/addPost", postController.addPost);
 
+// findByPostId
 postRouter.get("/post/:postId", postController.getPostByPostId);
+
+postRouter.get("/post/tag/:tag", postController.getPostsByTag);
 
 // post 수정
 
