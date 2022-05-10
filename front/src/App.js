@@ -40,10 +40,11 @@ function App() {
     return (
         <Router>
             <Routes>
+                <Route path="/" exact element={<Home />} />
                 {userState && (
-                    <Route path="/auth" element={<EliceUserAuth />} />
+                    <Route path="/auth" exact element={<EliceUserAuth />} />
                 )}
-                <Route path="/test" element={<GoogleLoading />} />
+                <Route path="/test" exact element={<GoogleLoading />} />
                 <Route path="*" element={<Home />} />
             </Routes>
         </Router>
