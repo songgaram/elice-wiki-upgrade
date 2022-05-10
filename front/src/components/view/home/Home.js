@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import * as Api from "../api";
+import UserHome from "./UserHome";
 
 const Home = () => {
     const navigate = useNavigate();
@@ -9,11 +9,11 @@ const Home = () => {
     const userState = useSelector((state) =>
         state ? state.userReducer.user : undefined
     );
-    const [homeOwner, setHomeOwner] = useState(null);
+    const userAuthorized = userState.auth;
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
     useEffect(() => {
-        if (!userState.auth) {
+        if (!userAuthorized) {
             navigate("/auth");
             return;
         }
@@ -25,7 +25,7 @@ const Home = () => {
         return <div>로딩중...</div>;
     }
 
-    return <div>HOME</div>;
+    return <>{userAuthorized ? <UserHome /> : <NotUserHome />}</>;
 };
 
 export default Home;
