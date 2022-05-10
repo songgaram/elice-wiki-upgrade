@@ -3,11 +3,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import * as Api from "./api";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./store/actions/userAction";
+import { useSelector } from "react-redux";
 import Home from "./components/view/home/Home";
 import EliceUserAuth from "./components/auth/EliceUserAuth";
 
 function App() {
     const dispatch = useDispatch();
+    const userState = useSelector((state) =>
+        state ? state.userReducer.user : undefined
+    );
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
     const fetchCurrentUser = async () => {
@@ -37,12 +41,11 @@ function App() {
     return (
         <Router>
             <Routes>
-                {/* <Route path="/" exact element={<Home />} />
-        <Route path="/users/:userId" element={<Home />} /> */}
-                <Route path="/" element={<EliceUserAuth />} />
-                {/* <Route path="/login" element={<LoginForm />} />
-        <Route path="/test" element={<GoogleLoading />} />
-        <Route path="*" element={<Home />} /> */}
+                {userState && (
+                    <Route path="/auth" element={<EliceUserAuth />} />
+                )}
+                <Route path="/test" element={<GoogleLoading />} />
+                <Route path="*" element={<Home />} />
             </Routes>
         </Router>
     );
