@@ -6,6 +6,7 @@ import { loginUser } from "./store/actions/userAction";
 import { useSelector } from "react-redux";
 import Home from "./components/view/home/Home";
 import EliceUserAuth from "./components/auth/EliceUserAuth";
+import GoogleLoading from "./components/auth/GoogleLoading";
 
 function App() {
     const dispatch = useDispatch();
