@@ -4,10 +4,9 @@ import { loginUser } from "../../store/actions/userAction";
 import { useNavigate } from "react-router-dom";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 import styles from "./EliceUserAuth.module.css";
+import * as Api from "../../api";
 
 const EliceUserAuth = () => {
-    const question =
-        "엘리스 레이서들의 체크인 체크아웃을 책임지는 이 거북이의 이름은 무엇일까요?";
     const [answer, setAnswer] = useState(undefined);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -16,8 +15,7 @@ const EliceUserAuth = () => {
         e.preventDefault();
 
         try {
-            const res = await Api.post("auth", {
-                question,
+            const res = await Api.post("user/auth", {
                 answer,
             });
             const user = res.data;
@@ -30,7 +28,11 @@ const EliceUserAuth = () => {
 
     return (
         <div className={styles["wrapper"]}>
-            <img src="/image/cal-bot.png" style={{ width: "40%" }} />
+            <img
+                src="/image/cal-bot.png"
+                alt="거북이"
+                style={{ width: "40%" }}
+            />
             <div className={styles["title"]}>
                 엘리스 레이서들의 <br />
                 <span style={{ color: "#7353EA" }}>"체크인/체크아웃"</span>을

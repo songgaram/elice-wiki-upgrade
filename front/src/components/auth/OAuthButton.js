@@ -1,4 +1,3 @@
-import { FcGoogle } from "react-icons/fc";
 import { Button } from "react-bootstrap";
 
 const OAuthButton = () => {
@@ -15,7 +14,7 @@ const OAuthButton = () => {
     };
     return (
         <Button variant="light" onClick={onClick} style={{ width: "300px" }}>
-            <FcGoogle /> 구글로 로그인하기
+            구글로 로그인하기
         </Button>
     );
 };
