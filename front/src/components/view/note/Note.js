@@ -9,23 +9,6 @@ const Wrapper = styled.div`
   padding-right: 3rem;
 `;
 
-const SubmitBtn = styled.button`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  float: right;
-  font-weight: bold;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  background-color: #12b886;
-  color: white;
-  border-radius: 4px;
-  padding: 0px 1.25rem;
-  height: 2rem;
-  font-size: 1rem;
-`;
-
 const Title = styled.input`
   background: transparent;
   display: block;
@@ -73,7 +56,7 @@ const HashOuter = styled.div`
     padding-left: 1rem;
     padding-right: 1rem;
     background-color: #f8f9fa;
-    color: #12b886;
+    color: #7353ea;
     margin-right: 0.75rem;
     margin-bottom: 0.75rem;
     cursor: pointer;
@@ -81,10 +64,16 @@ const HashOuter = styled.div`
 `;
 
 function Note() {
-  // onChange로 관리할 문자열
+  // onChange로 관리할 Title 문자열
+  const [titleInp, setTitleInp] = useState("");
+  // onChange로 관리할 해시태그 문자열
   const [hashtag, setHashtag] = useState("");
   // 해시태그를 담을 배열
   const [hashArr, setHashArr] = useState([]);
+
+  const onChangeTitle = (e) => {
+    setTitleInp(e.target.value);
+  };
 
   const onChangeHashtag = (e) => {
     setHashtag(e.target.value);
@@ -96,7 +85,6 @@ function Note() {
     $HashWrapInner.className = "HashWrapInner";
 
     if (e.keyCode === 13 && e.target.value.trim() !== "") {
-      console.log("태그 생성됨: ", e.target.value, hashArr);
       $HashWrapInner.innerHTML = e.target.value;
       $HashWrapOuter.appendChild($HashWrapInner);
       setHashArr((hashArr) => [...hashArr, hashtag]);
@@ -105,7 +93,6 @@ function Note() {
 
     $HashWrapInner.addEventListener("click", () => {
       $HashWrapOuter?.removeChild($HashWrapInner);
-      console.log($HashWrapInner.innerHTML);
       setHashArr(hashArr.filter((hashtag) => hashtag));
     });
   };
@@ -113,7 +100,11 @@ function Note() {
   return (
     <>
       <Wrapper>
-        <Title type="text" placeholder="제목을 입력하세요" />
+        <Title
+          type="text"
+          placeholder="제목을 입력하세요"
+          onChange={onChangeTitle}
+        />
         <Line></Line>
         <div className="HashWrap">
           <HashOuter className="HashWrapOuter"></HashOuter>
@@ -126,7 +117,7 @@ function Note() {
             placeholder="태그를 입력하세요"
           />
         </div>
-        <Writer />
+        <Writer titleInp={titleInp} hashArr={hashArr} />
       </Wrapper>
     </>
   );

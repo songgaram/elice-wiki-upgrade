@@ -1,3 +1,4 @@
+import * as Api from "../../../api";
 import Prism from "prismjs";
 // 여기 css를 수정해서 코드 하이라이팅 커스텀 가능
 import "prismjs/themes/prism.css";
@@ -19,21 +20,35 @@ const SubmitBtn = styled.button`
   cursor: pointer;
   outline: none;
   border: none;
-  background-color: #12b886;
+  background-color: #7353ea;
   color: white;
   border-radius: 4px;
   padding: 0px 1.25rem;
+  margin: 15px 0 15px 0;
   height: 2rem;
   font-size: 1rem;
 `;
 
-const Writer = () => {
+const Writer = ({ titleInp, hashArr }) => {
   const editorRef = useRef();
-  const btnClickListener = () => {
+  const week = "13";
+  const user_id = "usrId18";
+  const btnClickListener = async () => {
     const editorInstance = editorRef.current.getInstance();
     const getContent_md = editorInstance.getMarkdown();
-    console.log(getContent_md);
+    console.log(titleInp, hashArr, getContent_md);
+
+    await Api.post("addPost", {
+      user_id,
+      week,
+      hashArr,
+      titleInp,
+    });
+
+    // Api.get('post', postId).then((res) => setList(res.data));
   };
+
+  const checkTitle = titleInp !== "";
 
   return (
     <>
@@ -47,9 +62,11 @@ const Writer = () => {
         ref={editorRef}
       />
       <Link to={"/"} style={{ textDecoration: "none" }}>
-          &larr; 나가기
-        </Link>
-        <SubmitBtn onClick={btnClickListener}>출간하기</SubmitBtn>
+        &larr; 나가기
+      </Link>
+      <SubmitBtn onClick={btnClickListener} disabled={!checkTitle}>
+        출간하기
+      </SubmitBtn>
     </>
   );
 };
