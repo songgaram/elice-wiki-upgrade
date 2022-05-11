@@ -14,4 +14,6 @@ postRouter.get("/post/tag/:tag", postController.getPostsByTag);
 // week로 post 검색
 postRouter.get("/post/week/:week", postController.getPostByWeek);
 
+postRouter.put("/post/update/:postId", postController.updatePost);
+
 export { postRouter };

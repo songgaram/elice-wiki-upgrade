@@ -58,6 +58,23 @@ class postModel {
         });
         return posts;
     }
+
+    static async updatePost({ postId, update }) {
+        const updatePostInfo = await models.Post.update(
+            {
+                // 바꿀 내용
+                tag: update.tag,
+                week: update.week,
+                title: update.title,
+            },
+            {
+                where: {
+                    post_id: postId,
+                },
+            }
+        );
+        return updatePostInfo;
+    }
 }
 
 export { postModel };
