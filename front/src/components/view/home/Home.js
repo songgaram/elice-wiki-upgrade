@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import OAuthButton from "../../auth/OAuthButton";
 import { useSelector } from "react-redux";
 import UserHome from "./UserHome";
