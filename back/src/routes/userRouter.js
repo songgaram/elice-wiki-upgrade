@@ -6,7 +6,7 @@ import { userController } from "../controller/userController.js";
 const userRouter = Router();
 
 userRouter.post("/user/sign", userController.sign);
-// userRouter.get('/users', loginRequired, adminRequired, userController.getAllUsers);
+userRouter.get('/users', loginRequired, adminRequired, userController.getAllUsers);
 userRouter.post("/user/auth", loginRequired, userController.auth);
 
 export { userRouter };

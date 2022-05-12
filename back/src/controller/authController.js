@@ -3,9 +3,9 @@ import { authService } from "../services/authService";
 class authController {
   static async newQuestion(req, res, next) {
     try {
-        const { question, answer } = req.body;
-        const createdQuestion = await authService.createQuestion({ question, answer });
-        res.status(200).json({ createdQuestion });
+      const { question, answer } = req.body;
+      const createdQuestion = await authService.createQuestion({ question, answer });
+      res.status(200).json({ createdQuestion });
     } catch (error) {
       next(error);
     }
@@ -13,9 +13,9 @@ class authController {
 
   static async getCurrentQuestion(req, res, next) {
     try {
-        const currentQuestion = await authService.getCurrentQuestion();
+      const currentQuestion = await authService.getCurrentQuestion();
 
-        res.status(200).json(currentQuestion);
+      res.status(200).json(currentQuestion);
     } catch (error) {
       next(error);
     }
@@ -23,11 +23,11 @@ class authController {
 
   static async updateCurrentQuestion(req, res, next) {
     try {
-        const { question, answer } = req.body;
+      const { question, answer } = req.body;
 
-        const currentQuestion = await authService.updateQuestion({ question, answer });
+      const currentQuestion = await authService.updateQuestion({ question, answer });
 
-        res.status(200).json(currentQuestion);      
+      res.status(200).json(currentQuestion);
     } catch (error) {
       next(error);
     }
@@ -45,11 +45,11 @@ class authController {
 
   static async getQuestions(req, res, next) {
     try {
-        const questions = await authService.findAll();
-        res.status(200).json({ questions });
+      const questions = await authService.findAll();
+      res.status(200).json({ questions });
     } catch (error) {
       next(error);
     }
   }
 }
-export { userController };
+export { authController };

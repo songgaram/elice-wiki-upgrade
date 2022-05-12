@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "+QJ2#w%Sjm38X6kT",
-    "database": "elicewiki",
+    "password": "a8862301",
+    "database": "test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

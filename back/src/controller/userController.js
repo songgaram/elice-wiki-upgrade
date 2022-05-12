@@ -1,4 +1,5 @@
 import { userService } from "../services/userService";
+import { authService } from "../services/authService";
 import axios from 'axios';
 
 class userController {
@@ -26,9 +27,15 @@ class userController {
 
   static async auth(req, res, next) {
     try {
-      const { userId } = req.params;
-      const users = await userService.authUser({ userId });
-      res.status(200).json({ users });
+      const { userId } = req.currentUser;
+      const { answer } = req.body;
+      const currentQuestion = await authService.getCurrentQuestion();
+      if (currentQuestion?.answer == answer) {
+        const result = await userService.authUser({ userId });
+        return res.status(200).json({ result });
+      }
+      const result = { success: false }
+      return res.status(200).json({ result });
     } catch (error) {
       next(error);
     }

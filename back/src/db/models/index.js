@@ -10,9 +10,9 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize(process.env[config.use_env_variable], config, { logging: console.log });
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(config.database, config.username, config.password, config, { logging: console.log });
 }
 
 fs
@@ -31,7 +31,13 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+const Users = require("./user")(sequelize, Sequelize.DataTypes);
+const Auth = require("./auth")(sequelize, Sequelize.DataTypes);
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+db["Users"] = Users;
+db["Auth"] = Auth;
 
 module.exports = db;

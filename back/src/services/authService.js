@@ -13,7 +13,7 @@ class authService {
 
   static async getCurrentQuestion() {
 
-    const currentQuestion = await authModel.getLatestQuestion
+    const currentQuestion = await authModel.getLatestQuestion();
 
     return currentQuestion;
   }
