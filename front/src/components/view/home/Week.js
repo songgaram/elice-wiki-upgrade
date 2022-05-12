@@ -1,5 +1,5 @@
 const Week = () => {
-    return;
+  return;
 };
 
 export default Week;

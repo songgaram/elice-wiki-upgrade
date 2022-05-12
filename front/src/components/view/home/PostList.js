@@ -1,5 +1,5 @@
 function PostList() {
-    return <></>;
+  return <></>;
 }
 
 export default PostList;

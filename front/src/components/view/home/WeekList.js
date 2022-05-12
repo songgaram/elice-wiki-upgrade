@@ -1,7 +1,7 @@
 import styles from "./WeekList.module.css";
 
 const WeekList = () => {
-    return;
+  return;
 };
 
 export default WeekList;
