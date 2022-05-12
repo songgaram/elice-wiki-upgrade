@@ -18,7 +18,7 @@ const EliceUserAuth = () => {
             const res = await Api.post("user/auth", {
                 answer,
             });
-            const user = res.data;
+            const user = res.data.result;
             dispatch(loginUser(user));
             navigate("/", { replace: true });
         } catch (error) {
@@ -43,18 +43,20 @@ const EliceUserAuth = () => {
             <div className={styles["sub_title"]}>
                 * 띄어쓰기를 지켜서 작성해야 올바르게 적용됩니다.
             </div>
-            <InputGroup className="mb-3" style={{ width: "25%" }}>
-                <FormControl
-                    onSubmit={(e) => handleSubmit(e)}
-                    placeholder="정답을 적어주세요."
-                    type="text"
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                />
-                <Button className={styles["btn"]} type="submit">
-                    submit
-                </Button>
-            </InputGroup>
+            <form action="submit" onSubmit={(e) => handleSubmit(e)}>
+                <InputGroup className="mb-3" style={{ width: "25%" }}>
+                    <FormControl
+
+                        placeholder="정답을 적어주세요."
+                        type="text"
+                        value={answer}
+                        onChange={(e) => setAnswer(e.target.value)}
+                    />
+                    <Button className={styles["btn"]} type="submit">
+                        submit
+                    </Button>
+                </InputGroup>
+            </form>
         </div>
     );
 };

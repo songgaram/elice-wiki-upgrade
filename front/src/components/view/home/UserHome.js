@@ -7,7 +7,7 @@ function UserHome() {
     const userState = useSelector((state) =>
         state ? state.userReducer.user : undefined
     );
-    const userAuthorized = userState?.auth;
+    const userAuthorized = userState?.authorized;
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
     useEffect(() => {
