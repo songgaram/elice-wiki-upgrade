@@ -1,4 +1,4 @@
-import styles from "./WeekList.module.css";
+// import styles from "./WeekList.module.css";
 
 const WeekList = () => {
   return;
