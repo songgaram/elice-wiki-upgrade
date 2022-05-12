@@ -1,29 +1,29 @@
-import { Layout, Menu, Breadcrumb, Space, Typography, Divider } from "antd";
+import { Layout, Breadcrumb, Typography } from "antd";
 import styles from "./Home.module.css";
+import "antd/dist/antd.min.css";
 
 const Home = () => {
-    const { Header, Content, Footer } = Layout;
+    const { Header, Content } = Layout;
     return (
-        <Layout className="layout">
-            <Header>
-                <Space split={<Divider type="vertical" />}>
-                    {new Array(15).fill(null).map((_, week) => (
-                        <Typography.Link>{week + 1}</Typography.Link>
-                    ))}
-                </Space>
-            </Header>
-            <Content style={{ padding: "0 50px" }}>
-                <Breadcrumb style={{ margin: "16px 0" }}>
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item>List</Breadcrumb.Item>
-                    <Breadcrumb.Item>App</Breadcrumb.Item>
-                </Breadcrumb>
-                <div className="site-layout-content">Content</div>
-            </Content>
-            <Footer style={{ textAlign: "center" }}>
-                Ant Design ©2018 Created by Ant UED
-            </Footer>
-        </Layout>
+        <>
+            <Layout className="layout">
+                <Header className={styles.header}>
+                    <Breadcrumb separator="|">
+                        {new Array(23).fill(null).map((_, week) => (
+                            <Breadcrumb.Item>
+                                <Typography.Link>{week + 1}</Typography.Link>
+                            </Breadcrumb.Item>
+                        ))}
+                        <Breadcrumb.Item>
+                            <Typography.Link>기타</Typography.Link>
+                        </Breadcrumb.Item>
+                    </Breadcrumb>
+                </Header>
+                <Content style={{ padding: "0 50px" }}>
+                    <div className="site-layout-content">Content</div>
+                </Content>
+            </Layout>
+        </>
     );
 };
 
