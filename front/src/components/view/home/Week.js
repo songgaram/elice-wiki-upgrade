@@ -1,5 +1,5 @@
-const Week = (number) => {
-  return <div>{number}</div>;
+const Week = () => {
+    return;
 };
 
 export default Week;
