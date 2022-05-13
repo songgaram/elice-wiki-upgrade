@@ -43,12 +43,14 @@ class userModel {
     catch (err) { console.log(err.message) }
   }
 
-  static async delete() {
+  static async delete({ userId }) {
     try {
-      const user = await models.Users.delete()
-      return user;
+      const result = await models.Users.destroy({ where: { __id: userId } })
+      return result;
     }
-    catch (err) { console.log(err.message) }
+    catch (err) {
+      console.log(err.message)
+    }
   }
 
 }

@@ -25,6 +25,34 @@ class userController {
     }
   }
 
+  static async deleteUser(req, res, next) {
+    const userIdList = []
+    if (Object.keys(req.params).length === 0) {
+      userIdList.push(req.currentUser.userId)//유저 탈퇴 현재 로그인중인 유저아이디써서
+    } else {
+      userIdList.push(...req.params.userId.split(","))//어드민 페이지에서 선택된 유저 한번에 강퇴
+    }
+    const deleteResult = { success: 0, failed: 0 }
+    Promise.all(userIdList.map(async (userId) => {
+      try {
+        const result = await userService.deleteUser({ userId });
+        if (result === 0) {
+          deleteResult.failed += 1;
+        } else {
+          deleteResult.success += 1;;
+        }
+      } catch (error) {
+        next(error);
+      }
+    })).then(() => {
+      const body = {
+        status: "success",
+        payload: { ...deleteResult }
+      }
+      res.status(200).json(body)
+    })
+  }
+
   static async auth(req, res, next) {
     try {
       const { userId } = req.currentUser;

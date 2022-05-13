@@ -53,7 +53,11 @@ class userService {
     return user;
   }
 
+  static async deleteUser({ userId }) {
 
+    const result = await userModel.delete({ userId });
+    return result;
+  }
 
 }
 
