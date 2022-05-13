@@ -26,7 +26,7 @@ const Home = () => {
                         </>
                     ))}
 
-                    <Button>기타</Button>
+                    <Button color="primary">기타</Button>
                 </div>
                 <div className={styles.contents_container}>
                     <div className={styles.home_side}></div>
