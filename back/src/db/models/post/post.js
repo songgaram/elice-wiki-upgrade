@@ -25,6 +25,11 @@ class postModel {
         return insertPost;
     }
 
+    static async findAllPost() {
+        const posts = await models.Post.find({});
+        return posts;
+    }
+
     static async getPostByPostId({ post_id }) {
         // postId로 post의 정보검색
         // 사용자가 post를 눌렀을 때 동작?
