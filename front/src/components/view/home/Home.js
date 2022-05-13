@@ -1,8 +1,13 @@
+import { useState } from "react";
 import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
 
 const Home = () => {
-    const handleClick = () => {};
+    const [clicked, setClicked] = useState(Array(24).fill(false));
+
+    const handleClick = (e) => {
+        setClicked(!e.target.value);
+    };
 
     return (
         <>
@@ -16,6 +21,9 @@ const Home = () => {
                     {new Array(24).fill(null).map((_, week) => (
                         <>
                             <Button
+                                value={clicked}
+                                size="small"
+                                variant={clicked ? "contained" : "text"}
                                 sx={{
                                     minWidth: "2.5%",
                                     maxHeight: "50%",
@@ -35,7 +43,6 @@ const Home = () => {
                     ))}
 
                     <Button
-                        color="primary"
                         sx={{
                             minWidth: "2.5%",
                             maxHeight: "50%",
