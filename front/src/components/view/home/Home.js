@@ -1,30 +1,100 @@
-import { Layout, Breadcrumb, Typography } from "antd";
-import styles from "./Home.module.css";
-import "antd/dist/antd.min.css";
+import { useState } from "react";
+import { Button, Divider } from "@mui/material";
+import styled from "styled-components";
 
 const Home = () => {
-    const { Header, Content } = Layout;
+    const [clicked, setClicked] = useState(Array(24).fill(false));
+
+    const handleClick = (e) => {
+        setClicked(!e.target.value);
+    };
+
     return (
         <>
-            <Layout className="layout">
-                <Header className={styles.header}>
-                    <Breadcrumb separator="|">
-                        {new Array(23).fill(null).map((_, week) => (
-                            <Breadcrumb.Item>
-                                <Typography.Link>{week + 1}</Typography.Link>
-                            </Breadcrumb.Item>
-                        ))}
-                        <Breadcrumb.Item>
-                            <Typography.Link>기타</Typography.Link>
-                        </Breadcrumb.Item>
-                    </Breadcrumb>
-                </Header>
-                <Content style={{ padding: "0 50px" }}>
-                    <div className="site-layout-content">Content</div>
-                </Content>
-            </Layout>
+            <div style={{ minHeight: "100vh", height: "auto" }}>
+                <header style={{ height: "60px" }} />
+                <WeekNav>
+                    <Button disabled style={{ color: "black" }}>
+                        WEEK
+                    </Button>
+
+                    {new Array(24).fill(null).map((_, week) => (
+                        <>
+                            <Button
+                                value={clicked}
+                                size="small"
+                                variant={clicked ? "contained" : "text"}
+                                sx={{
+                                    minWidth: "2.5%",
+                                    maxHeight: "50%",
+                                    borderRadius: "30px",
+                                    margin: "0 3px",
+                                }}
+                                onClick={handleClick}
+                            >
+                                {String(week + 1).padStart(2, "0")}
+                            </Button>
+                            <Divider
+                                orientation="vertical"
+                                variant="middle"
+                                flexItem
+                            />
+                        </>
+                    ))}
+
+                    <Button
+                        sx={{
+                            minWidth: "2.5%",
+                            maxHeight: "50%",
+                            borderRadius: "30px",
+                            margin: "0 3px",
+                        }}
+                    >
+                        기타
+                    </Button>
+                </WeekNav>
+                <Container>
+                    <ContentsSide />
+                    <Contents>
+                        <div>
+                            <div>tag</div>
+                            <div>title</div>
+                        </div>
+                    </Contents>
+                    <ContentsSide />
+                </Container>
+            </div>
         </>
     );
 };
+
+const WeekNav = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background-color: #f1f1f1;
+`;
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: calc(100vh - 100px);
+    background-color: #e1e1e1;
+`;
+
+const ContentsSide = styled.div`
+    width: 25%;
+    background-color: white;
+`;
+
+const Contents = styled.div`
+    width: 50%;
+    background-color: #f1f1f1;
+    overflow: scroll;
+`;
 
 export default Home;
