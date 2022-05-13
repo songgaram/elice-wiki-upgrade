@@ -6,6 +6,7 @@ const Home = () => {
     return (
         <>
             <div className={styles.home_container}>
+                <header style={{ height: "60px" }} />
                 <Header className={styles.home_header}>
                     <Breadcrumb separator="|">
                         {new Array(24).fill(null).map((_, week) => (
@@ -22,7 +23,28 @@ const Home = () => {
                 </Header>
                 <Content className={styles.contents_container}>
                     <div className={styles.home_side}></div>
-                    <div className={styles.home_contents}>Content</div>
+                    <div className={styles.home_contents}>
+                        <div>
+                            <div>tag</div>
+                            <div>title</div>
+                        </div>
+                        <div>
+                            <div>tag</div>
+                            <div>title</div>
+                        </div>
+                        <div>
+                            <div>tag</div>
+                            <div>title</div>
+                        </div>{" "}
+                        <div>
+                            <div>tag</div>
+                            <div>title</div>
+                        </div>
+                        <div>
+                            <div>tag</div>
+                            <div>title</div>
+                        </div>
+                    </div>
                     <div className={styles.home_side}></div>
                 </Content>
             </div>
