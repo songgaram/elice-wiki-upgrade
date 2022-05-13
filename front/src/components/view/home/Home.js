@@ -6,12 +6,14 @@ const Home = () => {
     const { Header, Content } = Layout;
     return (
         <>
-            <Layout className="layout">
-                <Header className={styles.header}>
+            <div className={styles.home_container}>
+                <Header className={styles.home_header}>
                     <Breadcrumb separator="|">
-                        {new Array(23).fill(null).map((_, week) => (
-                            <Breadcrumb.Item>
-                                <Typography.Link>{week + 1}</Typography.Link>
+                        {new Array(24).fill(null).map((_, week) => (
+                            <Breadcrumb.Item style={{}}>
+                                <Typography.Link>
+                                    {String(week + 1).padStart(2, "0")}
+                                </Typography.Link>
                             </Breadcrumb.Item>
                         ))}
                         <Breadcrumb.Item>
@@ -19,10 +21,10 @@ const Home = () => {
                         </Breadcrumb.Item>
                     </Breadcrumb>
                 </Header>
-                <Content style={{ padding: "0 50px" }}>
-                    <div className="site-layout-content">Content</div>
+                <Content className={styles.home_contents}>
+                    <div>Content</div>
                 </Content>
-            </Layout>
+            </div>
         </>
     );
 };

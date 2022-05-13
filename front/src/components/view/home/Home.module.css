@@ -1,4 +1,14 @@
-.header {
+.home_container {
+    width: 100%;
+    height: auto;
+}
+
+.home_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     margin-top: 80px;
-    background-color: #f1f1f1;
+    height: 2rem !important;
+    background-color: #f1f1f1 !important;
 }
