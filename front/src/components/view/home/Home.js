@@ -1,27 +1,34 @@
-import { Layout, Breadcrumb, Typography } from "antd";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+
 import styles from "./Home.module.css";
 
 const Home = () => {
-    const { Header, Content } = Layout;
     return (
         <>
             <div className={styles.home_container}>
                 <header style={{ height: "60px" }} />
-                <Header className={styles.home_header}>
-                    <Breadcrumb separator="|">
-                        {new Array(24).fill(null).map((_, week) => (
-                            <Breadcrumb.Item style={{}}>
-                                <Typography.Link className={styles.home_week}>
-                                    {String(week + 1).padStart(2, "0")}
-                                </Typography.Link>
-                            </Breadcrumb.Item>
-                        ))}
-                        <Breadcrumb.Item>
-                            <Typography.Link>기타</Typography.Link>
-                        </Breadcrumb.Item>
-                    </Breadcrumb>
-                </Header>
-                <Content className={styles.contents_container}>
+                <div className={styles.home_header}>
+                    <Button disabled style={{ color: "black" }}>
+                        WEEK
+                    </Button>
+
+                    {new Array(24).fill(null).map((_, week) => (
+                        <>
+                            <Button sx={{ minWidth: "45px" }} variant="text">
+                                {String(week + 1).padStart(2, "0")}
+                            </Button>
+                            <Divider
+                                orientation="vertical"
+                                variant="middle"
+                                flexItem
+                            />
+                        </>
+                    ))}
+
+                    <Button>기타</Button>
+                </div>
+                <div className={styles.contents_container}>
                     <div className={styles.home_side}></div>
                     <div className={styles.home_contents}>
                         <div>
@@ -46,7 +53,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className={styles.home_side}></div>
-                </Content>
+                </div>
             </div>
         </>
     );
