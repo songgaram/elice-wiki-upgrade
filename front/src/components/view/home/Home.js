@@ -1,6 +1,5 @@
 import { Layout, Breadcrumb, Typography } from "antd";
 import styles from "./Home.module.css";
-import "antd/dist/antd.min.css";
 
 const Home = () => {
     const { Header, Content } = Layout;
@@ -11,7 +10,7 @@ const Home = () => {
                     <Breadcrumb separator="|">
                         {new Array(24).fill(null).map((_, week) => (
                             <Breadcrumb.Item style={{}}>
-                                <Typography.Link>
+                                <Typography.Link className={styles.home_week}>
                                     {String(week + 1).padStart(2, "0")}
                                 </Typography.Link>
                             </Breadcrumb.Item>
@@ -21,8 +20,10 @@ const Home = () => {
                         </Breadcrumb.Item>
                     </Breadcrumb>
                 </Header>
-                <Content className={styles.home_contents}>
-                    <div>Content</div>
+                <Content className={styles.contents_container}>
+                    <div className={styles.home_side}></div>
+                    <div className={styles.home_contents}>Content</div>
+                    <div className={styles.home_side}></div>
                 </Content>
             </div>
         </>
