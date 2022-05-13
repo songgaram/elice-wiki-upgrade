@@ -28,14 +28,9 @@ class postController {
     }
 
     static async getPostByPostId(req, res, next) {
-        const post_id = req.params.postId;
+        const post_id = req.params.id;
         const getSinglePost = await postService.getPostByPostId({ post_id });
         res.status(200).json(getSinglePost);
-    }
-
-    static async updatePost(req, res, next) {
-        // post의 정보를 받아와야 한다
-        // postId로 받아온다??
     }
 
     static async getPostByWeek(req, res, next) {
@@ -53,5 +48,23 @@ class postController {
             next(error);
         }
     }
+
+    static async updatePost(req, res, next) {
+        try {
+            const postId = req.params.id;
+            // todo user id 부분 코드 보기
+            const { user_id, week, tag, title } = req.body;
+            const update = await postService.updatePost({
+                postId,
+                week,
+                title,
+                tag,
+            });
+            res.status(200).json(update.message);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
+
 export { postController };
