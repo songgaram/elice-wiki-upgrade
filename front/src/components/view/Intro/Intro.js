@@ -34,7 +34,6 @@ const Intro = () => {
           <span>#elice-wiki</span> 는 엘리스 AI 트랙에 참여하는 레이서를 위한
           <br />
           <span>위키 서비스</span>입니다.
-          {/* 저희와 함께라면 당신의 학습이 새로워질 거예요. */}
         </p>
       </div>
       <CardSection />
