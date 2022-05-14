@@ -75,6 +75,26 @@ postRouter.get("/post/week/:week", postController.getPostByWeek);
 // id = post id
 postRouter.put("/post/update/:id", postController.updatePost);
 
+/**
+ * @swagger
+ * paths:
+ *  /posts:
+ *    get:
+ *      tags: [Post]
+ *      summary: find all post
+ *      responses:
+ *          200:
+ *           description: succ
+ *           content:
+ *              application/json:
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                      paload:
+ *                          type: object
+ *
+ */
 postRouter.get("/posts", postController.findAllPost);
 
 export { postRouter };
