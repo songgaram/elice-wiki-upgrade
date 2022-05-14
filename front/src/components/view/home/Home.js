@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
+import Post from "./Post";
 
 const Home = () => {
     const [isClicked, setIsClicked] = useState(new Array(24).fill(false));
@@ -58,10 +59,7 @@ const Home = () => {
                 <Container>
                     <ContentsSide />
                     <Contents>
-                        <div>
-                            <div>tag</div>
-                            <div>title</div>
-                        </div>
+                        <Post />
                     </Contents>
                     <ContentsSide />
                 </Container>
