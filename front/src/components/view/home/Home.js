@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
+import PostList from "./PostList";
 
 const Home = () => {
-    const [clicked, setClicked] = useState(Array(24).fill(false));
-
+    const [isClicked, setIsClicked] = useState(new Array(24).fill(false));
     const handleClick = (e) => {
-        setClicked(!e.target.value);
+        const newArr = new Array(24).fill(false);
+        newArr[e.target.value] = !newArr[e.target.value];
+        setIsClicked(newArr);
     };
 
     return (
@@ -18,12 +20,13 @@ const Home = () => {
                         WEEK
                     </Button>
 
-                    {new Array(24).fill(null).map((_, week) => (
+                    {new Array(24).fill(null).map((_, idx) => (
                         <>
                             <Button
-                                value={clicked}
+                                value={idx}
+                                key={`week_${idx}`}
                                 size="small"
-                                variant={clicked ? "contained" : "text"}
+                                variant={isClicked[idx] ? "contained" : "text"}
                                 sx={{
                                     minWidth: "2.5%",
                                     maxHeight: "50%",
@@ -32,7 +35,7 @@ const Home = () => {
                                 }}
                                 onClick={handleClick}
                             >
-                                {String(week + 1).padStart(2, "0")}
+                                {String(idx + 1).padStart(2, "0")}
                             </Button>
                             <Divider
                                 orientation="vertical"
@@ -56,10 +59,7 @@ const Home = () => {
                 <Container>
                     <ContentsSide />
                     <Contents>
-                        <div>
-                            <div>tag</div>
-                            <div>title</div>
-                        </div>
+                        <PostList />
                     </Contents>
                     <ContentsSide />
                 </Container>
@@ -95,6 +95,19 @@ const Contents = styled.div`
     width: 50%;
     background-color: #f1f1f1;
     overflow: scroll;
+    // &::-webkit-scrollbar {
+    //     width: 10px;
+    // }
+    // &::-webkit-scrollbar-track {
+    //     background: #f1f1f1;
+    //     margin-left: -10px;
+    // }
+    // &::-webkit-scrollbar-thumb {
+    //     background: #7353ea;
+    // }
+    // &::-webkit-scrollbar-thumb:hover {
+    //     background: #555;
+    // }
 `;
 
 export default Home;
