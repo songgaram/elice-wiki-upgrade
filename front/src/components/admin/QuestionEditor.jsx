@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const QuestionEditor = () => {
-  const [value, setValue] = React.useState();
-  const [url, setUrl] = React.useState();
+  const [value, setValue] = React.useState("<h4>소스코드입력</h4>");
+  const [url, setUrl] = React.useState("image/cal-bot.png");
   const [source, setSource] = React.useState();
   const onChangeHandler = (e) => {
     if (e.target.id === "imgurl") {
@@ -23,6 +23,7 @@ const QuestionEditor = () => {
       <Wrapper>
         <div style={{ width: "40vw" }}>
           <label for="imgurl">Img URL</label>
+          <img src="image/questionMark.png" style={{ display: "inline-block", height: "14px", marginLeft: "10px" }} />
           <ImgUrl id="imgurl" placeholder="Img URL( https://images.unsplash.com/photo-164... )" value={url} onChange={onChangeHandler} />
           <label for="sourcecode">Source Code</label>
           <InputArea id="sourcecode" placeholder="Type your source code here..." value={source} onChange={onChangeHandler} />
@@ -37,15 +38,15 @@ const QuestionEditor = () => {
         <div>
           <label for="preview">Preview</label>
           <Preview id="preview">
-            <img src="images/Header.png" style={{ height: "5%", position: "relative", top: "1%", left: "1%" }} />
+            <img src="image/logo_large.png" style={{ height: "5%", position: "relative", top: "1%", left: "1%" }} />
             <div style={{ height: "94%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
               {value && (
                 <div style={{ height: "50%" }}>
-                  <img src={value.url || "images/cal-bot.png"} style={{ height: "50%" }} />
+                  <img src={value.url || "image/cal-bot.png"} style={{ height: "50%" }} />
                   <div dangerouslySetInnerHTML={{ __html: value.source || "<h4>소스코드입력</h4>" }} style={{ height: "50%", textAlign: "center" }} />
                 </div>
               )}
-              <img src="images/Answer_the_question.png" style={{ height: "10%" }} />
+              <img src="image/Answer_the_question.png" style={{ height: "10%" }} />
             </div>
           </Preview>
         </div>
