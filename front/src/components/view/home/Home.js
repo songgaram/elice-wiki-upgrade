@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
-import Post from "./Post";
+import PostList from "./PostList";
 
 const Home = () => {
     const [isClicked, setIsClicked] = useState(new Array(24).fill(false));
@@ -59,7 +59,7 @@ const Home = () => {
                 <Container>
                     <ContentsSide />
                     <Contents>
-                        <Post />
+                        <PostList />
                     </Contents>
                     <ContentsSide />
                 </Container>
@@ -95,6 +95,19 @@ const Contents = styled.div`
     width: 50%;
     background-color: #f1f1f1;
     overflow: scroll;
+    // &::-webkit-scrollbar {
+    //     width: 10px;
+    // }
+    // &::-webkit-scrollbar-track {
+    //     background: #f1f1f1;
+    //     margin-left: -10px;
+    // }
+    // &::-webkit-scrollbar-thumb {
+    //     background: #7353ea;
+    // }
+    // &::-webkit-scrollbar-thumb:hover {
+    //     background: #555;
+    // }
 `;
 
 export default Home;

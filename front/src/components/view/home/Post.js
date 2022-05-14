@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import TagBtn from "./TagBtn";
 
-function Post() {
+function Post({ data }) {
+    const { title, tag } = data;
+
     return (
         <PostContainer>
-            <TagBtn />
-            <PostTitle>HTML/CSS의 기본 문법 학습 (1)</PostTitle>
+            <TagBtn tag={tag} />
+            <PostTitle>{title}</PostTitle>
         </PostContainer>
     );
 }

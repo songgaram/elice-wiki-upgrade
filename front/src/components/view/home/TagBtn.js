@@ -1,8 +1,9 @@
 import { Button } from "@mui/material";
 
-export default function TagBtn() {
-    const tagData = ["html", "css", "javascript"];
+export default function TagBtn({ tag }) {
+    const tagData = tag.split("#").slice(1);
 
+    console.log(tagData);
     return (
         <>
             {tagData.map((tag) => (
@@ -11,7 +12,7 @@ export default function TagBtn() {
                     sx={{
                         fontSize: "0.5rem",
                         borderRadius: "100px",
-                        m: "5px",
+                        m: "5px 3px",
                     }}
                     key={tag}
                 >
