@@ -3,10 +3,12 @@ import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
 
 const Home = () => {
-    const [clicked, setClicked] = useState(Array(24).fill(false));
-
+    const [isClicked, setIsClicked] = useState(new Array(24).fill(false));
+    console.log(isClicked);
     const handleClick = (e) => {
-        setClicked(!e.target.value);
+        const newArr = new Array(24).fill(false);
+        newArr[e.target.value] = !newArr[e.target.value];
+        setIsClicked(newArr);
     };
 
     return (
@@ -18,12 +20,13 @@ const Home = () => {
                         WEEK
                     </Button>
 
-                    {new Array(24).fill(null).map((_, week) => (
+                    {new Array(24).fill(null).map((_, idx) => (
                         <>
                             <Button
-                                value={clicked}
+                                value={idx}
+                                key={`week_${idx}`}
                                 size="small"
-                                variant={clicked ? "contained" : "text"}
+                                variant={isClicked[idx] ? "contained" : "text"}
                                 sx={{
                                     minWidth: "2.5%",
                                     maxHeight: "50%",
@@ -32,7 +35,7 @@ const Home = () => {
                                 }}
                                 onClick={handleClick}
                             >
-                                {String(week + 1).padStart(2, "0")}
+                                {String(idx + 1).padStart(2, "0")}
                             </Button>
                             <Divider
                                 orientation="vertical"
