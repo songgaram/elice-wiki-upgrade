@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../store/actions/userAction";
 import { useNavigate } from "react-router-dom";
+import { TextField, Button } from "@mui/material";
 import styled from "styled-components";
 import * as Api from "../../api";
 
@@ -42,18 +43,17 @@ const EliceUserAuth = () => {
             <SubTitle>
                 * 띄어쓰기를 지켜서 작성해야 올바르게 적용됩니다.
             </SubTitle>
-            <InputGroup className="mb-3" style={{ width: "25%" }}>
-                <FormControl
-                    onSubmit={(e) => handleSubmit(e)}
+
+            <form onSubmit={(e) => handleSubmit(e)}>
+                <TextField
+                    variant="outlined"
+                    style={{ width: "25%" }}
                     placeholder="정답을 적어주세요."
-                    type="text"
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
                 />
-                <Button className={styles["btn"]} type="submit">
-                    submit
-                </Button>
-            </InputGroup>
+                <Button type="submit">submit</Button>
+            </form>
         </Container>
     );
 };
