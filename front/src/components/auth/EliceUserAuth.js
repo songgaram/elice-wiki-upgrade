@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../store/actions/userAction";
 import { useNavigate } from "react-router-dom";
-import { InputGroup, FormControl, Button } from "react-bootstrap";
 import styles from "./EliceUserAuth.module.css";
 import * as Api from "../../api";
 
