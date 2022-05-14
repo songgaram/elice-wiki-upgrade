@@ -1,24 +1,10 @@
 import styled from "styled-components";
-import { Button } from "@mui/material";
+import TagBtn from "./TagBtn";
 
 function Post() {
-    const tagData = ["html", "css", "javascript"];
-
     return (
         <PostContainer>
-            {tagData.map((tag) => (
-                <Button
-                    variant="outlined"
-                    sx={{
-                        fontSize: "0.5rem",
-                        borderRadius: "100px",
-                        m: "5px",
-                    }}
-                    key={tag}
-                >
-                    {tag}
-                </Button>
-            ))}
+            <TagBtn />
             <PostTitle>HTML/CSS의 기본 문법 학습 (1)</PostTitle>
         </PostContainer>
     );
