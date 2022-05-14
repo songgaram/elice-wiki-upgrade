@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 const Home = () => {
     const [isClicked, setIsClicked] = useState(new Array(24).fill(false));
-    console.log(isClicked);
     const handleClick = (e) => {
         const newArr = new Array(24).fill(false);
         newArr[e.target.value] = !newArr[e.target.value];
