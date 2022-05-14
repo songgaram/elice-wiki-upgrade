@@ -26,8 +26,17 @@ class postModel {
     }
 
     static async findAllPost() {
-        const posts = await models.Post.find({});
-        return posts;
+        const posts = await models.Post.findAll({});
+        if (!posts) {
+            return {
+                status: "failed",
+                message: "게시글이 없네요..",
+            };
+        }
+        return {
+            status: "succ",
+            payload: posts,
+        };
     }
 
     static async getPostByPostId({ post_id }) {

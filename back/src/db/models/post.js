@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             week: { type: DataTypes.INTEGER, allowNull: true },
             tag: { type: DataTypes.STRING, allowNull: false },
             title: { type: DataTypes.STRING, allowNull: false },
+            lastmod_user: { type: DataTypes.STRING, allowNull: false },
         },
         {
             sequelize,

@@ -4,7 +4,7 @@ class postController {
     static async addPost(req, res, next) {
         try {
             // 요청으로부터 데이터 받아오기
-            const { user_id, week, tag, title } = req.body;
+            const { user_id, week, tag, title, lastmod_user } = req.body;
             // tag는 리스트로 들어옵니다
 
             // body에 text가 저장되어 올 것
@@ -19,6 +19,7 @@ class postController {
                 week,
                 tag,
                 body,
+                lastmod_user,
                 title,
             });
             res.status(201).json(newPost).end();
@@ -61,6 +62,15 @@ class postController {
                 tag,
             });
             res.status(200).json(update.message);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async findAllPost(req, res, next) {
+        try {
+            const posts = await postService.getAllPost();
+            res.status(200).json(posts);
         } catch (error) {
             next(error);
         }

@@ -75,7 +75,7 @@ const makeTag = ({ tagList, post_id }) => {
 class postService {
     // 값 req에서 받아와 추가 하기
     // tag 여러개 가져오는 방법은 프론트와 함께 얘기해봐야 함 #tag 이런식??
-    static async addPost({ user_id, week, tag, title, body }) {
+    static async addPost({ user_id, week, tag, lastmod_user, title, body }) {
         // body에서 받은 text를 md파일로 저장
         // todo: 함수 다이어트 필요
 
@@ -92,6 +92,7 @@ class postService {
             date: dateDot,
             week,
             tag: storedTag,
+            lastmod_user,
             title,
         };
         const insertedPost = await postModel
@@ -130,6 +131,11 @@ class postService {
         };
         const updatePost = await postModel.updatePost({ postId, update });
         return { updatePost, message: "게시글의 정보가 수정되었습니다." };
+    }
+
+    static async getAllPost() {
+        const posts = await postModel.findAllPost();
+        return posts;
     }
 }
 

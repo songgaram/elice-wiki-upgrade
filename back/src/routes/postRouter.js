@@ -10,6 +10,38 @@ const postRouter = Router();
  *  description: Post API
  */
 
+/**
+ * @swagger
+ * paths:
+ *  /newpost:
+ *   get:
+ *    tags: [Post]
+ *    summary: create new post
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application.json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              post_id:
+ *                  type: string
+ *              user_id:
+ *                  type: string
+ *              date:
+ *                  type: string
+ *
+ *    responses:
+ *      200:
+ *       description: 새 게시글 생성 성공!!
+ *       content:
+ *         type: object
+ *         properties:
+ *          status:
+ *              type: string
+ *          payload:
+ *              type: string
+ */
 postRouter.post("/newpost", postController.addPost);
 
 // findByPostId
@@ -44,14 +76,25 @@ postRouter.get("/post/week/:week", postController.getPostByWeek);
 postRouter.put("/post/update/:id", postController.updatePost);
 
 /**
-//  * @swagger
- *  components:
- *   schemas:
- *      Post:
- *       type: object
- *       properties:
- *          post_id:
- *           type: string
+ * @swagger
+ * paths:
+ *  /posts:
+ *    get:
+ *      tags: [Post]
+ *      summary: find all post
+ *      responses:
+ *          200:
+ *           description: succ
+ *           content:
+ *              application/json:
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                      paload:
+ *                          type: object
  *
  */
+postRouter.get("/posts", postController.findAllPost);
+
 export { postRouter };
