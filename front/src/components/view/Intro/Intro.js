@@ -1,5 +1,7 @@
+import { Footer } from "./Footer";
 import CardSection from "./CardSection";
 import styles from "./Intro.module.css";
+import { DescSection } from "./DescSection";
 
 const Intro = () => {
   return (
@@ -9,8 +11,9 @@ const Intro = () => {
           <div className={styles["textWarpper"]}>
             <div className={styles["innerWrapper"]}>
               <h1 className={styles["title"]}>
-                엘리스 레이서, <br />
-                위키에서 쉽고 간편하게
+                엘리스 레이서,
+                <br />
+                학습 내용을 내 것으로
               </h1>
               <div className={styles["description"]}>
                 본 서비스는 엘리스에서 주관하는 교육 상황에서의 빠르고 많은
@@ -37,6 +40,8 @@ const Intro = () => {
         </p>
       </div>
       <CardSection />
+      <DescSection />
+      <Footer />
     </main>
   );
 };
