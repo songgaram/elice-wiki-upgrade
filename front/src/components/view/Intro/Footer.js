@@ -40,21 +40,15 @@ const FooterText = styled.p`
   }
 `;
 
-const FooterBtn = styled.div`
-  &:hover {
-    background-color: #ffffff;
-    color: #000000;
-  }
+const FooterLink = styled.div`
   display: flex;
   align-items: center;
-  font-size: 28px;
+  font-size: 20px;
   padding: 20px 30px;
-  border-radius: 43px;
   font-weight: bold;
-  transition: background-color 0.35s ease;
-  font-size: 18px;
-  background-color: #191f28;
-  color: #ffffff;
+  background: linear-gradient(90deg, #5438d1, #8938d1 60%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   cursor: pointer;
 `;
 
@@ -67,7 +61,7 @@ export const Footer = () => {
           <br />
           지금 바로 사용해보세요.
         </FooterText>
-        <FooterBtn>학습 내용 기록하러 가기 &rarr;</FooterBtn>
+        <FooterLink>학습 내용 기록하러 가기 &rarr;</FooterLink>
       </FooterWrapper>
     </FooterSection>
   );
