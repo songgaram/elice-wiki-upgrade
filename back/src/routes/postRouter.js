@@ -14,7 +14,7 @@ const postRouter = Router();
  * @swagger
  * paths:
  *  /newpost:
- *   get:
+ *   post:
  *    tags: [Post]
  *    summary: create new post
  *    requestBody:
@@ -72,7 +72,26 @@ postRouter.get("/post/tag/:tag", postController.getPostsByTag);
 // week로 post 검색
 postRouter.get("/post/week/:week", postController.getPostByWeek);
 
-// id = post id
+/**
+ * @swagger
+ * paths:
+ *  /post/update/:id:
+ *    put:
+ *      tags: [Post]
+ *      summary: update post info
+ *      parameters:
+ *          - name: id
+ *            in: path
+ *            type: string
+ *            description: post의 고유 id
+ *      responses:
+ *          200:
+ *           description: succ
+ *           content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ */
 postRouter.put("/post/update/:id", postController.updatePost);
 
 /**
