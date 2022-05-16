@@ -44,7 +44,7 @@ const EliceUserAuth = () => {
                 * 띄어쓰기를 지켜서 작성해야 올바르게 적용됩니다.
             </SubTitle>
 
-            <form onSubmit={(e) => handleSubmit(e)}>
+            <form onSubmit={handleSubmit}>
                 <TextField
                     variant="outlined"
                     style={{ width: "25%" }}
