@@ -11,11 +11,33 @@ class commentController {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
       //   const userId = req.currentUserId;
       // req (request) 에서 데이터 가져오기
-      const { userId, boardId, content } = req.body;
+      const { boardId, userId, content } = req.body;
 
-      await commentService.addComment({
-        userId,
+      const result = await commentService.addComment({
         boardId,
+        userId,
+        content,
+      });
+
+      res.status(201).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async addReComment(req, res, next) {
+    try {
+      if (is.emptyObject(req.body)) {
+        throw new Error(headerError);
+      }
+      // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+      //   const userId = req.currentUserId;
+      // req (request) 에서 데이터 가져오기
+      const { target, userId, content } = req.body;
+
+      await commentService.addReComment({
+        target,
+        userId,
         content,
       });
 
@@ -51,8 +73,9 @@ class commentController {
     try {
       const { commentId } = req.params;
       const content = req.body.content ?? null;
+      const parentCommentId = req.body.parentCommentId ?? null;
 
-      const toUpdate = { content };
+      const toUpdate = { content, parentCommentId };
 
       const updatedComment = await commentService.setComment({
         commentId,

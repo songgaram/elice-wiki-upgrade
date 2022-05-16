@@ -1,11 +1,11 @@
 import models, { Sequelize } from "../index";
 
-// const Op = Sequelize.Op;
+const Op = Sequelize.Op;
 
 class commentModel {
   static async insertComment({ newComment }) {
-    const insertComment = await models.Comment.create(newComment);
-    return insertComment;
+    const insertedComment = await models.Comment.create(newComment);
+    return insertedComment;
   }
 
   static async findByCommentId({ commentId }) {
@@ -16,6 +16,14 @@ class commentModel {
   static async findByBoardId({ boardId }) {
     const commentList = await models.Comment.findAll({ where: { boardId } });
     return commentList;
+  }
+
+  static async incrementOrder({ parentCommentId, orderRange }) {
+    const comments = await models.Comment.increment(
+      { order: 1 },
+      { where: { parentCommentId, order: { [Op.gte]: orderRange } } }
+    );
+    return comments;
   }
 
   static async update({ commentId, fieldToUpdate, newValue }) {
