@@ -69,6 +69,7 @@ const WeekNav = styled.div`
     align-items: center;
     height: 40px;
     background-color: #f1f1f1;
+    border-top: 5px solid #7353ea;
 `;
 
 export default WeekList;
