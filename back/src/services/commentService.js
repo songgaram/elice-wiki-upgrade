@@ -13,16 +13,16 @@ class commentService {
     const insertedComment = await commentModel.insertComment({ newComment });
 
     const commentId = insertedComment.null;
-    const fieldToUpdate = "parentCommentId";
+    const fieldToUpdate = "groupId";
     const newValue = commentId;
 
-    const insertedParentId = await commentModel.update({
+    const insertedGroupId = await commentModel.update({
       commentId,
       fieldToUpdate,
       newValue,
     });
 
-    return insertedParentId;
+    return insertedGroupId;
   }
 
   static async addReComment({ target, userId, content }) {
@@ -30,15 +30,24 @@ class commentService {
       const errorMessage = addError("댓글");
       throw new Error(errorMessage);
     }
-    const parentCommentId = target.parentCommentId;
-    const order = target.order + 1;
+    const groupId = target.groupId;
+    const parentCommentId = target.commentId;
+    const depth = target.depth + 1;
+    const comments = await commentModel.findByDepth({
+      groupId,
+      parentCommentId,
+      depth,
+    });
+    const orderList = comments.map((comment) => comment.order);
+    const maxOrder = orderList.length > 0 ? Math.max(orderList) : target.order;
+    const order = maxOrder + 1;
 
     const orderRange = order;
-    await commentModel.incrementOrder({ parentCommentId, orderRange });
+    await commentModel.incrementOrder({ groupId, orderRange });
 
-    const depth = target.depth + 1;
     const boardId = target.boardId;
     const newComment = {
+      groupId,
       parentCommentId,
       order,
       depth,

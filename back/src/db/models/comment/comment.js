@@ -14,14 +14,27 @@ class commentModel {
   }
 
   static async findByBoardId({ boardId }) {
-    const commentList = await models.Comment.findAll({ where: { boardId } });
+    const commentList = await models.Comment.findAll({
+      order: [
+        ["groupId", "ASC"],
+        ["order", "ASC"],
+      ],
+      where: { boardId },
+    });
     return commentList;
   }
 
-  static async incrementOrder({ parentCommentId, orderRange }) {
+  static async findByDepth({ groupId, parentCommentId, depth }) {
+    const comments = await models.Comment.findAll({
+      where: { groupId, parentCommentId, depth },
+    });
+    return comments;
+  }
+
+  static async incrementOrder({ groupId, orderRange }) {
     const comments = await models.Comment.increment(
       { order: 1 },
-      { where: { parentCommentId, order: { [Op.gte]: orderRange } } }
+      { where: { groupId, order: { [Op.gte]: orderRange } } }
     );
     return comments;
   }

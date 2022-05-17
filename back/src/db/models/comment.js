@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
+      groupId: DataTypes.INTEGER,
       parentCommentId: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
