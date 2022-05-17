@@ -15,7 +15,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Auth.init({
     question: DataTypes.STRING,
-    answer: DataTypes.STRING
+    answer: DataTypes.STRING,
+    url: DataTypes.STRING,
+    source: DataTypes.STRING,
+    current: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Auth',

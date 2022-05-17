@@ -14,6 +14,15 @@ module.exports = {
       answer: {
         type: Sequelize.STRING
       },
+      url: {
+        type: Sequelize.STRING
+      },
+      source: {
+        type: Sequelize.STRING
+      },
+      current: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
