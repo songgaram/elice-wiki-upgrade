@@ -1,8 +1,8 @@
 {
     "development": {
         "username": "root",
-        "password": "0376",
-        "database": "miniProject",
+        "password": "970220",
+        "database": "EliceWiki",
         "host": "127.0.0.1",
         "dialect": "mysql"
     },

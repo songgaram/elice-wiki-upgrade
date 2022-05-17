@@ -4,9 +4,9 @@ import styled from "styled-components";
 import PostList from "./PostList";
 
 const Home = () => {
-    const [isClicked, setIsClicked] = useState(new Array(24).fill(false));
+    const [isClicked, setIsClicked] = useState(new Array(25).fill(false));
     const handleClick = (e) => {
-        const newArr = new Array(24).fill(false);
+        const newArr = new Array(25).fill(false);
         newArr[e.target.value] = !newArr[e.target.value];
         setIsClicked(newArr);
     };
@@ -46,12 +46,16 @@ const Home = () => {
                     ))}
 
                     <Button
+                        value={24}
+                        variant={isClicked[24] ? "contained" : "text"}
+                        size="small"
                         sx={{
-                            minWidth: "2.5%",
+                            minWidth: "3%",
                             maxHeight: "50%",
                             borderRadius: "30px",
                             margin: "0 3px",
                         }}
+                        onClick={handleClick}
                     >
                         기타
                     </Button>
