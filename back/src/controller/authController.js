@@ -4,7 +4,14 @@ class authController {
   static async newQuestion(req, res, next) {
     try {
       const { question, answer, url, source } = req.body;
-      const createdQuestion = await authService.createQuestion({ question, answer });
+      const data = {
+        question,
+        answer,
+        url,
+        source,
+        current: false,
+      }
+      const createdQuestion = await authService.createQuestion(data);
       res.status(200).json({ createdQuestion });
     } catch (error) {
       next(error);

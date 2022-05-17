@@ -2,9 +2,9 @@ import models, { Sequelize } from "../index";
 const Op = Sequelize.Op;
 
 class authModel {
-    static async create({ newQuestion }) {
-        const createdAuth = await models.Auth.create(newQuestion)
-        return createdAuth;
+    static async create(data) {
+        const createdQuestion = await models.Auth.create(data);
+        return createdQuestion;
     }
     static async getQuestion({ id }) {
         if (!id) {

@@ -3,11 +3,8 @@ import jwt from 'jsonwebtoken';
 
 
 class authService {
-  static async createQuestion({ question, answer }) {
-
-    const newQuestion = { question, answer };
-    const createdQuestion = await authModel.create({ newQuestion })
-
+  static async createQuestion(data) {
+    const createdQuestion = await authModel.create(data);
     return createdQuestion;
   }
 
