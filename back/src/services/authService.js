@@ -1,6 +1,4 @@
 import { authModel } from "../db/models/auth/auth";
-import jwt from 'jsonwebtoken';
-
 
 class authService {
   static async createQuestion(data) {
