@@ -95,12 +95,11 @@ class postService {
             lastmod_user,
             title,
         };
-        const insertedPost = await postModel
-            .insertPost({ newPost })
-            .then(() => console.log("post created"))
-            .catch((err) => console.log(err));
+        const insertedPost = await postModel.insertPost({ newPost });
+        let addField = { ...insertedPost };
+        addField.payload.post_id = post_id;
 
-        return insertedPost;
+        return addField;
     }
 
     static async getPostByPostId({ post_id }) {
