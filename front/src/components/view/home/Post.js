@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import TagBtn from "./TagBtn";
 
-function Post({ data }) {
-    const { title, tag } = data;
+function Post({ post }) {
+    const { title, tag } = post;
 
     return (
         <PostContainer>
