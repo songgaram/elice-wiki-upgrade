@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Card1 } from "./Cards/Card1";
 import { Card2 } from "./Cards/Card2";
+import useScrollFadeIn from "../../../hooks/useScrollFadeIn";
 
 const TopContainer = styled.div`
   display: flex;
@@ -52,21 +53,26 @@ const InnerWrapper = styled.div`
 `;
 
 const CardSection = () => {
+  const animatedItem = {
+    0: useScrollFadeIn("up", 0.9, 0),
+    1: useScrollFadeIn("up", 0.9, 0.1),
+    2: useScrollFadeIn("up", 0.9, 0.1),
+  };
   return (
     <>
       <TopContainer>
-        <TextWrapper>
+        <TextWrapper {...animatedItem[0]}>
           <Title>누군가 멋진 제목을 지어주세요</Title>
           <Description>
             두 질문에 대한 답으로, 우리는 마음을 담아 #elice-wiki를
             준비했습니다.
           </Description>
         </TextWrapper>
-        <CardWrapper>
+        <CardWrapper {...animatedItem[1]}>
           <InnerWrapper>
             <Card1 />
           </InnerWrapper>
-          <InnerWrapper>
+          <InnerWrapper {...animatedItem[2]}>
             <Card2 />
           </InnerWrapper>
         </CardWrapper>

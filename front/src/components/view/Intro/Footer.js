@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import useScrollFadeIn from "../../../hooks/useScrollFadeIn";
 
 const FooterSection = styled.section`
   min-height: 300px;
@@ -53,15 +54,19 @@ const FooterLink = styled.div`
 `;
 
 export const Footer = () => {
+  const animatedItem = {
+    0: useScrollFadeIn("up", 0.9, 0),
+    1: useScrollFadeIn("up", 0.9, 0.1),
+  };
   return (
     <FooterSection>
       <FooterWrapper>
-        <FooterText>
+        <FooterText {...animatedItem[0]}>
           레이서를 위한 서비스, <span>elice-wiki</span>
           <br />
           지금 바로 사용해보세요.
         </FooterText>
-        <FooterLink>학습 내용 기록하러 가기 &rarr;</FooterLink>
+        <FooterLink {...animatedItem[1]}>학습 내용 기록하러 가기 &rarr;</FooterLink>
       </FooterWrapper>
     </FooterSection>
   );
