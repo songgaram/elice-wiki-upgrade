@@ -2,8 +2,10 @@ import express from "express";
 import { postRouter } from "./routes/postRouter";
 import { tagRouter } from "./routes/tagRouter";
 import { swaggerUi, specs } from "./swagger";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

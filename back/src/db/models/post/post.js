@@ -2,27 +2,35 @@ import models, { Sequelize } from "../index";
 
 const Op = Sequelize.Op;
 
+const getTagList = (tagString) => {
+    // find 동작 시 post의 태그를 리스트로 변환
+    const tagList = tagString.replaceAll("#", " ").trim().split(" ");
+    return tagList;
+};
+
+const getPostInfo = (element) => {
+    const { tag, ...postElement } = element;
+    const tagList = getTagList(tag);
+    return {
+        ...postElement.dataValues,
+        tag: tagList,
+    };
+};
+
 class postModel {
-    static getTagList(tagString) {
-        // find 동작 시 post의 태그를 리스트로 변환
-        const tagList = tagString.replaceAll("#", " ").trim().split(" ");
-        return tagList;
-    }
-
-    static getPostInfo(element) {
-        const { tag, ...postElement } = element;
-        const tagList = this.getTagList(tag);
-        return {
-            ...postElement.dataValues,
-            tag: tagList,
-        };
-    }
-
     // post 추가
     static async insertPost({ newPost }) {
         const insertPost = await models.Post.create(newPost);
-
-        return insertPost;
+        if (!insertPost) {
+            return {
+                status: "failed",
+                message: "게시글을 저장할 수 없습니다.",
+            };
+        }
+        return {
+            status: "succ",
+            payload: insertPost,
+        };
     }
 
     static async findAllPost() {
@@ -46,7 +54,16 @@ class postModel {
             where: { post_id },
             attributes: ["title", "post_id", "date", "week", "user_id", "tag"],
         });
-        return this.getPostInfo(getOnePost);
+        if (!getOnePost) {
+            return {
+                status: "failed",
+                message: "조건에 알맞은 게시글이 없습니다",
+            };
+        }
+        return {
+            status: "succ",
+            payload: getOnePost,
+        };
     }
 
     static async findByWeek({ week }) {
@@ -55,13 +72,21 @@ class postModel {
             where: { week: week },
             attributes: ["title", "post_id", "date", "week", "user_id", "tag"],
         });
-
+        if (!postList) {
+            return {
+                status: "failed",
+                message: "조건에 알맞은 게시글이 없습니다",
+            };
+        }
         const postListInfo = [];
         postList.forEach((element) => {
-            postListInfo.push(this.getPostInfo(element));
+            postListInfo.push(getPostInfo(element));
         });
 
-        return postListInfo;
+        return {
+            status: "succ",
+            payload: postListInfo,
+        };
     }
 
     static async findByTag({ tag }) {
@@ -70,7 +95,17 @@ class postModel {
                 tag: { [Op.substring]: tag },
             },
         });
-        return posts;
+        if (!posts) {
+            return {
+                status: "failed",
+                message: "조건에 알맞은 게시글이 없습니다",
+            };
+        }
+
+        return {
+            status: "succ",
+            payload: posts,
+        };
     }
 
     static async updatePost({ postId, update }) {
@@ -87,7 +122,16 @@ class postModel {
                 },
             }
         );
-        return updatePostInfo;
+        if (!updatePostInfo) {
+            return {
+                status: "failed",
+                message: "조건에 알맞은 게시글이 없습니다",
+            };
+        }
+        return {
+            status: "succ",
+            payload: updatePostInfo,
+        };
     }
 }
 
