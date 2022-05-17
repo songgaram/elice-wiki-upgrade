@@ -6,7 +6,8 @@ import { userController } from "../controller/userController.js";
 const adminRouter = Router();
 
 adminRouter.get('/users', userController.getAllUsers);
+adminRouter.delete("/users/:userId", userController.deleteUser);
 // adminRouter.get('/users', loginRequired, adminRequired, userController.getAllUsers);
-adminRouter.delete("/users/:userId", loginRequired, adminRequired, userController.deleteUser);
+// adminRouter.delete("/users/:userId", loginRequired, adminRequired, userController.deleteUser);
 
 export { adminRouter };
