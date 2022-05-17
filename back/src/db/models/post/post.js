@@ -17,6 +17,14 @@ const getPostInfo = (element) => {
     };
 };
 
+const getPostList = (posts) => {
+    const postListInfo = [];
+    posts.forEach((element) => {
+        postListInfo.push(getPostInfo(element));
+    });
+    return postListInfo;
+};
+
 class postModel {
     // post 추가
     static async insertPost({ newPost }) {
@@ -34,16 +42,20 @@ class postModel {
     }
 
     static async findAllPost() {
-        const posts = await models.Post.findAll({});
+        const posts = await models.Post.findAll({
+            attributes: ["title", "post_id", "date", "week", "user_id", "tag"],
+        });
+
         if (!posts) {
             return {
                 status: "failed",
                 message: "게시글이 없네요..",
             };
         }
+        const postListInfo = getPostList(posts);
         return {
             status: "succ",
-            payload: posts,
+            payload: postListInfo,
         };
     }
 
@@ -60,6 +72,7 @@ class postModel {
                 message: "조건에 알맞은 게시글이 없습니다",
             };
         }
+
         return {
             status: "succ",
             payload: getOnePost,
@@ -78,11 +91,7 @@ class postModel {
                 message: "조건에 알맞은 게시글이 없습니다",
             };
         }
-        const postListInfo = [];
-        postList.forEach((element) => {
-            postListInfo.push(getPostInfo(element));
-        });
-
+        const postListInfo = getPostList(postList);
         return {
             status: "succ",
             payload: postListInfo,
@@ -101,10 +110,11 @@ class postModel {
                 message: "조건에 알맞은 게시글이 없습니다",
             };
         }
+        const postListInfo = getPostList(posts);
 
         return {
             status: "succ",
-            payload: posts,
+            payload: postListInfo,
         };
     }
 
