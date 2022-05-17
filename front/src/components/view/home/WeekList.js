@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
-// import { handleWeekClick } from "./HomeData";
+import { handleWeekClick } from "./HomeData";
 import * as Api from "../../../api";
 
 const WeekList = ({ setPosts, posts }) => {
@@ -11,14 +11,7 @@ const WeekList = ({ setPosts, posts }) => {
         const week = parseInt(e.target.value) + 1;
         newArr[e.target.value] = !newArr[e.target.value];
         setIsClicked(newArr);
-        // handleWeekClick(setPosts, week);
-
-        try {
-            const res = await Api.get(`post/week/${week}`);
-            setPosts(res.data);
-        } catch (e) {
-            console.log("Week-Post를 가져오는데 실패하였습니다.", e);
-        }
+        handleWeekClick(setPosts, week);
     };
 
     useEffect(() => {

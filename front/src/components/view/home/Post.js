@@ -6,7 +6,7 @@ function Post({ post }) {
 
     return (
         <PostContainer>
-            <TagBtn tag={tag} />
+            <TagBtn tags={tag} />
             <PostTitle>{title}</PostTitle>
         </PostContainer>
     );
