@@ -1,6 +1,29 @@
 "use strict";
 // const { Model } = require("sequelize");
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    Post:
+ *      type: object
+ *      required:
+ *          - user_id
+ *          - week
+ *          - tag
+ *          - title
+ *      properties:
+ *          user_id:
+ *           type: string
+ *          week:
+ *           type: string
+ *          tag:
+ *           items:
+ *              type: string
+ *          title:
+ *            type: string
+ *
+ */
 // Post 테이블 정의
 module.exports = (sequelize, DataTypes) => {
     const post = sequelize.define(
