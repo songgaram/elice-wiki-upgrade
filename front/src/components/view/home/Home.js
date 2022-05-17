@@ -11,10 +11,6 @@ const Home = () => {
         getPosts(setPosts);
     }, []);
 
-    // useEffect(() => {
-    //     console.log(posts);
-    // }, [posts]);
-
     return (
         <>
             <div style={{ minHeight: "100vh", height: "auto" }}>

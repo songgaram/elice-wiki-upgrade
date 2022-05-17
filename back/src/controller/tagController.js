@@ -13,6 +13,15 @@ class tagController {
             }
         }
     }
+
+    static async getAllTag(req, res, next) {
+        try {
+            const tags = await tagService.getAllTag();
+            res.status(200).json(tags);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 export { tagController };
