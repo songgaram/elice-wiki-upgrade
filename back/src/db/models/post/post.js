@@ -43,7 +43,16 @@ class postModel {
 
     static async findAllPost() {
         const posts = await models.Post.findAll({
-            attributes: ["title", "post_id", "date", "week", "user_id", "tag"],
+            attributes: [
+                "title",
+                "post_id",
+                "date",
+                "week",
+                "user_id",
+                "tag",
+                "createdAt",
+            ],
+            order: [["createdAt", "DESC"]],
         });
 
         if (!posts) {
@@ -84,6 +93,7 @@ class postModel {
         const postList = await models.Post.findAll({
             where: { week: week },
             attributes: ["title", "post_id", "date", "week", "user_id", "tag"],
+            order: [["createdAt", "DESC"]],
         });
         if (!postList) {
             return {
@@ -102,6 +112,7 @@ class postModel {
         const posts = await models.Post.findAll({
             where: {
                 tag: { [Op.substring]: tag },
+                order: [["createdAt", "DESC"]],
             },
         });
         if (!posts) {
