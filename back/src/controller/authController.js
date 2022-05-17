@@ -3,7 +3,7 @@ import { authService } from "../services/authService";
 class authController {
   static async newQuestion(req, res, next) {
     try {
-      const { question, answer } = req.body;
+      const { question, answer, url, source } = req.body;
       const createdQuestion = await authService.createQuestion({ question, answer });
       res.status(200).json({ createdQuestion });
     } catch (error) {
@@ -11,11 +11,12 @@ class authController {
     }
   }
 
-  static async getCurrentQuestion(req, res, next) {
+  static async getQuestion(req, res, next) {
     try {
-      const currentQuestion = await authService.getCurrentQuestion();
+      const { id } = req.params;
+      const result = await authService.getQuestion({ id });
 
-      res.status(200).json(currentQuestion);
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }

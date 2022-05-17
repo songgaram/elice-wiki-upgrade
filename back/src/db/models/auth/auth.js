@@ -6,11 +6,18 @@ class authModel {
         const createdAuth = await models.Auth.create(newQuestion)
         return createdAuth;
     }
-    static async getLatestQuestion() {
-        const latestQuestion = await models.Auth.findOne({
-            order: [['createdAt', 'DESC']],
+    static async getQuestion({ id }) {
+        if (!id) {
+            const result = await models.Auth.findOne({
+                where: { current: true },
+            })
+            return result;
+        }
+        const result = await models.Auth.findOne({
+            where: { id: id },
         })
-        return latestQuestion;
+        return result;
+
     }
 }
 

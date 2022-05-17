@@ -11,11 +11,11 @@ class authService {
     return createdQuestion;
   }
 
-  static async getCurrentQuestion() {
+  static async getQuestion({ id }) {
 
-    const currentQuestion = await authModel.getLatestQuestion();
+    const result = await authModel.getQuestion({ id });
 
-    return currentQuestion;
+    return result;
   }
 
   static async findAll() {
