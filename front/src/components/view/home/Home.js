@@ -1,17 +1,29 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import PostList from "./PostList";
 import WeekList from "./WeekList";
+import { getPosts } from "./HomeData";
 
 const Home = () => {
+    const [posts, setPosts] = useState(undefined);
+
+    useEffect(() => {
+        getPosts(setPosts);
+    }, []);
+
+    // useEffect(() => {
+    //     console.log(posts);
+    // }, [posts]);
+
     return (
         <>
             <div style={{ minHeight: "100vh", height: "auto" }}>
                 <header style={{ height: "60px" }} />
-                <WeekList />
+                <WeekList setPosts={setPosts} posts={posts} />
                 <Container>
                     <ContentsSide />
                     <Contents>
-                        <PostList />
+                        <PostList posts={posts} />
                     </Contents>
                     <ContentsSide />
                 </Container>

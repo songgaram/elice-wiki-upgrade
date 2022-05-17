@@ -1,14 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
+// import { handleWeekClick } from "./HomeData";
+import * as Api from "../../../api";
 
-const WeekList = () => {
+const WeekList = ({ setPosts, posts }) => {
     const [isClicked, setIsClicked] = useState(new Array(25).fill(false));
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         const newArr = new Array(25).fill(false);
+        const week = parseInt(e.target.value) + 1;
         newArr[e.target.value] = !newArr[e.target.value];
         setIsClicked(newArr);
+        // handleWeekClick(setPosts, week);
+
+        try {
+            const res = await Api.get(`post/week/${week}`);
+            setPosts(res.data);
+        } catch (e) {
+            console.log("Week-Post를 가져오는데 실패하였습니다.", e);
+        }
     };
+
+    useEffect(() => {
+        console.log(posts);
+    }, [posts]);
 
     return (
         <>
@@ -26,7 +41,7 @@ const WeekList = () => {
                             variant={isClicked[idx] ? "contained" : "text"}
                             sx={{
                                 minWidth: "2.5%",
-                                maxHeight: "50%",
+                                maxHeight: "60%",
                                 borderRadius: "30px",
                                 margin: "0 3px",
                             }}
@@ -48,7 +63,7 @@ const WeekList = () => {
                     size="small"
                     sx={{
                         minWidth: "3%",
-                        maxHeight: "50%",
+                        maxHeight: "60%",
                         borderRadius: "30px",
                         margin: "0 3px",
                     }}
