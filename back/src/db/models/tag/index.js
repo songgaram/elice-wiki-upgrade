@@ -29,6 +29,20 @@ class tagModel {
         });
         return postList;
     }
+
+    static async getAllTag() {
+        const tags = await models.Tag.findAll({});
+        if (!tags) {
+            return {
+                status: "failed",
+                message: "저장된 태그가 없습니다.",
+            };
+        }
+        return {
+            status: "succ",
+            payload: tags,
+        };
+    }
 }
 
 export { tagModel };
