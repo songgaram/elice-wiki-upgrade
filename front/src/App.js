@@ -18,7 +18,6 @@ const theme = createTheme({
     },
 });
 
-
 function App() {
     const dispatch = useDispatch();
     const userState = useSelector((state) =>
@@ -31,7 +30,6 @@ function App() {
         try {
             const { data } = await Api.get("user/current");
             const currentUser = data.payload;
-            console.log(currentUser);
             // dispatch 함수를 통해 로그인 성공 상태로 만듦.
             dispatch(loginUser(currentUser));
 
@@ -51,25 +49,19 @@ function App() {
     }
 
     return (
-      <ThemeProvider theme={theme}>
-        <Router>
-            <Routes>
-                <Route path="/" exact element={<Home />} />
-                {!userState?.authorized && (
-                    <Route path="/auth" exact element={<EliceUserAuth />} />
-                )}
-                <Route path="/test" exact element={<GoogleLoading />} />
-                <Route path="*" element={<Home />} />
-            </Routes>
-        </Router>
+        <ThemeProvider theme={theme}>
+            <Router>
+                <Routes>
+                    <Route path="/" exact element={<Home />} />
+                    {!userState?.authorized && (
+                        <Route path="/auth" exact element={<EliceUserAuth />} />
+                    )}
+                    <Route path="/test" exact element={<GoogleLoading />} />
+                    <Route path="*" element={<Home />} />
+                </Routes>
+            </Router>
         </ThemeProvider>
+    );
+}
 
-    )
-
-  }
-
-  export default App;
-
-
-
-
+export default App;

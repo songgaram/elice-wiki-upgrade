@@ -10,25 +10,39 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config, { logging: console.log });
+    sequelize = new Sequelize(process.env[config.use_env_variable], config, {
+        logging: console.log,
+    });
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config, { logging: console.log });
+    sequelize = new Sequelize(
+        config.database,
+        config.username,
+        config.password,
+        config,
+        { logging: console.log }
+    );
 }
 
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
+fs.readdirSync(__dirname)
+    .filter((file) => {
+        return (
+            file.indexOf(".") !== 0 &&
+            file !== basename &&
+            file.slice(-3) === ".js"
+        );
+    })
+    .forEach((file) => {
+        const model = require(path.join(__dirname, file))(
+            sequelize,
+            Sequelize.DataTypes
+        );
+        db[model.name] = model;
+    });
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
+Object.keys(db).forEach((modelName) => {
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
 });
 
 const Users = require("./user")(sequelize, Sequelize.DataTypes);
@@ -48,7 +62,7 @@ db["Tag"] = Tag;
 
 db.Post.sync();
 db.Tag.sync();
-
+db.Users.sync();
 // db.Post.drop();
 // db.Tag.drop();
 
