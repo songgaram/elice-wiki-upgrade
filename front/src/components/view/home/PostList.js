@@ -3,8 +3,8 @@ import Post from "./Post";
 function PostList({ posts }) {
     return (
         <>
-            {posts?.map((post) => (
-                <Post post={post} />
+            {posts?.map((post, idx) => (
+                <Post post={post} idx={idx} />
             ))}
         </>
     );

@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 export default function TagBtn({ tags }) {
     return (
         <>
-            {tags.map((tag) => (
+            {tags?.map((tag) => (
                 <Button
                     variant="outlined"
                     sx={{

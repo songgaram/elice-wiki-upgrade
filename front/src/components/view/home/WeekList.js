@@ -13,10 +13,6 @@ const WeekList = ({ setPosts, posts }) => {
         handleWeekClick(setPosts, week);
     };
 
-    useEffect(() => {
-        console.log(posts);
-    }, [posts]);
-
     return (
         <>
             <WeekNav>
