@@ -46,6 +46,12 @@ class userService {
     return users;
   }
 
+  static async findUser({ userId }) {
+
+    const users = await userModel.findById({ userId });
+    return users;
+  }
+
   static async updateUser({ userId, fieldToUpdate }) {
     const user = await userModel.findAndUpdate({ userId, fieldToUpdate });
 

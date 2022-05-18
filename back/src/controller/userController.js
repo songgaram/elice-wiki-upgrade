@@ -25,6 +25,16 @@ class userController {
     }
   }
 
+  static async getCurrentUser(req, res, next) {
+    const { userId } = req.currentUser;
+    try {
+      const currentUser = await userService.findUser({ userId });
+      res.status(200).json({ status: "success", payload: currentUser });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async deleteUser(req, res, next) {
     const userIdList = []
     if (Object.keys(req.params).length === 0) {
@@ -78,13 +88,13 @@ class userController {
       const { userId } = req.currentUser;
       const { answer } = req.body;
       const fieldToUpdate = { authorized: true };
-      const currentQuestion = await authService.getQuestion();
+      const currentQuestion = await authService.getQuestion({ id: null });
       if (currentQuestion?.answer == answer) {
         const result = await userService.updateUser({ userId, fieldToUpdate });
         return res.status(200).json({ status: "success", payload: result });
       }
       const result = { status: "fail", payload: "정답이 아닙니다." }
-      return res.status(200).json({ result });
+      return res.status(200).json(result);
     } catch (error) {
       next(error);
     }
