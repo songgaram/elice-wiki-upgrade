@@ -22,7 +22,7 @@ class postController {
                 lastmod_user,
                 title,
             });
-            res.status(201).json(newPost).end();
+            res.status(201).json(newPost);
         } catch (error) {
             console.log(error.message);
         }

@@ -31,16 +31,25 @@ class tagModel {
     }
 
     static async getAllTag() {
-        const tags = await models.Tag.findAll({});
+        const tags = await models.Tag.findAll({
+            attributes: ["tag"],
+            group: ["tag"],
+        });
+
         if (!tags) {
             return {
                 status: "failed",
                 message: "저장된 태그가 없습니다.",
             };
         }
+        let tagList = [];
+        [...tags].forEach((tag) => {
+            tagList.push(tag.tag);
+        });
+
         return {
             status: "succ",
-            payload: tags,
+            payload: tagList,
         };
     }
 }

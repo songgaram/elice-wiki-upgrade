@@ -5,6 +5,8 @@ import { authRouter } from "./routes/authRouter";
 import { adminRouter } from "./routes/adminRouter";
 import { postRouter } from "./routes/postRouter";
 import { tagRouter } from "./routes/tagRouter";
+// import { errorMiddleware } from "./middlewares/errorMiddleware";
+
 import { swaggerUi, specs } from "./swagger";
 
 const app = express();
@@ -21,6 +23,6 @@ app.use(postRouter);
 app.use(tagRouter);
 
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs));
+// app.use(errorMiddleware);
 
 export { app };
-// https://llshl.tistory.com/49
