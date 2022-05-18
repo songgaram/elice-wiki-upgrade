@@ -36,35 +36,10 @@ class boardService {
       throw new Error(errorMessage);
     }
 
-    if (toUpdate.postId) {
-      const fieldToUpdate = "postId";
-      const newValue = toUpdate.postId;
-      board = await boardModel.update({
-        boardId,
-        fieldToUpdate,
-        newValue,
-      });
-    }
-
-    if (toUpdate.title) {
-      const fieldToUpdate = "title";
-      const newValue = toUpdate.title;
-      board = await boardModel.update({
-        boardId,
-        fieldToUpdate,
-        newValue,
-      });
-    }
-
-    if (toUpdate.body) {
-      const fieldToUpdate = "body";
-      const newValue = toUpdate.body;
-      board = await boardModel.update({
-        boardId,
-        fieldToUpdate,
-        newValue,
-      });
-    }
+    board = await boardModel.update({
+      boardId,
+      toUpdate,
+    });
 
     return board;
   }

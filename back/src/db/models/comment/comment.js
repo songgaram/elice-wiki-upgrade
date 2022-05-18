@@ -39,10 +39,9 @@ class commentModel {
     return comments;
   }
 
-  static async update({ commentId, fieldToUpdate, newValue }) {
+  static async update({ commentId, toUpdate }) {
     const filter = { commentId };
-    const update = { [fieldToUpdate]: newValue };
-    const updatedComment = await models.Comment.update(update, {
+    const updatedComment = await models.Comment.update(toUpdate, {
       where: filter,
     });
 
@@ -50,8 +49,10 @@ class commentModel {
   }
 
   static async deleteByCommentId({ commentId }) {
-    const result = await models.Comment.destroy({ where: { commentId } });
-    const deletedResult = result === 1;
+    const deletedResult = await models.Comment.update(
+      { isDeleted: true },
+      { where: { commentId } }
+    );
     return deletedResult;
   }
 }

@@ -8,18 +8,16 @@ class commentController {
       if (is.emptyObject(req.body)) {
         throw new Error(headerError);
       }
-      // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-      //   const userId = req.currentUserId;
-      // req (request) 에서 데이터 가져오기
-      const { boardId, userId, content } = req.body;
+      const userId = req.currentUserId;
+      const { boardId, content } = req.body;
 
-      const result = await commentService.addComment({
+      await commentService.addComment({
         boardId,
         userId,
         content,
       });
 
-      res.status(201).send(result);
+      res.status(201).json({ status: success });
     } catch (error) {
       next(error);
     }
@@ -30,10 +28,8 @@ class commentController {
       if (is.emptyObject(req.body)) {
         throw new Error(headerError);
       }
-      // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-      //   const userId = req.currentUserId;
-      // req (request) 에서 데이터 가져오기
-      const { target, userId, content } = req.body;
+      const userId = req.currentUserId;
+      const { target, content } = req.body;
 
       await commentService.addReComment({
         target,
@@ -41,7 +37,7 @@ class commentController {
         content,
       });
 
-      res.status(201).end();
+      res.status(201).json({ status: success });
     } catch (error) {
       next(error);
     }
@@ -52,7 +48,7 @@ class commentController {
       const { commentId } = req.params;
       const foundComment = await commentService.getComment({ commentId });
 
-      res.status(200).send(foundComment);
+      res.status(200).json({ status: success, payload: foundComment });
     } catch (error) {
       next(error);
     }
@@ -63,7 +59,7 @@ class commentController {
       const { boardId } = req.params;
       const foundList = await commentService.getCommentList({ boardId });
 
-      res.status(200).send(foundList);
+      res.status(200).json({ status: success, payload: foundList });
     } catch (error) {
       next(error);
     }
@@ -73,16 +69,15 @@ class commentController {
     try {
       const { commentId } = req.params;
       const content = req.body.content ?? null;
-      const parentCommentId = req.body.parentCommentId ?? null;
 
-      const toUpdate = { content, parentCommentId };
+      const toUpdate = { content };
 
-      const updatedComment = await commentService.setComment({
+      await commentService.setComment({
         commentId,
         toUpdate,
       });
 
-      res.status(200).json(updatedComment);
+      res.status(200).json({ status: success });
     } catch (error) {
       next(error);
     }
@@ -93,7 +88,7 @@ class commentController {
       const { commentId } = req.params;
       await commentService.deleteComment({ commentId });
 
-      res.status(200).end();
+      res.status(200).json({ status: success });
     } catch (error) {
       next(error);
     }

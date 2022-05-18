@@ -1,5 +1,5 @@
 import { commentModel } from "../db/models/comment/comment";
-import { addError, findError } from "../utils/errorMessages";
+import { addError, findError, deleteError } from "../utils/errorMessages";
 
 class commentService {
   static async addComment({ boardId, userId, content }) {
@@ -11,15 +11,13 @@ class commentService {
     const depth = 0;
     const newComment = { order, depth, boardId, userId, content };
     const insertedComment = await commentModel.insertComment({ newComment });
-
+    console.log(insertedComment);
     const commentId = insertedComment.null;
-    const fieldToUpdate = "groupId";
-    const newValue = commentId;
+    const toUpdate = { groupId: commentId };
 
     const insertedGroupId = await commentModel.update({
       commentId,
-      fieldToUpdate,
-      newValue,
+      toUpdate,
     });
 
     return insertedGroupId;
@@ -30,6 +28,12 @@ class commentService {
       const errorMessage = addError("댓글");
       throw new Error(errorMessage);
     }
+
+    if (target.isDeleted == 1) {
+      const errorMessage = deleteError("댓글");
+      throw new Error(errorMessage);
+    }
+
     const groupId = target.groupId;
     const parentCommentId = target.commentId;
     const depth = target.depth + 1;
@@ -66,6 +70,7 @@ class commentService {
       const errorMessage = findError("댓글");
       throw new Error(errorMessage);
     }
+
     return comment;
   }
 
@@ -77,37 +82,21 @@ class commentService {
   static async setComment({ commentId, toUpdate }) {
     let comment = await commentModel.findByCommentId({ commentId });
     if (!comment) {
-      const errorMessage = findError("게시판");
+      const errorMessage = findError("댓글");
       throw new Error(errorMessage);
     }
-
-    if (toUpdate.parentCommentId) {
-      const fieldToUpdate = "parentCommentId";
-      const newValue = toUpdate.parentCommentId;
-      comment = await commentModel.update({
-        commentId,
-        fieldToUpdate,
-        newValue,
-      });
-    }
-
-    if (toUpdate.content) {
-      const fieldToUpdate = "content";
-      const newValue = toUpdate.content;
-      comment = await commentModel.update({
-        commentId,
-        fieldToUpdate,
-        newValue,
-      });
-    }
-
+    comment = await commentModel.update({
+      commentId,
+      toUpdate,
+    });
+    console.log(comment);
     return comment;
   }
 
   static async deleteComment({ commentId }) {
     const deletedResult = await commentModel.deleteByCommentId({ commentId });
     if (!deletedResult) {
-      const errorMessage = findError("게시판");
+      const errorMessage = findError("댓글");
       throw new Error(errorMessage);
     }
 

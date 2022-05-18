@@ -18,10 +18,9 @@ class boardModel {
     return boardList;
   }
 
-  static async update({ boardId, fieldToUpdate, newValue }) {
+  static async update({ boardId, toUpdate }) {
     const filter = { boardId };
-    const update = { [fieldToUpdate]: newValue };
-    const updatedBoard = await models.Board.update(update, {
+    const updatedBoard = await models.Board.update(toUpdate, {
       where: filter,
     });
 
