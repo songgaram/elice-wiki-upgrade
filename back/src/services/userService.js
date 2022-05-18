@@ -46,8 +46,7 @@ class userService {
     return users;
   }
 
-  static async authUser({ userId }) {
-    const fieldToUpdate = { authorized: true };
+  static async updateUser({ userId, fieldToUpdate }) {
     const user = await userModel.findAndUpdate({ userId, fieldToUpdate });
 
     return user;

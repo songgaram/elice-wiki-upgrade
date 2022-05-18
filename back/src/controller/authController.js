@@ -12,15 +12,15 @@ class authController {
         current: false,
       }
       const createdQuestion = await authService.createQuestion(data);
-      res.status(200).json({ createdQuestion });
+      res.status(200).json({ status: "success", payload: createdQuestion });
     } catch (error) {
       next(error);
     }
   }
 
   static async getQuestion(req, res, next) {
+    const { id } = req.params;
     try {
-      const { id } = req.params;
       const result = await authService.getQuestion({ id });
 
       res.status(200).json(result);
@@ -29,32 +29,44 @@ class authController {
     }
   }
 
-  static async updateCurrentQuestion(req, res, next) {
+  static async updateQuestion(req, res, next) {
+    const { id } = req.params
     try {
-      const { question, answer } = req.body;
-
-      const currentQuestion = await authService.updateQuestion({ question, answer });
-
-      res.status(200).json(currentQuestion);
+      const result = await authService.updateQuestion({ id, fieldToUpdate: req.body })
+      const body = { status: "success", payload: result }
+      res.status(200).json(body);
     } catch (error) {
       next(error);
     }
   }
 
-  static async deleteCurrentQuestion(req, res, next) {
-    try {
-      await authService.deleteQuestion();
-
-      res.status(200).send("Deleted successfully");
-    } catch (error) {
-      next(error);
-    }
+  static async deleteQuestion(req, res, next) {
+    const questionIdList = req.params.id.split(",")
+    const deleteResult = { success: 0, failed: 0 }
+    Promise.all(questionIdList.map(async (id) => {
+      try {
+        const result = await authService.deleteQuestion({ id });
+        if (result === 0) {
+          deleteResult.failed += 1;
+        } else {
+          deleteResult.success += 1;;
+        }
+      } catch (error) {
+        next(error);
+      }
+    })).then(() => {
+      const body = {
+        status: "success",
+        payload: { ...deleteResult }
+      }
+      res.status(200).json(body)
+    })
   }
 
   static async getQuestions(req, res, next) {
     try {
       const questions = await authService.findAll();
-      res.status(200).json({ questions });
+      res.status(200).json({ status: "success", payload: questions });
     } catch (error) {
       next(error);
     }

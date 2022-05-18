@@ -13,10 +13,24 @@ class authService {
     return result;
   }
 
+  static async updateQuestion(data) {
+    const { id, fieldToUpdate } = data;
+    const result = await authModel.findAndUpdate({ id, fieldToUpdate });
+
+    return result;
+  }
+
+  static async deleteQuestion({ id }) {
+
+    const result = await authModel.delete({ id });
+
+    return result;
+  }
+
   static async findAll() {
 
-    const users = await userModel.findAll();
-    return users;
+    const questions = await authModel.findAll();
+    return questions;
   }
 
 }

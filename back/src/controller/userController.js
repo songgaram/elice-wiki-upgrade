@@ -19,7 +19,7 @@ class userController {
   static async getAllUsers(req, res, next) {
     try {
       const users = await userService.findAll();
-      res.status(200).json({ users });
+      res.status(200).json({ status: "success", payload: users });
     } catch (error) {
       next(error);
     }
@@ -53,16 +53,37 @@ class userController {
     })
   }
 
+  static async updateUser(req, res, next) {
+    const userIdList = req.params.userId.split(",")
+    const fieldToUpdate = req.body
+    const Result = [];
+    Promise.all(userIdList.map(async (userId) => {
+      try {
+        const result = await userService.updateUser({ userId, fieldToUpdate });
+        Result.push(result)
+      } catch (error) {
+        next(error);
+      }
+    })).then(() => {
+      const body = {
+        status: "success",
+        payload: Result
+      }
+      res.status(200).json(body)
+    })
+  }
+
   static async auth(req, res, next) {
     try {
       const { userId } = req.currentUser;
       const { answer } = req.body;
-      const currentQuestion = await authService.getCurrentQuestion();
+      const fieldToUpdate = { authorized: true };
+      const currentQuestion = await authService.getQuestion();
       if (currentQuestion?.answer == answer) {
-        const result = await userService.authUser({ userId });
-        return res.status(200).json({ result });
+        const result = await userService.updateUser({ userId, fieldToUpdate });
+        return res.status(200).json({ status: "success", payload: result });
       }
-      const result = { success: false }
+      const result = { status: "fail", payload: "정답이 아닙니다." }
       return res.status(200).json({ result });
     } catch (error) {
       next(error);
