@@ -34,9 +34,6 @@ function App() {
     useEffect(() => {
         fetchCurrentUser();
     }, []);
-    // useEffect(() => {
-
-    // }, [currentUser]);
 
     if (!isFetchCompleted) {
         return <div>로딩중...</div>;
