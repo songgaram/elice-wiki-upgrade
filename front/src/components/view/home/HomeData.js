@@ -17,3 +17,12 @@ export const handleWeekClick = async (setPosts, week) => {
         console.log("Week-Post를 가져오는데 실패하였습니다.", e);
     }
 };
+
+export const getTags = async (setTags) => {
+    try {
+        const { data } = await Api.get("tags");
+        setTags(data.payload);
+    } catch (e) {
+        console.log("Tag-List를 가져오는데 실패하였습니다.", e);
+    }
+};

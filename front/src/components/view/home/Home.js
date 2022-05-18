@@ -2,14 +2,21 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import PostList from "./PostList";
 import WeekList from "./WeekList";
-import { getPosts } from "./HomeData";
+import { getPosts, getTags } from "./HomeData";
+import TagBtn from "./TagBtn";
 
 const Home = () => {
     const [posts, setPosts] = useState(undefined);
+    const [tags, setTags] = useState(undefined);
 
     useEffect(() => {
         getPosts(setPosts);
+        getTags(setTags);
     }, []);
+
+    useEffect(() => {
+        console.log(tags);
+    }, [tags]);
 
     return (
         <>
@@ -17,7 +24,11 @@ const Home = () => {
                 <header style={{ height: "60px" }} />
                 <WeekList setPosts={setPosts} posts={posts} />
                 <Container>
-                    <ContentsSide />
+                    <ContentsSide>
+                        <div style={{ padding: "0 4%" }}>
+                            {/* <TagBtn tags={tags} /> */}
+                        </div>
+                    </ContentsSide>
                     <Contents>
                         <PostList posts={posts} />
                     </Contents>
@@ -33,17 +44,19 @@ const Container = styled.div`
     flex-direction: row;
     width: 100%;
     height: calc(100vh - 100px);
-    background-color: #e1e1e1;
 `;
 
 const ContentsSide = styled.div`
     width: 25%;
     background-color: white;
+    display: flex;
+    padding-top: 5%;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const Contents = styled.div`
     width: 50%;
-    background-color: #f1f1f1;
     overflow: scroll;
     // &::-webkit-scrollbar {
     //     width: 10px;

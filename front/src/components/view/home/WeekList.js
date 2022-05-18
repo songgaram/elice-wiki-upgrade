@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
 import { handleWeekClick } from "./HomeData";
-import * as Api from "../../../api";
 
 const WeekList = ({ setPosts, posts }) => {
     const [isClicked, setIsClicked] = useState(new Array(25).fill(false));
@@ -13,10 +12,6 @@ const WeekList = ({ setPosts, posts }) => {
         setIsClicked(newArr);
         handleWeekClick(setPosts, week);
     };
-
-    useEffect(() => {
-        console.log(posts);
-    }, [posts]);
 
     return (
         <>

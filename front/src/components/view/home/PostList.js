@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
 import Post from "./Post";
-import * as Api from "../../../api";
 
 function PostList({ posts }) {
     return (
         <>
-            {posts?.map((post) => (
-                <Post post={post} />
+            {posts?.map((post, idx) => (
+                <Post post={post} idx={idx} />
             ))}
         </>
     );
