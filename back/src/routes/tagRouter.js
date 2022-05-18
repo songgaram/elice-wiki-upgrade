@@ -30,7 +30,8 @@ tagRouter.get("/tag/:tag", tagController.getAllPostByTag);
  *                      status:
  *                          type: string
  *                      payload:
- *                          $ref: '#/components/schemas/Tag'
+ *                          items:
+ *                            type: string
  */
 tagRouter.get("/tags", tagController.getAllTag);
 

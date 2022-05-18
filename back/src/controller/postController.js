@@ -22,7 +22,7 @@ class postController {
                 lastmod_user,
                 title,
             });
-            res.status(201).json(newPost).end();
+            res.status(201).json(newPost);
         } catch (error) {
             console.log(error.message);
         }
@@ -37,7 +37,6 @@ class postController {
     static async getPostByWeek(req, res, next) {
         const week = req.params.week;
         const postList = await postService.getPostByWeek({ week });
-        console.log(postList);
         res.status(200).json(postList);
     }
 
