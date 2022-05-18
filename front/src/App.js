@@ -6,6 +6,7 @@ import { loginUser } from "./store/actions/userAction";
 import { useSelector } from "react-redux";
 import Home from "./components/view/home/Home";
 import EliceUserAuth from "./components/auth/EliceUserAuth";
+import GoogleLoading from "./components/auth/GoogleLoading";
 
 function App() {
     const dispatch = useDispatch();
@@ -16,7 +17,6 @@ function App() {
 
     const fetchCurrentUser = async () => {
         try {
-            // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
             const res = await Api.get("user/current");
             const currentUser = res.data;
 
@@ -41,10 +41,11 @@ function App() {
     return (
         <Router>
             <Routes>
+                <Route path="/" exact element={<Home />} />
                 {userState && (
-                    <Route path="/auth" element={<EliceUserAuth />} />
+                    <Route path="/auth" exact element={<EliceUserAuth />} />
                 )}
-                <Route path="/test" element={<GoogleLoading />} />
+                <Route path="/test" exact element={<GoogleLoading />} />
                 <Route path="*" element={<Home />} />
             </Routes>
         </Router>
