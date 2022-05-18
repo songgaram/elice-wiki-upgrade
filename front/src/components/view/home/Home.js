@@ -7,7 +7,7 @@ const Home = () => {
         state ? state.userReducer.user : undefined
     );
 
-    return <>{userState?.auth ? <UserHome /> : <OAuthButton />}</>;
+    return <>{userState?.authorized ? <UserHome /> : <OAuthButton />}</>;
 };
 
 export default Home;

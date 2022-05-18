@@ -15,12 +15,16 @@ const EliceUserAuth = () => {
         e.preventDefault();
 
         try {
-            const res = await Api.post("user/auth", {
+            const { data } = await Api.post("user/auth", {
                 answer,
             });
-            const user = res.data;
-            dispatch(loginUser(user));
-            navigate("/", { replace: true });
+            const result = data.status;
+            if (result === "fail") {
+                alert(data.payload);
+            } else {
+                dispatch(loginUser(data.payload));
+                navigate("/", { replace: true });
+            }
         } catch (error) {
             console.log("인증에 실패햐였습니다.", error);
         }
@@ -44,15 +48,21 @@ const EliceUserAuth = () => {
                 * 띄어쓰기를 지켜서 작성해야 올바르게 적용됩니다.
             </SubTitle>
 
-            <form onSubmit={handleSubmit}>
+            <form
+                onSubmit={handleSubmit}
+                style={{ width: "30%", display: "flex", flexDirection: "row" }}
+            >
                 <TextField
                     variant="outlined"
-                    style={{ width: "25%" }}
+                    size="small"
+                    sx={{ width: "90%", minHeight: "50%" }}
                     placeholder="정답을 적어주세요."
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
                 />
-                <Button type="submit">submit</Button>
+                <Button variant="contained" type="submit">
+                    제출
+                </Button>
             </form>
         </Container>
     );

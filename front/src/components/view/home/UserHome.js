@@ -7,7 +7,7 @@ function UserHome() {
     const userState = useSelector((state) =>
         state ? state.userReducer.user : undefined
     );
-    const userAuthorized = userState?.auth;
+    const userAuthorized = userState?.authorized;
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
     useEffect(() => {
@@ -20,9 +20,9 @@ function UserHome() {
     }, [userAuthorized, navigate]);
 
     if (!isFetchCompleted) {
-        return <div>로딩중...</div>;
+        return <div>로딩중</div>;
     }
-    return <div>userHome</div>;
+    return <div>안녕 나는 유저홈</div>;
 }
 
 export default UserHome;

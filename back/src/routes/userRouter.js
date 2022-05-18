@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { loginRequired } from "../middlewares/loginRequired"
+import { loginRequired } from "../middlewares/loginRequired";
 
 import { userController } from "../controller/userController.js";
 const userRouter = Router();
@@ -41,7 +41,8 @@ userRouter.post("/user/sign", userController.sign);
  *          payload:
  *              type: string
  */
-userRouter.post("/user/auth", userController.auth);
+userRouter.post("/user/auth", loginRequired, userController.auth);
 userRouter.delete("/users/:userId", userController.deleteUser);
+userRouter.get("/user/current", loginRequired, userController.getCurrentUser);
 
 export { userRouter };

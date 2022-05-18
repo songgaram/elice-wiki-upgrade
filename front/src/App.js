@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import * as Api from "./api";
 import { useDispatch } from "react-redux";
@@ -13,13 +13,14 @@ function App() {
     const userState = useSelector((state) =>
         state ? state.userReducer.user : undefined
     );
+
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
     const fetchCurrentUser = async () => {
         try {
-            const res = await Api.get("user/current");
-            const currentUser = res.data;
-
+            const { data } = await Api.get("user/current");
+            const currentUser = data.payload;
+            console.log(currentUser);
             // dispatch 함수를 통해 로그인 성공 상태로 만듦.
             dispatch(loginUser(currentUser));
 
@@ -33,6 +34,9 @@ function App() {
     useEffect(() => {
         fetchCurrentUser();
     }, []);
+    // useEffect(() => {
+
+    // }, [currentUser]);
 
     if (!isFetchCompleted) {
         return <div>로딩중...</div>;
@@ -42,7 +46,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" exact element={<Home />} />
-                {userState && (
+                {!userState?.authorized && (
                     <Route path="/auth" exact element={<EliceUserAuth />} />
                 )}
                 <Route path="/test" exact element={<GoogleLoading />} />

@@ -14,11 +14,11 @@ const GoogleLoading = () => {
         try {
             const {
                 data: { user },
-            } = await Api.post("loading/google", { accessToken });
+            } = await Api.post("user/sign", { accessToken });
             const jwtToken = user.token;
             sessionStorage.setItem("userToken", jwtToken);
             dispatch(loginUser(user));
-            navigate("/", { replace: true });
+            navigate("/auth", { replace: true });
         } catch (e) {
             console.log("OAuth 에러", e);
         }
