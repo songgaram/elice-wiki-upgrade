@@ -10,10 +10,6 @@ const options = {
             description: "Test API with express",
         },
         basePath: "/",
-        // servers: {
-        //     description: "elice wiki",
-        //     url: "http://localhost:5001/swagger",
-        // },
     },
     apis: ["./src/routes/*.js", "./src/db/models/*.js"],
 };

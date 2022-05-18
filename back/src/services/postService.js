@@ -12,7 +12,7 @@ const writePost = (date, postId, body) => {
 
     // front/src/_post에 md파일이 저장된다
     fs.writeFile(
-        `${savePath}/${savePath_post}/${date}-${postId}.md`,
+        `${savePath}/${savePath_post}/${postId}.md`,
         "\ufeff" + body,
         {
             encoding: "utf-8",
@@ -54,8 +54,9 @@ const makeTag = ({ tagList, post_id }) => {
     let storedTag = "";
 
     tagList.forEach(async (tag) => {
-        storedTag += `#${tag}`;
-        const getTagId = await tagModel.getTagId({ tag });
+        let lower = tag.toLowerCase();
+        storedTag += `#${lower}`;
+        const getTagId = await tagModel.getTagId({ tag: lower });
         let tag_id = "";
         if (getTagId === null) {
             // tag가 존재하지 않으면 추가
@@ -63,8 +64,8 @@ const makeTag = ({ tagList, post_id }) => {
         } else {
             tag_id = getTagId.tag_id;
         }
-        const newPostTag = { tag_id, tag, post_id };
-        const insertPostIdInTag = await tagModel.insertPostId({
+        const newPostTag = { tag_id, tag: lower, post_id };
+        await tagModel.insertPostId({
             newPostTag,
         });
     });
@@ -90,7 +91,7 @@ class postService {
             post_id,
             user_id,
             date: dateDot,
-            week,
+            week: Number(week),
             tag: storedTag,
             lastmod_user,
             title,

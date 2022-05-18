@@ -112,8 +112,8 @@ class postModel {
         const posts = await models.Post.findAll({
             where: {
                 tag: { [Op.substring]: tag },
-                order: [["createdAt", "DESC"]],
             },
+            order: [["createdAt", "DESC"]],
         });
         if (!posts) {
             return {

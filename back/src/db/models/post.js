@@ -12,6 +12,7 @@
  *          - week
  *          - tag
  *          - title
+ *          - lastmod_user
  *      properties:
  *          user_id:
  *           type: string
@@ -22,8 +23,11 @@
  *              type: string
  *          title:
  *            type: string
+ *          lastmod_user:
+ *            type: string
  *
  */
+// lastmod user는 미들웨어 들어오면 빠질 것
 // Post 테이블 정의
 module.exports = (sequelize, DataTypes) => {
     const post = sequelize.define(
