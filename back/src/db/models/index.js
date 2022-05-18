@@ -46,8 +46,8 @@ db["Tag"] = Tag;
 
 // --------db sync drop----------
 
-// db.Post.sync();
-// db.Tag.sync();
+db.Post.sync();
+db.Tag.sync();
 
 // db.Post.drop();
 // db.Tag.drop();

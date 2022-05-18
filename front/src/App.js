@@ -7,6 +7,17 @@ import { useSelector } from "react-redux";
 import Home from "./components/view/home/Home";
 import EliceUserAuth from "./components/auth/EliceUserAuth";
 import GoogleLoading from "./components/auth/GoogleLoading";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#7353EA",
+            // darker: "#322468",
+        },
+    },
+});
+
 
 function App() {
     const dispatch = useDispatch();
@@ -40,6 +51,7 @@ function App() {
     }
 
     return (
+      <ThemeProvider theme={theme}>
         <Router>
             <Routes>
                 <Route path="/" exact element={<Home />} />
@@ -50,7 +62,14 @@ function App() {
                 <Route path="*" element={<Home />} />
             </Routes>
         </Router>
-    );
-}
+        </ThemeProvider>
 
-export default App;
+    )
+
+  }
+
+  export default App;
+
+
+
+

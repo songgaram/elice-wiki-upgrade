@@ -34,9 +34,7 @@ const Intro = () => {
                                 제안된 위키 서비스입니다.
                             </div>
                             <div className={styles["btnWrapper"]}>
-                                <div className={styles["primaryBtn"]}>
                                     <OAuthButton />
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,13 +1,14 @@
 import cors from "cors";
 import express from "express";
-import { userRouter } from "./routes/userRouter"
-import { authRouter } from "./routes/authRouter"
-import { adminRouter } from "./routes/adminRouter"
+import { userRouter } from "./routes/userRouter";
+import { authRouter } from "./routes/authRouter";
+import { adminRouter } from "./routes/adminRouter";
 import { postRouter } from "./routes/postRouter";
 import { tagRouter } from "./routes/tagRouter";
 import { swaggerUi, specs } from "./swagger";
 
 const app = express();
+app.use(cors());
 
 app.use(cors());
 app.use(express.json());
