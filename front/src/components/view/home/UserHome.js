@@ -5,7 +5,7 @@ import PostList from "./PostList";
 import WeekList from "./WeekList";
 import { getPosts, getTags } from "./HomeData";
 import styled from "styled-components";
-// import TagBtn from "./TagBtn";
+import TagBtn from "./TagBtn";
 import { logoutUser } from "../../../store/actions/userAction";
 
 function UserHome() {
@@ -44,13 +44,13 @@ function UserHome() {
         <>
             <div style={{ minHeight: "100vh", height: "auto" }}>
                 <header style={{ height: "60px" }}>
-                    <button onClick={handleLogout}>로그아웃</button>
+                    <button onClick={() => handleLogout()}>로그아웃</button>
                 </header>
                 <WeekList setPosts={setPosts} posts={posts} />
                 <Container>
                     <ContentsSide>
                         <div style={{ padding: "0 4%" }}>
-                            {/* <TagBtn tags={tags} /> */}
+                            <TagBtn tags={tags} />
                         </div>
                     </ContentsSide>
                     <Contents>
