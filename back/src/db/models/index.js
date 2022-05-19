@@ -33,9 +33,9 @@ db["Goal"] = Goal;
 
 // --------db sync drop----------
 
-// db.Post.sync();
-// db.Tag.sync();
-// db.Goal.sync();
+db.Post.sync();
+db.Tag.sync();
+db.Goal.sync();
 
 // db.Post.drop();
 // db.Tag.drop();
