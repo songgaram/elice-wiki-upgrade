@@ -1,4 +1,40 @@
 "use strict";
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Comment:
+ *       type: object
+ *       required:
+ *          - commentId
+ *          - order
+ *          - depth
+ *          - boardId
+ *          - userId
+ *          - content
+ *       properties:
+ *          commentId:
+ *              type: number
+ *          groupId:
+ *              type: number
+ *          parentCommentId:
+ *              type: number
+ *          order:
+ *              type: number
+ *          depth:
+ *              type: number
+ *          boardId:
+ *              type: string
+ *          userId:
+ *              type: string
+ *          content:
+ *              type: string
+ *          isDeleted:
+ *              type: boolean
+ *
+ */
+
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Comment extends Model {

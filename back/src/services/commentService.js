@@ -11,7 +11,7 @@ class commentService {
     const depth = 0;
     const newComment = { order, depth, boardId, userId, content };
     const insertedComment = await commentModel.insertComment({ newComment });
-    console.log(insertedComment);
+
     const commentId = insertedComment.null;
     const toUpdate = { groupId: commentId };
 

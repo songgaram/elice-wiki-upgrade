@@ -1,7 +1,31 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Board:
+ *       type: object
+ *       required:
+ *          - boardId
+ *          - userId
+ *          - title
+ *          - body
+ *       properties:
+ *          boardId:
+ *              type: string
+ *          userId:
+ *              type: string
+ *          postId:
+ *              type: string
+ *          title:
+ *              type: string
+ *          body:
+ *              type: string
+ *
+ */
+
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Board extends Model {
     /**
@@ -13,15 +37,18 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Board.init({
-    boardId: DataTypes.STRING,
-    userId: DataTypes.STRING,
-    postId: DataTypes.STRING,
-    title: DataTypes.STRING,
-    body: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Board',
-  });
+  Board.init(
+    {
+      boardId: DataTypes.STRING,
+      userId: DataTypes.STRING,
+      postId: DataTypes.STRING,
+      title: DataTypes.STRING,
+      body: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "Board",
+    }
+  );
   return Board;
 };
