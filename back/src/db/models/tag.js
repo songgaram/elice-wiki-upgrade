@@ -1,38 +1,21 @@
 "use strict";
-
-/**
- * @swagger
- * components:
- *  schemas:
- *    Tag:
- *      type: object
- *      required:
- *          - tag_index
- *          - tag_id
- *          - tag
- *          - post_id
- *      properties:
- *          tag_index:
- *              type: string
- *          tag_id:
- *              type: string
- *          tag:
- *              type: string
- *          post_id:
- *              type: string
- */
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-    const tag = sequelize.define(
-        "Tag",
+    class Tag extends Model {
+        /**
+         * Helper method for defining associations.
+         * This method is not a part of Sequelize lifecycle.
+         * The `models/index` file will call this method automatically.
+         */
+        static associate(models) {
+            // define association here
+        }
+    }
+    Tag.init(
         {
-            tag_index: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
-                primaryKey: true,
-            },
-            tag_id: { type: DataTypes.STRING, allowNull: false },
-            tag: { type: DataTypes.STRING, allowNull: false },
-            post_id: { type: DataTypes.STRING, allowNull: false },
+            tag_id: DataTypes.STRING,
+            tag: DataTypes.STRING,
+            post_id: DataTypes.STRING,
         },
         {
             sequelize,
@@ -40,5 +23,5 @@ module.exports = (sequelize, DataTypes) => {
             freezeTableName: true,
         }
     );
-    return tag;
+    return Tag;
 };
