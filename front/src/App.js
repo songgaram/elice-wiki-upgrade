@@ -56,7 +56,7 @@ function App() {
                     <Route path="users" element={<ManageUsers />} />
                     <Route path="questions" element={<ManageQuestions />} />
                 </Route>
-                <Route path="editquestion" element={<QuestionEditor />} />
+                <Route path="editquestion/:id" element={<QuestionEditor />} />
                 <Route path="*" element={<Home />} />
             </Routes>
         </Router>
