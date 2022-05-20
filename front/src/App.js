@@ -7,12 +7,12 @@ import { useSelector } from "react-redux";
 import Home from "./components/view/home/Home";
 import EliceUserAuth from "./components/auth/EliceUserAuth";
 import GoogleLoading from "./components/auth/GoogleLoading";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Admin from "./components/admin/Admin";
 import ManagePosts from "./components/admin/ManagePosts";
 import ManageUsers from "./components/admin/ManageUsers";
 import ManageQuestions from "./components/admin/ManageQuestions";
 import QuestionEditor from "./components/admin/QuestionEditor";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
     palette: {
@@ -22,7 +22,6 @@ const theme = createTheme({
         },
     },
 });
-
 function App() {
     const dispatch = useDispatch();
     const userState = useSelector((state) =>

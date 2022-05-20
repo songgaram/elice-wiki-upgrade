@@ -15,8 +15,8 @@ const EliceUserAuth = () => {
 
     const getAuthData = async () => {
         try {
-            const res = await Api.get("auth");
-            setAuthData(res.data);
+            const { data } = await Api.get("auth");
+            setAuthData(data.payload);
         } catch (error) {
             console.log("데이터를 불러오는데 실패햐였습니다.", error);
         }

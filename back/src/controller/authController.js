@@ -21,8 +21,8 @@ class authController {
   static async getQuestion(req, res, next) {
     const { id } = req.params;
     try {
-      const result = await authService.getQuestion({ id });
-
+      const payload = await authService.getQuestion({ id });
+      const result = { status: "success", payload }
       res.status(200).json(result);
     } catch (error) {
       next(error);

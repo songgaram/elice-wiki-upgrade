@@ -1,84 +1,160 @@
 import React from "react";
 import * as Api from "../../api";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
-const ManagePosts = () => {
-  const [data, setData] = React.useState();
-  React.useEffect(() => {
-    const getData = async () => {
-      const { data } = await Api.get("posts");
-      setData(data);
+const ManageUsers = () => {
+    const [data, setData] = React.useState();
+    const [checkedList, setCheckedList] = React.useState([]);
+    const navigate = useNavigate();
+
+    const getData = React.useCallback(async () => {
+        const { data } = await Api.get("posts");
+        setData(data.payload);
+    });
+
+    React.useEffect(() => {
+        getData();
+    }, []);
+    const checkAll = (e) => {
+        if (e.target.checked) {
+            const idList = data.map((datum) => datum.id);
+            setCheckedList(idList);
+        } else {
+            setCheckedList([]);
+        }
     };
-    // getData();
-    const testData = () => {
-      const testD = {
-        posts: [
-          {
-            post_id: "ce83120b-30a0-44c4-b91a-38acbb4f9eee",
-            title: "왜 yarn을 써야하는가",
-            user_id: "John Smith",
-            tag: ["#package manager", "#etc"],
-            week: "etc",
-          },
-          {
-            post_id: "f5d37d77-c100-4785-8939-dae239e64ee2",
-            title: "node.js 기초",
-            user_id: "Steve Stevenson",
-            tag: ["#nodeJs", "#javascript"],
-            week: "2",
-          },
-          {
-            post_id: "4268a0ef-2c2f-4be2-b874-c1b3deff8e32",
-            title: "react와 react-router-dom",
-            user_id: "Michael Schof",
-            tag: ["#frontend", "#react", "#javascript"],
-            week: "4",
-          },
-          {
-            post_id: "8d9f99fa-10c8-49d8-a47c-6e130e64e75d",
-            title: "Express.js를 이용한 백엔드 구축(2)",
-            user_id: "Egoing",
-            tag: ["#expressJs", "#backend", "#javascript"],
-            week: "7",
-          },
-        ],
-      };
-      setData(testD);
+    const checkHandler = (e) => {
+        if (e.target.checked) {
+            const newCheckedList = [...checkedList, parseInt(e.target.value)];
+            setCheckedList(newCheckedList);
+        } else {
+            const newCheckedList = checkedList.filter((id) => id !== parseInt(e.target.value));
+            setCheckedList(newCheckedList);
+        }
     };
-    testData();
-  }, []);
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>
-            <input type="checkbox" />
-          </th>
-          <th>PostId</th>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Tag</th>
-          <th>Week</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data &&
-          data.posts.map((datum, index) => {
-            return (
-              <tr key={`users/${index}`}>
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>{datum.post_id}</td>
-                <td>{datum.title}</td>
-                <td>{datum.user_id}</td>
-                <td>{datum.tag}</td>
-                <td>{datum.week}</td>
-              </tr>
-            );
-          })}
-      </tbody>
-    </table>
-  );
+    const controller = async (e) => {
+        const checkedIdString = checkedList.join(",");
+        if (e.target.name === "deleteQuestion") {
+            await Api.delete("auth", checkedIdString);
+            alert(`질문을 삭제하였습니다.`);
+            getData();
+        } else if (e.target.name === "setCurrentQuestion") {
+            if (checkedList.length > 1) {
+                alert("현재 질문은 1개만 설정할 수 있습니다.");
+            } else {
+                const { data } = await Api.put(`auth/${checkedList[0]}`, { current: true });
+                alert(`Id: ${data.payload.id}를 현재 질문으로 설정하였습니다.`);
+                getData();
+            }
+        } else if (e.target.name === "createNewQuestion") {
+            navigate("/editquestion/new");
+        }
+        setCheckedList([]);
+        document.getElementById("checkAll").checked = false;
+    };
+    return (
+        <div style={{ width: "100%", height: "100%" }}>
+            <ControllerContainer>
+                <Button variant="outlined" onClick={controller} name="setCurrentQuestion">
+                    현재 질문으로 설정
+                </Button>
+                <Button variant="outlined" onClick={controller} name="createNewQuestion">
+                    새로만들기
+                </Button>
+                <Button variant="outlined" onClick={controller} name="deleteQuestion">
+                    제거하기
+                </Button>
+            </ControllerContainer>
+            <Table>
+                <Thead>
+                    <Tr color="#C2C2C2">
+                        <Th>
+                            <input type="checkbox" id="checkAll" onChange={checkAll} />
+                        </Th>
+                        <Th>No.</Th>
+                        <Th>PostId</Th>
+                        <Th>Title</Th>
+                        <Th>Week</Th>
+                        <Th>Tags</Th>
+                        <Th>작성자</Th>
+                        <Th>최종수정</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {data &&
+                        data.map((datum, index) => {
+                            return (
+                                <Tr key={`users/${index}`} color={checkedList.includes(datum.__id) ? "#e0e0e0" : "white"}>
+                                    <Td>
+                                        <input
+                                            type="checkbox"
+                                            value={datum.id}
+                                            onClick={checkHandler}
+                                            checked={checkedList.includes(datum.id) ? true : false}
+                                        />
+                                    </Td>
+                                    <Td>{datum.id}</Td>
+                                    <Td>
+                                        <Title
+                                            onClick={() => {
+                                                navigate(`/editquestion/${datum.id}`);
+                                            }}
+                                        >
+                                            {datum.question}
+                                        </Title>
+                                    </Td>
+                                    <Td>{datum.answer}</Td>
+                                    <Td>{String(datum.current)}</Td>
+                                </Tr>
+                            );
+                        })}
+                </Tbody>
+            </Table>
+        </div>
+    );
 };
-
-export default ManagePosts;
+const Table = styled.table`
+    width: 100%;
+`;
+const Th = styled.th`
+    height: 2.5rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: bold;
+    font-size: 1.4rem;
+    vertical-align: middle;
+`;
+const Td = styled.td`
+    height: 2.5rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 1.2rem;
+    vertical-align: middle;
+`;
+const Tr = styled.tr`
+    background-color: ${(props) => props.color};
+`;
+const Thead = styled.thead``;
+const Tbody = styled.tbody``;
+const ControllerContainer = styled.div`
+    position: absolute;
+    right: 10vw;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 15px;
+    margin-top: -45px;
+    padding-right: 10px;
+`;
+const Title = styled.a`
+    text-decoration: underline;
+    color: black;
+    cursor: pointer;
+    &:hover {
+        color: gray;
+    }
+`;
+export default ManageUsers;
