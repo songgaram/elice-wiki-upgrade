@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import * as Api from "./api";
 import { useDispatch } from "react-redux";
@@ -12,6 +12,7 @@ import Admin from "./components/admin/Admin";
 import ManagePosts from "./components/admin/ManagePosts";
 import ManageUsers from "./components/admin/ManageUsers";
 import ManageQuestions from "./components/admin/ManageQuestions";
+import QuestionEditor from "./components/admin/QuestionEditor";
 
 const theme = createTheme({
     palette: {
@@ -21,6 +22,7 @@ const theme = createTheme({
         },
     },
 });
+
 
 function App() {
     const dispatch = useDispatch();
@@ -67,6 +69,7 @@ function App() {
                         <Route path="users" element={<ManageUsers />} />
                         <Route path="questions" element={<ManageQuestions />} />
                     </Route>
+                    <Route path="editquestion/:id" element={<QuestionEditor />} />
                 </Routes>
             </Router>
         </ThemeProvider>

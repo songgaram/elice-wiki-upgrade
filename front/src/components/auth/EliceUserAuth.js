@@ -12,13 +12,18 @@ const EliceUserAuth = () => {
     const [authData, setAuthData] = useState(undefined);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    useEffect(() => {
+
+    const getAuthData = async () => {
         try {
-            const { data } = Api.get("auth");
+            const { data } = await Api.get("auth");
             setAuthData(data.payload);
         } catch (error) {
             console.log("데이터를 불러오는데 실패햐였습니다.", error);
         }
+    };
+
+    useEffect(() => {
+        getAuthData();
     }, []);
 
     const handleSubmit = async (e) => {
@@ -46,7 +51,7 @@ const EliceUserAuth = () => {
             <Title>
                 <div
                     dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(authData.source),
+                        __html: DOMPurify.sanitize(authData?.source),
                     }}
                 />
             </Title>
