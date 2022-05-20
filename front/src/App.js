@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import * as Api from "./api";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,11 @@ import Home from "./components/view/home/Home";
 import EliceUserAuth from "./components/auth/EliceUserAuth";
 import GoogleLoading from "./components/auth/GoogleLoading";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Admin from "./components/admin/Admin";
+import ManagePosts from "./components/admin/ManagePosts";
+import ManageUsers from "./components/admin/ManageUsers";
+import ManageQuestions from "./components/admin/ManageQuestions";
+import QuestionEditor from "./components/admin/QuestionEditor";
 
 const theme = createTheme({
     palette: {
@@ -58,6 +63,15 @@ function App() {
                     )}
                     <Route path="/test" exact element={<GoogleLoading />} />
                     <Route path="*" element={<Home />} />
+                    <Route path="/admin" element={<Admin />}>
+                        <Route path="posts" element={<ManagePosts />} />
+                        <Route path="users" element={<ManageUsers />} />
+                        <Route path="questions" element={<ManageQuestions />} />
+                    </Route>
+                    <Route
+                        path="editquestion/:id"
+                        element={<QuestionEditor />}
+                    />
                 </Routes>
             </Router>
         </ThemeProvider>
