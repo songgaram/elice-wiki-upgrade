@@ -23,7 +23,6 @@ const theme = createTheme({
     },
 });
 
-
 function App() {
     const dispatch = useDispatch();
     const userState = useSelector((state) =>
@@ -69,7 +68,10 @@ function App() {
                         <Route path="users" element={<ManageUsers />} />
                         <Route path="questions" element={<ManageQuestions />} />
                     </Route>
-                    <Route path="editquestion/:id" element={<QuestionEditor />} />
+                    <Route
+                        path="editquestion/:id"
+                        element={<QuestionEditor />}
+                    />
                 </Routes>
             </Router>
         </ThemeProvider>
