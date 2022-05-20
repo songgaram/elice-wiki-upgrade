@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 const Admin = () => {
     const [selected, setSelected] = React.useState();
     const navigate = useNavigate();
+
     React.useEffect(() => {
         setSelected(window.location.pathname.split("/")[2]);
     }, [window.location.pathname]);
@@ -14,6 +15,7 @@ const Admin = () => {
     };
     const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
     const user = userState?.payload;
+
     return (
         <div style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
             <NavBar>

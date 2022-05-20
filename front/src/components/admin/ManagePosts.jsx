@@ -95,18 +95,21 @@ const ManageUsers = () => {
                                             checked={checkedList.includes(datum.id) ? true : false}
                                         />
                                     </Td>
-                                    <Td>{datum.id}</Td>
+                                    <Td>{index + 1}</Td>
+                                    <Td>{datum.post_id}</Td>
                                     <Td>
                                         <Title
                                             onClick={() => {
-                                                navigate(`/editquestion/${datum.id}`);
+                                                navigate(`/editquestion/${datum.title}`);
                                             }}
                                         >
-                                            {datum.question}
+                                            {datum.title}
                                         </Title>
                                     </Td>
-                                    <Td>{datum.answer}</Td>
-                                    <Td>{String(datum.current)}</Td>
+                                    <Td>{datum.week}</Td>
+                                    <Td>{datum.tag}</Td>
+                                    <Td>{datum.user_id}</Td>
+                                    <Td>{datum.lastmod_user}</Td>
                                 </Tr>
                             );
                         })}
@@ -132,6 +135,7 @@ const Td = styled.td`
     padding-right: 10px;
     font-size: 1.2rem;
     vertical-align: middle;
+    text-align: center;
 `;
 const Tr = styled.tr`
     background-color: ${(props) => props.color};

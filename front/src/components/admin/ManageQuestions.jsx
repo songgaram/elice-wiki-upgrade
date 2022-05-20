@@ -129,6 +129,7 @@ const Td = styled.td`
     padding-right: 10px;
     font-size: 1.2rem;
     vertical-align: middle;
+    text-align: center;
 `;
 const Tr = styled.tr`
     background-color: ${(props) => props.color};
