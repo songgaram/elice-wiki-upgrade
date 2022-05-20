@@ -10,6 +10,7 @@ class goalController {
             res.status(200).json(insert.payload);
         }
     }
+    // static async
 }
 
 export { goalController };
