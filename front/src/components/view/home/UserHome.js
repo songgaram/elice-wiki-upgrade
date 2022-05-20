@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import PostList from "./PostList";
 import WeekList from "./WeekList";
+import Goal from "./Goal";
 import { getPosts, getTags } from "./HomeData";
 import styled from "styled-components";
 import TagBtn from "./TagBtn";
@@ -56,7 +57,9 @@ function UserHome() {
                     <Contents>
                         <PostList posts={posts} />
                     </Contents>
-                    <ContentsSide />
+                    <ContentsSide>
+                        <Goal />
+                    </ContentsSide>
                 </Container>
             </div>
         </>
