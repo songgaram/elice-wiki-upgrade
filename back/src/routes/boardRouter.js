@@ -34,16 +34,17 @@ const boardRouter = Router();
  *                   type: string
  *                 body:
  *                   type: string
- *     responses:
- *       201:
- *         description: 새 게시판 생성 성공!!
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
+ *
+ *       responses:
+ *         201:
+ *           description: 새 게시판 생성 성공!!
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   status:
+ *                     type: string
  */
 boardRouter.post("/boards/board", loginRequired, boardController.addBoard);
 
