@@ -53,6 +53,8 @@ boardRouter.post("/boards/board", boardController.addBoard);
  *    get:
  *      tags: [Board]
  *      summary: find board by boardId
+ *      security:
+ *	       - jwt: []
  *      parameters:
  *        - name: boardId
  *          in: path
@@ -80,6 +82,8 @@ boardRouter.get("/boards/:boardId", boardController.getBoard);
  *    get:
  *      tags: [Board]
  *      summary: find boardlist by userId
+ *      security:
+ *	       - jwt: []
  *      parameters:
  *        - name: userId
  *          in: path
@@ -107,6 +111,8 @@ boardRouter.get("/boardlist/:userId", boardController.getBoardList);
  *     put:
  *       tags: [Board]
  *       summary: update board
+ *       security:
+ *	       - jwt: []
  *       parameters:
  *         - name: boardId
  *           in: path
@@ -146,6 +152,8 @@ boardRouter.put("/boards/:boardId", boardController.setBoard);
  *     delete:
  *       tags: [Board]
  *       summary: delete board
+ *       security:
+ *	       - jwt: []
  *       parameters:
  *         - name: boardId
  *           in: path

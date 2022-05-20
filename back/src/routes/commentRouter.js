@@ -17,6 +17,8 @@ const commentRouter = Router();
  *     post:
  *       tags: [Comment]
  *       summary: create new comment
+ *       security:
+ *	       - jwt: []
  *       requestBody:
  *         description: creat new comment
  *         required: true
@@ -49,6 +51,8 @@ commentRouter.post("/comments/comment", commentController.addComment);
  *     post:
  *       tags: [Comment]
  *       summary: create new recomment
+ *       security:
+ *	       - jwt: []
  *       requestBody:
  *         description: target -> 대댓글을 달 댓글 정보
  *         required: true
@@ -81,6 +85,8 @@ commentRouter.post("/comments/recomment", commentController.addReComment);
  *    get:
  *      tags: [Comment]
  *      summary: find comment by commentId
+ *      security:
+ *	       - jwt: []
  *      parameters:
  *        - name: commentId
  *          in: path
@@ -104,10 +110,12 @@ commentRouter.get("/comments/:commentId", commentController.getComment);
 /**
  * @swagger
  * paths:
- *  /comments/{boardId}:
+ *  /commentlist/{boardId}:
  *    get:
  *      tags: [Comment]
  *      summary: find commentlist by boardId
+ *      security:
+ *	       - jwt: []
  *      parameters:
  *        - name: boardId
  *          in: path
@@ -135,6 +143,8 @@ commentRouter.get("/commentlist/:boardId", commentController.getCommentList);
  *     put:
  *       tags: [Comment]
  *       summary: update comment
+ *       security:
+ *	       - jwt: []
  *       parameters:
  *         - name: commentId
  *           in: path
@@ -170,6 +180,8 @@ commentRouter.put("/comments/:commentId", commentController.setComment);
  *     delete:
  *       tags: [Comment]
  *       summary: delete comment
+ *       security:
+ *	       - jwt: []
  *       parameters:
  *         - name: commentId
  *           in: path
