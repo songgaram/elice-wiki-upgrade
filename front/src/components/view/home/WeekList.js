@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
-import { handleWeekClick } from "./HomeData";
+import { handleWeekClick, getGoal } from "./HomeData";
 
-const WeekList = ({ setPosts, posts }) => {
+const WeekList = ({ setPosts, setGoal }) => {
     const [isClicked, setIsClicked] = useState(new Array(25).fill(false));
     const handleClick = async (e) => {
         const newArr = new Array(25).fill(false);
@@ -11,6 +11,7 @@ const WeekList = ({ setPosts, posts }) => {
         newArr[e.target.value] = !newArr[e.target.value];
         setIsClicked(newArr);
         handleWeekClick(setPosts, week);
+        getGoal(setGoal, week);
     };
 
     return (

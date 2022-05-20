@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../../../store/actions/userAction";
 import PostList from "./PostList";
 import WeekList from "./WeekList";
 import Goal from "./Goal";
+import TagBtn from "./TagBtn";
 import { getPosts, getTags } from "./HomeData";
 import styled from "styled-components";
-import TagBtn from "./TagBtn";
-import { logoutUser } from "../../../store/actions/userAction";
 
 function UserHome() {
     const [posts, setPosts] = useState(undefined);
     const [tags, setTags] = useState(undefined);
+    const [goal, setGoal] = useState(undefined);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const userState = useSelector((state) =>
@@ -19,6 +20,8 @@ function UserHome() {
     );
     const userAuthorized = userState?.authorized;
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+
+    console.log(goal);
 
     const handleLogout = () => {
         // dispatch 함수를 이용해 로그아웃함.
@@ -47,7 +50,7 @@ function UserHome() {
                 <header style={{ height: "60px" }}>
                     <button onClick={() => handleLogout()}>로그아웃</button>
                 </header>
-                <WeekList setPosts={setPosts} posts={posts} />
+                <WeekList setPosts={setPosts} posts={posts} setGoal={setGoal} />
                 <Container>
                     <ContentsSide>
                         <div style={{ padding: "0 4%" }}>
@@ -57,9 +60,7 @@ function UserHome() {
                     <Contents>
                         <PostList posts={posts} />
                     </Contents>
-                    <ContentsSide>
-                        <Goal />
-                    </ContentsSide>
+                    <ContentsSide>{goal && <Goal goal={goal} />}</ContentsSide>
                 </Container>
             </div>
         </>
