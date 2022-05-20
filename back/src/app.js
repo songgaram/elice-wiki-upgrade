@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { postRouter } from "./routes/postRouter";
 import { tagRouter } from "./routes/tagRouter";
+import { goalRouter } from "./routes/goalRouter";
 // import { errorMiddleware } from "./middlewares/errorMiddleware";
 
 import { swaggerUi, specs } from "./swagger";
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(postRouter);
 app.use(tagRouter);
+app.use(goalRouter);
 
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs));
 // app.use(errorMiddleware);

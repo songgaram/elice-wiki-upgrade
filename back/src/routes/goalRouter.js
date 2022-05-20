@@ -39,3 +39,5 @@ const goalRouter = Router();
  *
  */
 goalRouter.post("/insert/goal", goalController.insert);
+
+export { goalRouter };
