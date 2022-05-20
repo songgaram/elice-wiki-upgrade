@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { boardController } from "../controller/boardController";
+import { loginRequired } from "../middlewares/loginRequired";
 
 const boardRouter = Router();
 
@@ -44,7 +45,7 @@ const boardRouter = Router();
  *                 status:
  *                   type: string
  */
-boardRouter.post("/boards/board", boardController.addBoard);
+boardRouter.post("/boards/board", loginRequired, boardController.addBoard);
 
 /**
  * @swagger
@@ -73,7 +74,7 @@ boardRouter.post("/boards/board", boardController.addBoard);
  *                  payload:
  *                    $ref: '#/components/schemas/Board'
  */
-boardRouter.get("/boards/:boardId", boardController.getBoard);
+boardRouter.get("/boards/:boardId", loginRequired, boardController.getBoard);
 
 /**
  * @swagger
@@ -102,7 +103,11 @@ boardRouter.get("/boards/:boardId", boardController.getBoard);
  *                  payload:
  *                    $ref: '#/components/schemas/Board'
  */
-boardRouter.get("/boardlist/:userId", boardController.getBoardList);
+boardRouter.get(
+  "/boardlist/:userId",
+  loginRequired,
+  boardController.getBoardList
+);
 
 /**
  * @swagger
@@ -143,7 +148,7 @@ boardRouter.get("/boardlist/:userId", boardController.getBoardList);
  *                   status:
  *                     type: string
  */
-boardRouter.put("/boards/:boardId", boardController.setBoard);
+boardRouter.put("/boards/:boardId", loginRequired, boardController.setBoard);
 
 /**
  * @swagger
@@ -170,6 +175,10 @@ boardRouter.put("/boards/:boardId", boardController.setBoard);
  *                   status:
  *                     type: string
  */
-boardRouter.delete("/boards/:boardId", boardController.deleteBoard);
+boardRouter.delete(
+  "/boards/:boardId",
+  loginRequired,
+  boardController.deleteBoard
+);
 
 export { boardRouter };

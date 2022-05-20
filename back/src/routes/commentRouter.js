@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { commentController } from "../controller/commentController";
+import { loginRequired } from "../middlewares/loginRequired";
 
 const commentRouter = Router();
 
@@ -42,7 +43,11 @@ const commentRouter = Router();
  *                 status:
  *                   type: string
  */
-commentRouter.post("/comments/comment", commentController.addComment);
+commentRouter.post(
+  "/comments/comment",
+  loginRequired,
+  commentController.addComment
+);
 
 /**
  * @swagger
@@ -76,7 +81,11 @@ commentRouter.post("/comments/comment", commentController.addComment);
  *                 status:
  *                   type: string
  */
-commentRouter.post("/comments/recomment", commentController.addReComment);
+commentRouter.post(
+  "/comments/recomment",
+  loginRequired,
+  commentController.addReComment
+);
 
 /**
  * @swagger
@@ -105,7 +114,11 @@ commentRouter.post("/comments/recomment", commentController.addReComment);
  *                  payload:
  *                    $ref: '#/components/schemas/Comment'
  */
-commentRouter.get("/comments/:commentId", commentController.getComment);
+commentRouter.get(
+  "/comments/:commentId",
+  loginRequired,
+  commentController.getComment
+);
 
 /**
  * @swagger
@@ -134,7 +147,11 @@ commentRouter.get("/comments/:commentId", commentController.getComment);
  *                  payload:
  *                    $ref: '#/components/schemas/Comment'
  */
-commentRouter.get("/commentlist/:boardId", commentController.getCommentList);
+commentRouter.get(
+  "/commentlist/:boardId",
+  loginRequired,
+  commentController.getCommentList
+);
 
 /**
  * @swagger
@@ -171,7 +188,11 @@ commentRouter.get("/commentlist/:boardId", commentController.getCommentList);
  *                   status:
  *                     type: string
  */
-commentRouter.put("/comments/:commentId", commentController.setComment);
+commentRouter.put(
+  "/comments/:commentId",
+  loginRequired,
+  commentController.setComment
+);
 
 /**
  * @swagger
@@ -198,6 +219,10 @@ commentRouter.put("/comments/:commentId", commentController.setComment);
  *                   status:
  *                     type: string
  */
-commentRouter.delete("/comments/:commentId", commentController.deleteComment);
+commentRouter.delete(
+  "/comments/:commentId",
+  loginRequired,
+  commentController.deleteComment
+);
 
 export { commentRouter };
