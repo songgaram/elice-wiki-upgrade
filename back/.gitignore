@@ -1,4 +1,6 @@
 node_modules
+config.json
+.env
 # db/config
 node_modules
 src/db/config/sangwon.pem
