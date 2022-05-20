@@ -19,6 +19,11 @@ class goalService {
         const goals = await goalModel.findAllGoal();
         return goals;
     }
+
+    static async findGoalByWeek({ week }) {
+        const goal = await goalModel.findByWeek({ week });
+        return goal;
+    }
 }
 
 export { goalService };
