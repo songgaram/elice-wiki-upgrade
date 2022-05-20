@@ -12,7 +12,16 @@ import ManagePosts from "./components/admin/ManagePosts";
 import ManageUsers from "./components/admin/ManageUsers";
 import ManageQuestions from "./components/admin/ManageQuestions";
 import QuestionEditor from "./components/admin/QuestionEditor";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#7353EA",
+            // darker: "#322468",
+        },
+    },
+});
 function App() {
     const dispatch = useDispatch();
     const userState = useSelector((state) =>
@@ -44,22 +53,26 @@ function App() {
     }
 
     return (
-        <Router>
-            <Routes>
-                <Route path="/" exact element={<Home />} />
-                {userState && (
-                    <Route path="/auth" exact element={<EliceUserAuth />} />
-                )}
-                <Route path="/test" exact element={<GoogleLoading />} />
-                <Route path="/admin" element={<Admin />} >
-                    <Route path="posts" element={<ManagePosts />} />
-                    <Route path="users" element={<ManageUsers />} />
-                    <Route path="questions" element={<ManageQuestions />} />
-                </Route>
-                <Route path="editquestion/:id" element={<QuestionEditor />} />
-                <Route path="*" element={<Home />} />
-            </Routes>
-        </Router>
+        <ThemeProvider theme={theme}>
+
+            <Router>
+                <Routes>
+                    <Route path="/" exact element={<Home />} />
+                    {userState && (
+                        <Route path="/auth" exact element={<EliceUserAuth />} />
+                    )}
+                    <Route path="/test" exact element={<GoogleLoading />} />
+                    <Route path="/admin" element={<Admin />} >
+                        <Route path="posts" element={<ManagePosts />} />
+                        <Route path="users" element={<ManageUsers />} />
+                        <Route path="questions" element={<ManageQuestions />} />
+                    </Route>
+                    <Route path="editquestion/:id" element={<QuestionEditor />} />
+                    <Route path="*" element={<Home />} />
+                </Routes>
+            </Router>
+        </ThemeProvider>
+
     );
 }
 

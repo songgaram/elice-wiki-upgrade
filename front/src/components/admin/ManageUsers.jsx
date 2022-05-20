@@ -2,10 +2,13 @@ import React from "react";
 import * as Api from "../../api";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { Button } from "@mui/material";
 
 const ManageUsers = () => {
     const [data, setData] = React.useState();
     const [checkedList, setCheckedList] = React.useState([]);
+    const [page, setPage] = React.useState(1);
+    const [perPage, setPerPage] = React.useState();
     const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
     const user = userState?.payload;
 
@@ -63,29 +66,29 @@ const ManageUsers = () => {
     return (
         <div style={{ width: "100%", height: "100%" }}>
             <ControllerContainer>
-                <Controller onClick={controller} name="deleteUser">
+                <Button variant="outlined" onClick={controller} name="deleteUser">
                     유저삭제
-                </Controller>
-                <Controller onClick={controller} name="auth">
+                </Button>
+                <Button variant="outlined" onClick={controller} name="auth">
                     인증
-                </Controller>
-                <Controller onClick={controller} name="cancleAuth">
+                </Button>
+                <Button variant="outlined" onClick={controller} name="cancleAuth">
                     인증해제
-                </Controller>
+                </Button>
                 {user?.admin === 0 && (
-                    <Controller onClick={controller} name="giveAdmin">
+                    <Button variant="outlined" onClick={controller} name="giveAdmin">
                         어드민 권한부여
-                    </Controller>
+                    </Button>
                 )}
                 {user?.admin === 0 && (
-                    <Controller onClick={controller} name="takeAdmin">
+                    <Button variant="outlined" onClick={controller} name="takeAdmin">
                         어드민 권한박탈
-                    </Controller>
+                    </Button>
                 )}
             </ControllerContainer>
             <Table>
                 <Thead>
-                    <Tr>
+                    <Tr color="#C2C2C2">
                         <Th>
                             <input type="checkbox" id="checkAll" onChange={checkAll} />
                         </Th>
@@ -101,7 +104,7 @@ const ManageUsers = () => {
                     {data &&
                         data.map((datum, index) => {
                             return (
-                                <Tr key={`users/${index}`} color={checkedList.includes(datum.__id) ? "lightgray" : "white"}>
+                                <Tr key={`users/${index}`} color={checkedList.includes(datum.__id) ? "#e0e0e0" : "white"}>
                                     <Td>
                                         <input
                                             type="checkbox"
@@ -112,7 +115,7 @@ const ManageUsers = () => {
                                     </Td>
                                     <Td>{datum.__id}</Td>
                                     <Td>{datum.name}</Td>
-                                    <Td>{datum.email}</Td>
+                                    <Td style={{ color: "#7353EA" }}>{datum.email}</Td>
                                     <Td>{datum.track}</Td>
                                     <Td>{String(datum.authorized)}</Td>
                                     <Td>{datum.admin}</Td>
@@ -127,20 +130,35 @@ const ManageUsers = () => {
 const Table = styled.table`
     width: 100%;
 `;
-const Th = styled.th``;
-const Td = styled.td``;
+const Th = styled.th`
+    height: 2.5rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: bold;
+    font-size: 1.4rem;
+    vertical-align: middle;
+`;
+const Td = styled.td`
+    height: 2.5rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 1.2rem;
+    vertical-align: middle;
+`;
 const Tr = styled.tr`
     background-color: ${(props) => props.color};
 `;
 const Thead = styled.thead``;
 const Tbody = styled.tbody``;
-const Controller = styled.button`
-    margin-top: -100%;
-`;
 const ControllerContainer = styled.div`
+    position: absolute;
+    right: 10vw;
+    width: fit-content;
     display: flex;
     flex-direction: row;
-    align-items: flex-end;
-    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 15px;
+    margin-top: -45px;
+    padding-right: 10px;
 `;
 export default ManageUsers;
