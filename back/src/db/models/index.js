@@ -2,10 +2,10 @@
 
 const path = require("path");
 const Sequelize = require("sequelize");
-const { ssh, local } = require("../config/config");
+const { rds, local } = require("../config/config");
 const db = {};
 
-let sequelize = new Sequelize(ssh.database, ssh.user, ssh.password, ssh);
+let sequelize = new Sequelize(rds.database, rds.user, rds.password, rds);
 
 const Post = require("./post")(sequelize, Sequelize.DataTypes);
 const Tag = require("./tag")(sequelize, Sequelize.DataTypes);
