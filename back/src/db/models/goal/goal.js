@@ -20,6 +20,37 @@ class goalModel {
             }
         }
     }
+
+    static async findAllGoal() {
+        // 전체 주차별 목표를 반환합니다.
+        try {
+            const goals = await models.Goal.findAll({});
+            return {
+                status: "succ",
+                payload: goals,
+            };
+        } catch (error) {
+            return {
+                status: "failed",
+                message: "저장된 목표가 없습니다!",
+            };
+        }
+    }
+
+    static async findByWeek({ week }) {
+        try {
+            const goal = await models.Goal.findOne({ where: { week } });
+            return {
+                status: "succ",
+                payload: goal,
+            };
+        } catch (error) {
+            return {
+                status: "failed",
+                message: "해당 주차의 목표가 없습니다.",
+            };
+        }
+    }
 }
 
 export { goalModel };

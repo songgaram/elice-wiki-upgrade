@@ -14,6 +14,16 @@ class goalService {
         const insert = await goalModel.insert({ newGoal });
         return insert;
     }
+
+    static async findAll() {
+        const goals = await goalModel.findAllGoal();
+        return goals;
+    }
+
+    static async findGoalByWeek({ week }) {
+        const goal = await goalModel.findByWeek({ week });
+        return goal;
+    }
 }
 
 export { goalService };
