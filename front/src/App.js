@@ -27,13 +27,13 @@ function App() {
     const userState = useSelector((state) =>
         state ? state.userReducer.user : undefined
     );
+
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
     const fetchCurrentUser = async () => {
         try {
-            const res = await Api.get("user/current");
-            const currentUser = res.data;
-
+            const { data } = await Api.get("user/current");
+            const currentUser = data.payload;
             // dispatch 함수를 통해 로그인 성공 상태로 만듦.
             dispatch(loginUser(currentUser));
 
@@ -54,25 +54,26 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-
             <Router>
                 <Routes>
                     <Route path="/" exact element={<Home />} />
-                    {userState && (
+                    {!userState?.authorized && (
                         <Route path="/auth" exact element={<EliceUserAuth />} />
                     )}
                     <Route path="/test" exact element={<GoogleLoading />} />
-                    <Route path="/admin" element={<Admin />} >
+                    <Route path="*" element={<Home />} />
+                    <Route path="/admin" element={<Admin />}>
                         <Route path="posts" element={<ManagePosts />} />
                         <Route path="users" element={<ManageUsers />} />
                         <Route path="questions" element={<ManageQuestions />} />
                     </Route>
-                    <Route path="editquestion/:id" element={<QuestionEditor />} />
-                    <Route path="*" element={<Home />} />
+                    <Route
+                        path="editquestion/:id"
+                        element={<QuestionEditor />}
+                    />
                 </Routes>
             </Router>
         </ThemeProvider>
-
     );
 }
 
