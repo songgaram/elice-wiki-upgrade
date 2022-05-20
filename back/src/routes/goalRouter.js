@@ -40,4 +40,27 @@ const goalRouter = Router();
  */
 goalRouter.post("/insert/goal", goalController.insert);
 
+/**
+ * @swagger
+ * paths:
+ *  /goals:
+ *   get:
+ *      tags: [Goal]
+ *      summary: find all goal
+ *      responses:
+ *          200:
+ *           description: succ
+ *           content:
+ *             application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                      payload:
+ *                          items:
+ *                            $ref: '#/components/schemas/Goal'
+ */
+goalRouter.get("/goals", goalController.findAllGoal);
+
 export { goalRouter };

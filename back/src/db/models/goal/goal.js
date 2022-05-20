@@ -20,6 +20,21 @@ class goalModel {
             }
         }
     }
+
+    static async findAllGoal() {
+        try {
+            const goals = await models.Goal.findAll({});
+            return {
+                status: "succ",
+                payload: goals,
+            };
+        } catch (error) {
+            return {
+                status: "failed",
+                message: "저장된 목표가 없습니다!",
+            };
+        }
+    }
 }
 
 export { goalModel };
