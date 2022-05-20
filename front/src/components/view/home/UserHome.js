@@ -21,8 +21,6 @@ function UserHome() {
     const userAuthorized = userState?.authorized;
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
-    console.log(goal);
-
     const handleLogout = () => {
         // dispatch 함수를 이용해 로그아웃함.
         dispatch(logoutUser());
@@ -60,7 +58,12 @@ function UserHome() {
                     <Contents>
                         <PostList posts={posts} />
                     </Contents>
-                    <ContentsSide>{goal && <Goal goal={goal} />}</ContentsSide>
+                    <ContentsSide>
+                        {" "}
+                        <div style={{ padding: "0 4%" }}>
+                            {goal && <Goal goal={goal} />}{" "}
+                        </div>
+                    </ContentsSide>
                 </Container>
             </div>
         </>
