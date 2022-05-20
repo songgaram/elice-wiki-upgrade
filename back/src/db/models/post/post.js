@@ -28,30 +28,22 @@ const getPostList = (posts) => {
 class postModel {
     // post 추가
     static async insertPost({ newPost }) {
-        const insertPost = await models.Post.create(newPost);
-        if (!insertPost) {
+        try {
+            const insertPost = await models.Post.create(newPost);
+            return {
+                status: "succ",
+                payload: insertPost,
+            };
+        } catch (error) {
             return {
                 status: "failed",
                 message: "게시글을 저장할 수 없습니다.",
             };
         }
-        return {
-            status: "succ",
-            payload: insertPost,
-        };
     }
 
     static async findAllPost() {
         const posts = await models.Post.findAll({
-            attributes: [
-                "title",
-                "post_id",
-                "date",
-                "week",
-                "user_id",
-                "tag",
-                "createdAt",
-            ],
             order: [["createdAt", "DESC"]],
         });
 
@@ -73,7 +65,6 @@ class postModel {
         // 사용자가 post를 눌렀을 때 동작?
         const getOnePost = await models.Post.findOne({
             where: { post_id },
-            attributes: ["title", "post_id", "date", "week", "user_id", "tag"],
         });
         if (!getOnePost) {
             return {
@@ -92,7 +83,6 @@ class postModel {
         // week를 기준으로 post 검색
         const postList = await models.Post.findAll({
             where: { week: week },
-            attributes: ["title", "post_id", "date", "week", "user_id", "tag"],
             order: [["createdAt", "DESC"]],
         });
         if (!postList) {
