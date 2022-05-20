@@ -20,15 +20,18 @@ tagRouter.get("/tag/:tag", tagController.getAllPostByTag);
  *    tags: [Tag]
  *    summary: get all tags
  *    responses:
- *     200:
- *      description: 모든 태그 가져오기
- *      content:
- *        type: object
- *        properties:
- *            status:
- *                type: string
- *            payload:
- *                type: object
+ *       200:
+ *          description: succ
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                      payload:
+ *                          items:
+ *                            type: string
  */
 tagRouter.get("/tags", tagController.getAllTag);
 

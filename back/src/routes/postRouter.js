@@ -18,33 +18,54 @@ const postRouter = Router();
  *    tags: [Post]
  *    summary: create new post
  *    requestBody:
+ *      description: creat new post
  *      required: true
  *      content:
- *        application.json:
+ *        application/json:
  *          schema:
- *            type: object
- *            properties:
- *              post_id:
- *                  type: string
- *              user_id:
- *                  type: string
- *              date:
- *                  type: string
- *
+ *              $ref: '#/components/schemas/Post'
  *    responses:
  *      200:
  *       description: 새 게시글 생성 성공!!
  *       content:
- *         type: object
- *         properties:
- *          status:
- *              type: string
- *          payload:
- *              type: string
+ *          application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                      payload:
+ *                          $ref: '#/components/schemas/Post'
  */
 postRouter.post("/newpost", postController.addPost);
 
-// findByPostId
+/**
+ * @swagger
+ * paths:
+ *  /post/id/{id}:
+ *   get:
+ *      tags: [Post]
+ *      summary: find post by post_id
+ *      parameters:
+ *          - name: id
+ *            in: path
+ *            type: string
+ *            description: post_id
+ *      responses:
+ *          200:
+ *           description: succ
+ *           content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          status:
+ *                              type: string
+ *                          payload:
+ *                              $ref: '#/components/schemas/Post'
+ *
+ */
+
 postRouter.get("/post/id/:id", postController.getPostByPostId);
 
 /**
@@ -58,18 +79,48 @@ postRouter.get("/post/id/:id", postController.getPostByPostId);
  *      - name: tag
  *        in: path
  *        type: string
- *        description: week 정보
+ *        description: tag 정보
  *    responses:
  *      200:
  *       description: succ
  *       content:
  *          application/json:
  *              schema:
-//  *               $ref: '#/components/schemas/Post'
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                      payload:
+ *                          $ref: '#/components/schemas/Post'
  *
  */
 postRouter.get("/post/tag/:tag", postController.getPostsByTag);
-// week로 post 검색
+
+/**
+ * @swagger
+ * paths:
+ *  /post/week/{week}:
+ *   get:
+ *      tags: [Post]
+ *      summary: find posts by week
+ *      parameters:
+ *          - name: week
+ *            in: path
+ *            type: string
+ *            description: week 정보
+ *      responses:
+ *        200:
+ *          description: succ
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                      payload:
+ *                          $ref: '#/components/schemas/Post'
+ */
 postRouter.get("/post/week/:week", postController.getPostByWeek);
 
 /**
@@ -85,12 +136,17 @@ postRouter.get("/post/week/:week", postController.getPostByWeek);
  *            type: string
  *            description: post의 고유 id
  *      responses:
- *          200:
- *           description: succ
- *           content:
- *              application/json:
- *                  schema:
- *                      type: object
+ *        200:
+ *          description: succ
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                      payload:
+ *                          $ref: '#/components/schemas/Post'
  */
 postRouter.put("/post/update/:id", postController.updatePost);
 
@@ -102,16 +158,17 @@ postRouter.put("/post/update/:id", postController.updatePost);
  *      tags: [Post]
  *      summary: find all post
  *      responses:
- *          200:
- *           description: succ
- *           content:
- *              application/json:
+ *        200:
+ *          description: succ
+ *          content:
+ *            application/json:
+ *              schema:
  *                  type: object
  *                  properties:
  *                      status:
  *                          type: string
- *                      paload:
- *                          type: object
+ *                      payload:
+ *                          $ref: '#/components/schemas/Post'
  *
  */
 postRouter.get("/posts", postController.findAllPost);
