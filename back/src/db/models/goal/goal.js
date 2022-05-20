@@ -40,9 +40,22 @@ class goalModel {
     static async findByWeek({ week }) {
         try {
             const goal = await models.Goal.findOne({ where: { week } });
+            let goalList = [];
+            goalList.push(goal.goal1);
+            goalList.push(goal.goal2);
+            goalList.push(goal.goal3);
+
+            const outGoal = {
+                id: goal.id,
+                week: goal.week,
+                goalList,
+                title: goal.title,
+                core_goal: goal.core_goal,
+            };
+
             return {
                 status: "succ",
-                payload: goal,
+                payload: outGoal,
             };
         } catch (error) {
             return {

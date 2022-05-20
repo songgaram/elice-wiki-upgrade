@@ -33,7 +33,7 @@ class goalController {
         if (goal.message) {
             res.status(400).json(goal.message);
         } else {
-            res.status(200).json(goal.payload);
+            res.status(200).json(goal);
         }
     }
 }
