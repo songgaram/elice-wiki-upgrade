@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-const ssh = {
+const rds = {
     host: process.env.RDS_HOST,
     port: process.env.RDS_PORT,
     database: process.env.RDS_DATABASE,
@@ -16,4 +16,4 @@ const local = {
     host: process.env.local_HOST,
     dialect: "mysql",
 };
-export { ssh, local };
+export { rds, local };
