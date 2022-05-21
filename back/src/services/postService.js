@@ -109,14 +109,14 @@ class postService {
         return getOnePost;
     }
 
-    static async getPostByWeek({ week }) {
+    static async getPostByWeek({ week, page, perPage }) {
         // week 기준으로 post 검색
-        const getPosts = await postModel.findByWeek({ week });
+        const getPosts = await postModel.findByWeek({ week, page, perPage });
         return getPosts;
     }
 
-    static async getPostsByTag({ tag }) {
-        const posts = await postModel.findByTag({ tag });
+    static async getPostsByTag({ tag, page, perPage }) {
+        const posts = await postModel.findByTag({ tag, page, perPage });
         return posts;
     }
 
@@ -133,8 +133,8 @@ class postService {
         return { updatePost, message: "게시글의 정보가 수정되었습니다." };
     }
 
-    static async getAllPost() {
-        const posts = await postModel.findAllPost();
+    static async getAllPost({ page, perPage }) {
+        const posts = await postModel.findAllPost({ page, perPage });
         return posts;
     }
 }

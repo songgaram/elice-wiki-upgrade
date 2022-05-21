@@ -73,18 +73,28 @@ postRouter.get("/post/id/:id", postController.getPostByPostId);
  * paths:
  *  /post/tag/{tag}:
  *   get:
- *    tags: [Post]
- *    summary: Post API
- *    parameters:
- *      - name: tag
- *        in: path
- *        type: string
- *        description: tag 정보
- *    responses:
- *      200:
- *       description: succ
- *       content:
- *          application/json:
+ *      tags: [Post]
+ *      summary: Post API
+ *      parameters:
+ *          - name: tag
+ *            in: path
+ *            type: string
+ *            description: tag 정보
+ *          - name: page
+ *            in: query
+ *            required: false
+ *            schema:
+ *              type: string
+ *          - name: perPage
+ *            in: query
+ *            required: false
+ *            schema:
+ *              type: string
+ *      responses:
+ *        200:
+ *          description: succ
+ *          content:
+ *            application/json:
  *              schema:
  *                  type: object
  *                  properties:
@@ -108,6 +118,16 @@ postRouter.get("/post/tag/:tag", postController.getPostsByTag);
  *            in: path
  *            type: string
  *            description: week 정보
+ *          - name: page
+ *            in: query
+ *            required: false
+ *            schema:
+ *              type: string
+ *          - name: perPage
+ *            in: query
+ *            required: false
+ *            schema:
+ *              type: string
  *      responses:
  *        200:
  *          description: succ
@@ -157,6 +177,17 @@ postRouter.put("/post/update/:id", postController.updatePost);
  *    get:
  *      tags: [Post]
  *      summary: find all post
+ *      parameters:
+ *          - name: page
+ *            in: query
+ *            required: false
+ *            schema:
+ *              type: string
+ *          - name: perPage
+ *            in: query
+ *            required: false
+ *            schema:
+ *              type: string
  *      responses:
  *        200:
  *          description: succ

@@ -5,29 +5,12 @@ const Sequelize = require("sequelize");
 const { rds, local } = require("../config/config");
 const db = {};
 
-let sequelize = new Sequelize(rds.database, rds.user, rds.password, rds);
-
-// fs.readdirSync(__dirname)
-//     .filter((file) => {
-//         return (
-//             file.indexOf(".") !== 0 &&
-//             file !== basename &&
-//             file.slice(-3) === ".js"
-//         );
-//     })
-//     .forEach((file) => {
-//         const model = require(path.join(__dirname, file))(
-//             sequelize,
-//             Sequelize.DataTypes
-//         );
-//         db[model.name] = model;
-//     });
-
-// Object.keys(db).forEach((modelName) => {
-//     if (db[modelName].associate) {
-//         db[modelName].associate(db);
-//     }
-// });
+let sequelize = new Sequelize(
+    local.database,
+    local.user,
+    local.password,
+    local
+);
 
 const Users = require("./user")(sequelize, Sequelize.DataTypes);
 const Auth = require("./auth")(sequelize, Sequelize.DataTypes);
