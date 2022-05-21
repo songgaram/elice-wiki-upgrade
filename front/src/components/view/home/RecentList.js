@@ -39,7 +39,7 @@ const Description = styled(Typography)({
 });
 
 const Author = styled(Typography)({
-  fontSize: 11,
+  fontSize: 10,
   fontWeight: 400,
   color: "gray",
   float: "left",
