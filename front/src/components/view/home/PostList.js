@@ -4,7 +4,7 @@ function PostList({ posts }) {
     return (
         <>
             {posts?.map((post, idx) => (
-                <Post post={post} idx={idx} />
+                <Post key={`post_${idx}`} post={post} idx={idx} />
             ))}
         </>
     );
