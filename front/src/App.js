@@ -12,6 +12,7 @@ import ManagePosts from "./components/admin/ManagePosts";
 import ManageUsers from "./components/admin/ManageUsers";
 import ManageQuestions from "./components/admin/ManageQuestions";
 import QuestionEditor from "./components/admin/QuestionEditor";
+import Board from "./components/view/board/Board";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -59,6 +60,10 @@ function App() {
                     <Route path="/" exact element={<Home />} />
                     {!userState?.authorized && (
                         <Route path="/auth" exact element={<EliceUserAuth />} />
+                    )}
+
+                    {userState?.authorized && (
+                        <Route path="/board" exact element={<Board />} />
                     )}
                     <Route path="/test" exact element={<GoogleLoading />} />
                     <Route path="*" element={<Home />} />
