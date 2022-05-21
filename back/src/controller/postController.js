@@ -36,14 +36,24 @@ class postController {
 
     static async getPostByWeek(req, res, next) {
         const week = req.params.week;
-        const postList = await postService.getPostByWeek({ week });
+        const { page, perPage } = req.query;
+        const postList = await postService.getPostByWeek({
+            week,
+            page: Number(page),
+            perPage: Number(perPage),
+        });
         res.status(200).json(postList);
     }
 
     static async getPostsByTag(req, res, next) {
         try {
             const tag = req.params.tag;
-            const posts = await postService.getPostsByTag({ tag });
+            const { page, perPage } = req.query;
+            const posts = await postService.getPostsByTag({
+                tag,
+                page: Number(page),
+                perPage: Number(perPage),
+            });
             res.status(200).json(posts);
         } catch (error) {
             next(error);
@@ -69,7 +79,11 @@ class postController {
 
     static async findAllPost(req, res, next) {
         try {
-            const posts = await postService.getAllPost();
+            const { page, perPage } = req.query;
+            const posts = await postService.getAllPost({
+                page: Number(page),
+                perPage: Number(perPage),
+            });
             res.status(200).json(posts);
         } catch (error) {
             next(error);
