@@ -57,6 +57,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
+  const menuId = "primary-search-account-menu";
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -64,7 +66,6 @@ function Header() {
     setAnchorEl(null);
   };
 
-  const menuId = "primary-search-account-menu";
   return (
     <>
       <Box sx={{ flexGrow: 1 }} style={{ width: "100%" }}>
@@ -82,7 +83,7 @@ function Header() {
             <img
               alt="elice_logo"
               src="../../../image/logo_large.png"
-              style={{ width: 150, imageRendering: "-webkit-optimize-contrast" }}
+              style={{ width: 150, imageRendering: "auto" }}
             />
             <Box sx={{ flexGrow: 1 }} />
             <Search>

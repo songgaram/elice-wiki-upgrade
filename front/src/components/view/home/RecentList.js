@@ -36,6 +36,7 @@ const Description = styled(Typography)({
   overflow: "hidden",
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
+  marginBottom: 2,
 });
 
 const Author = styled(Typography)({
