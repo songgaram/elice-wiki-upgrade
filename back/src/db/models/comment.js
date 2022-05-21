@@ -8,11 +8,15 @@
  *       type: object
  *       required:
  *          - commentId
+ *          - groupId
+ *          - parentCommentId
  *          - order
  *          - depth
  *          - boardId
  *          - userId
+ *          - userName
  *          - content
+ *          - isDeleted
  *       properties:
  *          commentId:
  *              type: number
@@ -27,6 +31,8 @@
  *          boardId:
  *              type: string
  *          userId:
+ *              type: string
+ *          userName:
  *              type: string
  *          content:
  *              type: string
@@ -62,6 +68,7 @@ module.exports = (sequelize, DataTypes) => {
       depth: DataTypes.INTEGER,
       boardId: DataTypes.STRING,
       userId: DataTypes.STRING,
+      userName: DataTypes.STRING,
       content: DataTypes.STRING,
       isDeleted: {
         type: DataTypes.BOOLEAN,

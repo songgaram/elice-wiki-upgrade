@@ -27,6 +27,9 @@ module.exports = {
       userId: {
         type: Sequelize.STRING,
       },
+      userName: {
+        type: Sequelize.STRING,
+      },
       content: {
         type: Sequelize.STRING,
       },

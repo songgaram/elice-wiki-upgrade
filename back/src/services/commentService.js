@@ -2,16 +2,16 @@ import { commentModel } from "../db/models/comment/comment";
 import { addError, findError, deleteError } from "../utils/errorMessages";
 
 class commentService {
-  static async addComment({ boardId, userId, content }) {
-    if (!boardId || !userId || !content) {
+  static async addComment({ boardId, userId, userName, content }) {
+    if (!boardId || !userId || !userName || !content) {
       const errorMessage = addError("댓글");
       throw new Error(errorMessage);
     }
     const order = 0;
     const depth = 0;
-    const newComment = { order, depth, boardId, userId, content };
+    const newComment = { order, depth, boardId, userId, userName, content };
     const insertedComment = await commentModel.insertComment({ newComment });
-
+    console.log(insertedComment);
     const commentId = insertedComment.null;
     const toUpdate = { groupId: commentId };
 
@@ -23,8 +23,8 @@ class commentService {
     return insertedGroupId;
   }
 
-  static async addReComment({ target, userId, content }) {
-    if (!target || !userId || !content) {
+  static async addReComment({ target, userId, userName, content }) {
+    if (!target || !userId || !userName || !content) {
       const errorMessage = addError("댓글");
       throw new Error(errorMessage);
     }
@@ -57,6 +57,7 @@ class commentService {
       depth,
       boardId,
       userId,
+      userName,
       content,
     };
     const insertedReComment = await commentModel.insertComment({ newComment });
