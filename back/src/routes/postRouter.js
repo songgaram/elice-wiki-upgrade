@@ -108,6 +108,16 @@ postRouter.get("/post/tag/:tag", postController.getPostsByTag);
  *            in: path
  *            type: string
  *            description: week 정보
+ *          - name: page
+ *            in: query
+ *            required: false
+ *            schema:
+ *              type: string
+ *          - name: perPage
+ *            in: query
+ *            required: false
+ *            schema:
+ *              type: string
  *      responses:
  *        200:
  *          description: succ

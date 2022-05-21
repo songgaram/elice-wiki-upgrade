@@ -109,9 +109,9 @@ class postService {
         return getOnePost;
     }
 
-    static async getPostByWeek({ week }) {
+    static async getPostByWeek({ week, page, perPage }) {
         // week 기준으로 post 검색
-        const getPosts = await postModel.findByWeek({ week });
+        const getPosts = await postModel.findByWeek({ week, page, perPage });
         return getPosts;
     }
 
