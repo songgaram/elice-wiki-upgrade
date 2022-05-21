@@ -25,6 +25,31 @@ const getPostList = (posts) => {
     return postListInfo;
 };
 
+// page 계산
+const paginate = async ({ aggregator, currentPage, perPage }) => {
+    const total = await aggregator();
+    console.log(`total: ${total}`);
+
+    let totalPage = Math.ceil(total / perPage);
+    if (currentPage > totalPage) {
+        currentPage = totalPage;
+    }
+    return { currPage: currentPage, totalPage };
+};
+
+const postPagination = async ({ page, perPage, query = null }) => {
+    const paginateQuery = {
+        where: query,
+        order: [["createdAt", "DESC"]],
+        limit: perPage,
+        offset: perPage * (page - 1),
+    };
+    const { count, rows } = await models.Post.findAndCountAll(paginateQuery);
+    const totalPage = Math.ceil(count / perPage);
+
+    return { totalPage, rows };
+};
+
 class postModel {
     // post 추가
     static async insertPost({ newPost }) {
@@ -42,21 +67,22 @@ class postModel {
         }
     }
 
-    static async findAllPost() {
-        const posts = await models.Post.findAll({
-            order: [["createdAt", "DESC"]],
+    static async findAllPost({ page, perPage }) {
+        const { totalPage, rows } = await postPagination({
+            page,
+            perPage,
         });
 
-        if (!posts) {
+        if (!rows) {
             return {
                 status: "failed",
                 message: "게시글이 없네요..",
             };
         }
-        const postListInfo = getPostList(posts);
+        const postListInfo = getPostList(rows);
         return {
             status: "succ",
-            payload: postListInfo,
+            payload: { totalPage, postListInfo },
         };
     }
 
@@ -79,22 +105,27 @@ class postModel {
         };
     }
 
-    static async findByWeek({ week }) {
+    static async findByWeek({ week, page, perPage }) {
+        const query = {
+            week: week,
+        };
         // week를 기준으로 post 검색
-        const postList = await models.Post.findAll({
-            where: { week: week },
-            order: [["createdAt", "DESC"]],
+        const { totalPage, rows } = await postPagination({
+            page,
+            perPage,
+            query,
         });
-        if (!postList) {
+
+        if (!rows) {
             return {
                 status: "failed",
                 message: "조건에 알맞은 게시글이 없습니다",
             };
         }
-        const postListInfo = getPostList(postList);
+        const postListInfo = getPostList(rows);
         return {
             status: "succ",
-            payload: postListInfo,
+            payload: { totalPage, postListInfo },
         };
     }
 

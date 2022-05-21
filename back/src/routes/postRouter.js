@@ -157,6 +157,17 @@ postRouter.put("/post/update/:id", postController.updatePost);
  *    get:
  *      tags: [Post]
  *      summary: find all post
+ *      parameters:
+ *          - name: page
+ *            in: query
+ *            required: false
+ *            schema:
+ *              type: string
+ *          - name: perPage
+ *            in: query
+ *            required: false
+ *            schema:
+ *              type: string
  *      responses:
  *        200:
  *          description: succ

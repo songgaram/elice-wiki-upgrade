@@ -133,8 +133,8 @@ class postService {
         return { updatePost, message: "게시글의 정보가 수정되었습니다." };
     }
 
-    static async getAllPost() {
-        const posts = await postModel.findAllPost();
+    static async getAllPost({ page, perPage }) {
+        const posts = await postModel.findAllPost({ page, perPage });
         return posts;
     }
 }

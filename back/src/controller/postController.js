@@ -69,7 +69,11 @@ class postController {
 
     static async findAllPost(req, res, next) {
         try {
-            const posts = await postService.getAllPost();
+            const { page, perPage } = req.query;
+            const posts = await postService.getAllPost({
+                page: Number(page),
+                perPage: Number(perPage),
+            });
             res.status(200).json(posts);
         } catch (error) {
             next(error);
