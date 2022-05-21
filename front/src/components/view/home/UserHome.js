@@ -51,19 +51,14 @@ function UserHome() {
                 <WeekList setPosts={setPosts} posts={posts} setGoal={setGoal} />
                 <Container>
                     <ContentsSide>
-                        <div style={{ padding: "0 4%" }}>
+                        <div style={{ padding: "0 3%" }}>
                             <TagBtn tags={tags} />
                         </div>
                     </ContentsSide>
                     <Contents>
                         <PostList posts={posts} />
                     </Contents>
-                    <ContentsSide>
-                        {" "}
-                        <div style={{ padding: "0 4%" }}>
-                            {goal && <Goal goal={goal} />}{" "}
-                        </div>
-                    </ContentsSide>
+                    <ContentsSide>{goal && <Goal goal={goal} />}</ContentsSide>
                 </Container>
             </div>
         </>
@@ -83,7 +78,7 @@ const ContentsSide = styled.div`
     width: 25%;
     background-color: white;
     display: flex;
-    padding-top: 5%;
+    padding: 2% 1%;
     flex-direction: column;
     align-items: center;
 `;
@@ -98,9 +93,9 @@ const Contents = styled.div`
     //     background: #f1f1f1;
     //     margin-left: -10px;
     // }
-    // &::-webkit-scrollbar-thumb {
-    //     background: #7353ea;
-    // }
+    &::-webkit-scrollbar-thumb {
+        background: #7353ea;
+    }
     // &::-webkit-scrollbar-thumb:hover {
     //     background: #555;
     // }
