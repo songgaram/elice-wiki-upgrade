@@ -9,7 +9,7 @@
  *       required:
  *          - commentId
  *          - groupId
- *          - parentCommentId
+ *          - parentId
  *          - order
  *          - depth
  *          - boardId
@@ -18,11 +18,13 @@
  *          - content
  *          - isDeleted
  *       properties:
- *          commentId:
+ *          id:
  *              type: number
+ *          commentId:
+ *              type: string
  *          groupId:
  *              type: number
- *          parentCommentId:
+ *          parentId:
  *              type: number
  *          order:
  *              type: number
@@ -56,16 +58,24 @@ module.exports = (sequelize, DataTypes) => {
   Comment.init(
     {
       commentId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
+        type: DataTypes.STRING,
       },
-      groupId: DataTypes.INTEGER,
-      parentCommentId: {
+      groupId: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
       },
-      order: DataTypes.INTEGER,
-      depth: DataTypes.INTEGER,
+      parentId: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      order: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      depth: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
       boardId: DataTypes.STRING,
       userId: DataTypes.STRING,
       userName: DataTypes.STRING,

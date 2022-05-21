@@ -13,10 +13,7 @@ class commentController {
       const user = await userService.findUser({ userId });
       const userName = user["name"];
       const { boardId, content } = req.body;
-      console.log("userId", userId);
-      console.log("userName", userName);
-      console.log("boardId", boardId);
-      console.log("content", content);
+
       await commentService.addComment({
         boardId,
         userId,

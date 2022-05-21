@@ -6,10 +6,10 @@ const { rds, local } = require("../config/config");
 const db = {};
 
 let sequelize = new Sequelize(
-    local.database,
-    local.user,
-    local.password,
-    local
+  local.database,
+  local.user,
+  local.password,
+  local
 );
 
 const Users = require("./user")(sequelize, Sequelize.DataTypes);
@@ -19,9 +19,6 @@ const Tag = require("./tag")(sequelize, Sequelize.DataTypes);
 const Goal = require("./goal")(sequelize, Sequelize.DataTypes);
 const Board = require("./board")(sequelize, Sequelize.DataTypes);
 const Comment = require("./comment")(sequelize, Sequelize.DataTypes);
-
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
 
 db["Users"] = Users;
 db["Auth"] = Auth;
