@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
 import { handleWeekClick, getGoal } from "./HomeData";
