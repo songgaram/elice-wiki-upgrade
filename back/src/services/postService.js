@@ -115,8 +115,8 @@ class postService {
         return getPosts;
     }
 
-    static async getPostsByTag({ tag }) {
-        const posts = await postModel.findByTag({ tag });
+    static async getPostsByTag({ tag, page, perPage }) {
+        const posts = await postModel.findByTag({ tag, page, perPage });
         return posts;
     }
 

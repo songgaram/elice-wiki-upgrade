@@ -48,7 +48,12 @@ class postController {
     static async getPostsByTag(req, res, next) {
         try {
             const tag = req.params.tag;
-            const posts = await postService.getPostsByTag({ tag });
+            const { page, perPage } = req.query;
+            const posts = await postService.getPostsByTag({
+                tag,
+                page: Number(page),
+                perPage: Number(perPage),
+            });
             res.status(200).json(posts);
         } catch (error) {
             next(error);
