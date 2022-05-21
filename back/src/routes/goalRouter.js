@@ -77,7 +77,7 @@ goalRouter.get("/goals", goalController.findAllGoal);
  *            description: 특정 주차의 목표를 입력
  *      responses:
  *          200:
- *           description: succ
+ *           description: succ(반환값으로 goal 3개는 배열로 반환됨)
  *           content:
  *            application/json:
  *              schema:

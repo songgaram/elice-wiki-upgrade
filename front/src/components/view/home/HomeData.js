@@ -26,3 +26,12 @@ export const getTags = async (setTags) => {
         console.log("Tag-List를 가져오는데 실패하였습니다.", e);
     }
 };
+
+export const getGoal = async (setGoal, week) => {
+    try {
+        const { data } = await Api.get(`goal/week/${week}`);
+        setGoal(data.payload);
+    } catch (e) {
+        console.log("주간 목표를 불어오는데 실패하였습니다.", e);
+    }
+};
