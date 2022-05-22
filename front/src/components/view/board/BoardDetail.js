@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { Box, Container, CssBaseline, Divider } from "@mui/material/";
 import BoardEditForm from "./BoardEditForm";
 import BoardContents from "./BoardContents";
+import Spinner from "../../Spinner";
 // import Comments from "../comment/Comments";
 import * as Api from "../../../api";
 
@@ -41,7 +42,7 @@ function BoardDetail() {
     }, [params]);
 
     if (!isFetchCompleted) {
-        return "loading...";
+        return <Spinner />;
     }
 
     const handleDelete = async () => {

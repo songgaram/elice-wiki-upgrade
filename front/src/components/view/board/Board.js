@@ -16,6 +16,7 @@ import {
     IconButton,
 } from "@mui/material";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
+import Spinner from "../../Spinner";
 import * as Api from "../../../api";
 
 function Board() {
@@ -38,7 +39,7 @@ function Board() {
     }, []);
 
     if (!isFetchCompleted) {
-        return <div>로딩중...</div>;
+        return <Spinner />;
     }
 
     return (

@@ -15,6 +15,7 @@ import QuestionEditor from "./components/admin/QuestionEditor";
 import Board from "./components/view/board/Board";
 import BoardDetail from "./components/view/board/BoardDetail";
 import BoardAddForm from "./components/view/board/BoardAddForm";
+import Spinner from "./components/Spinner";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -52,7 +53,7 @@ function App() {
     }, []);
 
     if (!isFetchCompleted) {
-        return <div>로딩중...</div>;
+        return <Spinner />;
     }
 
     return (

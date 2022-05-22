@@ -7,6 +7,7 @@ import WeekList from "./WeekList";
 import Goal from "./Goal";
 import TagBtn from "./TagBtn";
 import { getPosts, getTags } from "./HomeData";
+import Spinner from "../../Spinner";
 import styled from "styled-components";
 
 function UserHome() {
@@ -40,7 +41,7 @@ function UserHome() {
     }, [userAuthorized, navigate]);
 
     if (!isFetchCompleted) {
-        return <div>로딩중</div>;
+        return <Spinner />;
     }
     return (
         <>
