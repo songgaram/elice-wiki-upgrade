@@ -2,21 +2,28 @@ import React from "react";
 import * as Api from "../../api";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Pagination, Stack } from "@mui/material";
 
 const ManageUsers = () => {
     const [data, setData] = React.useState();
     const [checkedList, setCheckedList] = React.useState([]);
     const navigate = useNavigate();
+    const [page, setPage] = React.useState(1);
+    const [totalCount, setTotalCount] = React.useState();
+    const perPage = 15;
 
     const getData = React.useCallback(async () => {
-        const { data } = await Api.get("auths");
-        setData(data.payload);
+        const { data } = await Api.get(`auths?perPage=${perPage}&page=${page}`);
+        setData(data.payload.rows);
+        setTotalCount(data.payload.count);
     });
+    const pageHandler = (event, value) => {
+        setPage(value);
+    };
 
     React.useEffect(() => {
         getData();
-    }, []);
+    }, [page]);
     const checkAll = (e) => {
         if (e.target.checked) {
             const idList = data.map((datum) => datum.id);
@@ -55,60 +62,67 @@ const ManageUsers = () => {
         document.getElementById("checkAll").checked = false;
     };
     return (
-        <div style={{ width: "100%", height: "100%" }}>
-            <ControllerContainer>
-                <Button variant="outlined" onClick={controller} name="setCurrentQuestion">
-                    현재 질문으로 설정
-                </Button>
-                <Button variant="outlined" onClick={controller} name="createNewQuestion">
-                    새로만들기
-                </Button>
-                <Button variant="outlined" onClick={controller} name="deleteQuestion">
-                    제거하기
-                </Button>
-            </ControllerContainer>
-            <Table>
-                <Thead>
-                    <Tr color="#C2C2C2">
-                        <Th>
-                            <input type="checkbox" id="checkAll" onChange={checkAll} />
-                        </Th>
-                        <Th>No.</Th>
-                        <Th>Question</Th>
-                        <Th>Answer</Th>
-                        <Th>Current</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {data &&
-                        data.map((datum, index) => {
-                            return (
-                                <Tr key={`users/${index}`} color={checkedList.includes(datum.id) ? "#e0e0e0" : "white"}>
-                                    <Td>
-                                        <input
-                                            type="checkbox"
-                                            value={datum.id}
-                                            onClick={checkHandler}
-                                            checked={checkedList.includes(datum.id) ? true : false}
-                                        />
-                                    </Td>
-                                    <Td>{datum.id}</Td>
-                                    <Td>
-                                        <Title
-                                            onClick={() => {
-                                                navigate(`/editquestion/${datum.id}`);
-                                            }}
-                                        >
-                                            {datum.question}
-                                        </Title>
-                                    </Td>
-                                    <Td>{datum.answer}</Td>
-                                    <Td>{String(datum.current)}</Td>
-                                </Tr>
-                            );
-                        })}
-                </Tbody>
-            </Table>
+        <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+            <div style={{ width: "100%", height: "100%" }}>
+                <ControllerContainer>
+                    <Button variant="outlined" onClick={controller} name="setCurrentQuestion">
+                        현재 질문으로 설정
+                    </Button>
+                    <Button variant="outlined" onClick={controller} name="createNewQuestion">
+                        새로만들기
+                    </Button>
+                    <Button variant="outlined" onClick={controller} name="deleteQuestion">
+                        제거하기
+                    </Button>
+                </ControllerContainer>
+                <Table>
+                    <Thead>
+                        <Tr color="#C2C2C2">
+                            <Th>
+                                <input type="checkbox" id="checkAll" onChange={checkAll} />
+                            </Th>
+                            <Th>No.</Th>
+                            <Th>Question</Th>
+                            <Th>Answer</Th>
+                            <Th>Current</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {data &&
+                            data.map((datum, index) => {
+                                return (
+                                    <Tr key={`users/${index}`} color={checkedList.includes(datum.id) ? "#e0e0e0" : "white"}>
+                                        <Td>
+                                            <input
+                                                type="checkbox"
+                                                value={datum.id}
+                                                onClick={checkHandler}
+                                                checked={checkedList.includes(datum.id) ? true : false}
+                                            />
+                                        </Td>
+                                        <Td>{datum.id}</Td>
+                                        <Td>
+                                            <Title
+                                                onClick={() => {
+                                                    navigate(`/editquestion/${datum.id}`);
+                                                }}
+                                            >
+                                                {datum.question}
+                                            </Title>
+                                        </Td>
+                                        <Td>{datum.answer}</Td>
+                                        <Td>{String(datum.current)}</Td>
+                                    </Tr>
+                                );
+                            })}
+                    </Tbody>
+                </Table>
+            </div>
+            {totalCount > perPage && (
+                <Stack spacing={2}>
+                    <Pagination count={Math.ceil(totalCount / perPage)} page={page} onChange={pageHandler} color="primary" />
+                </Stack>
+            )}
         </div>
     );
 };

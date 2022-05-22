@@ -2,24 +2,28 @@ import React from "react";
 import * as Api from "../../api";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Pagination, Stack } from "@mui/material";
 
 const ManageUsers = () => {
     const [data, setData] = React.useState();
     const [checkedList, setCheckedList] = React.useState([]);
     const navigate = useNavigate();
+    const [page, setPage] = React.useState(1);
+    const [totalCount, setTotalCount] = React.useState();
+    const perPage = 15;
 
     const getData = React.useCallback(async () => {
-        const { data } = await Api.get("posts");
-        setData(data.payload);
+        const { data } = await Api.get(`posts?perPage=${perPage}&page=${page}`);
+        setData(data.payload.rows);
+        setTotalCount(data.payload.count);
     });
 
     React.useEffect(() => {
         getData();
-    }, []);
+    }, [page]);
     const checkAll = (e) => {
         if (e.target.checked) {
-            const idList = data.map((datum) => datum.id);
+            const idList = data.map((datum) => datum.post_index);
             setCheckedList(idList);
         } else {
             setCheckedList([]);
@@ -33,6 +37,9 @@ const ManageUsers = () => {
             const newCheckedList = checkedList.filter((id) => id !== parseInt(e.target.value));
             setCheckedList(newCheckedList);
         }
+    };
+    const pageHandler = (event, value) => {
+        setPage(value);
     };
     const controller = async (e) => {
         const checkedIdString = checkedList.join(",");
@@ -55,66 +62,73 @@ const ManageUsers = () => {
         document.getElementById("checkAll").checked = false;
     };
     return (
-        <div style={{ width: "100%", height: "100%" }}>
-            <ControllerContainer>
-                <Button variant="outlined" onClick={controller} name="setCurrentQuestion">
-                    현재 질문으로 설정
-                </Button>
-                <Button variant="outlined" onClick={controller} name="createNewQuestion">
-                    새로만들기
-                </Button>
-                <Button variant="outlined" onClick={controller} name="deleteQuestion">
-                    제거하기
-                </Button>
-            </ControllerContainer>
-            <Table>
-                <Thead>
-                    <Tr color="#C2C2C2">
-                        <Th>
-                            <input type="checkbox" id="checkAll" onChange={checkAll} />
-                        </Th>
-                        <Th>No.</Th>
-                        <Th>PostId</Th>
-                        <Th>Title</Th>
-                        <Th>Week</Th>
-                        <Th>Tags</Th>
-                        <Th>작성자</Th>
-                        <Th>최종수정</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {data &&
-                        data.map((datum, index) => {
-                            return (
-                                <Tr key={`users/${index}`} color={checkedList.includes(datum.__id) ? "#e0e0e0" : "white"}>
-                                    <Td>
-                                        <input
-                                            type="checkbox"
-                                            value={datum.id}
-                                            onClick={checkHandler}
-                                            checked={checkedList.includes(datum.id) ? true : false}
-                                        />
-                                    </Td>
-                                    <Td>{index + 1}</Td>
-                                    <Td>{datum.post_id}</Td>
-                                    <Td>
-                                        <Title
-                                            onClick={() => {
-                                                navigate(`/editquestion/${datum.title}`);
-                                            }}
-                                        >
-                                            {datum.title}
-                                        </Title>
-                                    </Td>
-                                    <Td>{datum.week}</Td>
-                                    <Td>{datum.tag}</Td>
-                                    <Td>{datum.user_id}</Td>
-                                    <Td>{datum.lastmod_user}</Td>
-                                </Tr>
-                            );
-                        })}
-                </Tbody>
-            </Table>
+        <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+            <div style={{ width: "100%", height: "100%" }}>
+                <ControllerContainer>
+                    <Button variant="outlined" onClick={controller} name="setCurrentQuestion">
+                        현재 질문으로 설정
+                    </Button>
+                    <Button variant="outlined" onClick={controller} name="createNewQuestion">
+                        새로만들기
+                    </Button>
+                    <Button variant="outlined" onClick={controller} name="deleteQuestion">
+                        제거하기
+                    </Button>
+                </ControllerContainer>
+                <Table>
+                    <Thead>
+                        <Tr color="#C2C2C2">
+                            <Th>
+                                <input type="checkbox" id="checkAll" onChange={checkAll} />
+                            </Th>
+                            <Th>No.</Th>
+                            <Th>PostId</Th>
+                            <Th>Title</Th>
+                            <Th>Week</Th>
+                            <Th>Tags</Th>
+                            <Th>작성자</Th>
+                            <Th>최종수정</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {data &&
+                            data.map((datum, index) => {
+                                return (
+                                    <Tr key={`users/${index}`} color={checkedList.includes(datum.post_index) ? "#e0e0e0" : "white"}>
+                                        <Td>
+                                            <input
+                                                type="checkbox"
+                                                value={datum.post_index}
+                                                onClick={checkHandler}
+                                                checked={checkedList.includes(datum.post_index) ? true : false}
+                                            />
+                                        </Td>
+                                        <Td>{datum.post_index}</Td>
+                                        <Td>{datum.post_id}</Td>
+                                        <Td>
+                                            <Title
+                                                onClick={() => {
+                                                    navigate(`/editquestion/${datum.title}`);
+                                                }}
+                                            >
+                                                {datum.title}
+                                            </Title>
+                                        </Td>
+                                        <Td>{datum.week}</Td>
+                                        <Td>{datum.tag}</Td>
+                                        <Td>{datum.user_id}</Td>
+                                        <Td>{datum.lastmod_user}</Td>
+                                    </Tr>
+                                );
+                            })}
+                    </Tbody>
+                </Table>
+            </div>
+            {totalCount > perPage && (
+                <Stack spacing={2}>
+                    <Pagination count={Math.ceil(totalCount / perPage)} page={page} onChange={pageHandler} color="primary" />
+                </Stack>
+            )}
         </div>
     );
 };

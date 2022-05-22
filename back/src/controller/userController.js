@@ -17,8 +17,9 @@ class userController {
     }
 
     static async getAllUsers(req, res, next) {
+        const { page, perPage } = req.query;
         try {
-            const users = await userService.findAll();
+            const users = await userService.findAll({ page, perPage });
             res.status(200).json({ status: "success", payload: users });
         } catch (error) {
             next(error);

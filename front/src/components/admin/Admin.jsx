@@ -13,8 +13,7 @@ const Admin = () => {
     const clickHandler = (e) => {
         navigate(e.target.name);
     };
-    const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
-    const user = userState?.payload;
+    const user = useSelector((state) => (state ? state.userReducer.user : undefined));
 
     return (
         <div style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
