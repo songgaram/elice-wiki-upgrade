@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { Box, Container, CssBaseline, Divider } from "@mui/material/";
-import ContentsDetail from "./ContentsDetail";
 import ContentEditForm from "./ContentEditForm";
 import Comments from "../comment/Comments";
 import * as Api from "../../api";
+import BoardContents from "./BoardContents";
 
 function BoardDetail() {
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ function BoardDetail() {
     const fetchContentInfo = async (contentId) => {
         try {
             const { data } = await Api.get("BoardDetails", contentId);
-            if (data.payload?.userId === userState?._id) {
+            if (data.payload?.userId === userState?.__id) {
                 setIsEditable(true);
             } else {
                 setIsEditable(false);
@@ -35,10 +35,6 @@ function BoardDetail() {
             console.log(error);
         }
     };
-
-    useEffect(() => {
-        console.log(userState);
-    }, [userState]);
 
     useEffect(() => {
         fetchContentInfo(contentId);
@@ -78,7 +74,7 @@ function BoardDetail() {
                         />
                     ) : (
                         <>
-                            <ContentsDetail
+                            <BoardContents
                                 boardData={boardData}
                                 setIsEditing={setIsEditing}
                                 isEditable={isEditable}
