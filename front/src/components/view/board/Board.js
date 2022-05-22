@@ -6,7 +6,6 @@ import {
     Box,
     Container,
     CssBaseline,
-    Divider,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -17,30 +16,30 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import IconButton from "@mui/material/IconButton";
-// import * as Api from "../../api";
+import * as Api from "../../../api";
 
 function Board() {
     const navigate = useNavigate();
-    // const [allboards, setAllBoards] = useState(undefined);
-    // const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+    const [boardList, setBoardList] = useState(undefined);
+    const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
-    // const fetchboardsInfo = async () => {
-    //     try {
-    //         const res = await Api.get("boards");
-    //         setAllBoards(res.data);
-    //         setIsFetchCompleted(true);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
+    const fetchboardsInfo = async () => {
+        try {
+            const { data } = await Api.get("boardlist");
+            setBoardList(data.payload);
+            setIsFetchCompleted(true);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-    // useEffect(() => {
-    //     fetchboardsInfo();
-    // }, []);
+    useEffect(() => {
+        fetchboardsInfo();
+    }, []);
 
-    // if (!isFetchCompleted) {
-    //     return <div>로딩중...</div>;
-    // }
+    if (!isFetchCompleted) {
+        return <div>로딩중...</div>;
+    }
 
     return (
         <React.Fragment>
@@ -95,33 +94,33 @@ function Board() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {/* {allboards?.map((board, idx) => (
+                                {boardList?.map((board) => (
                                     <TableRow
-                                        key={board.name}
+                                        key={board.id}
                                         sx={{
                                             "&:last-child td, &:last-child th":
                                                 { border: 0 },
                                         }}
                                         onClick={() =>
-                                            navigate(`/boards/${board._id}`)
+                                            navigate(`/boards/${board.boardId}`)
                                         }
                                         style={{ cursor: "pointer" }}
                                         hover={true}
                                     >
                                         <TableCell component="th" scope="row">
-                                            {idx}
+                                            {board.id}
                                         </TableCell>
                                         <TableCell align="center">
                                             {board.title}
                                         </TableCell>
                                         <TableCell align="center">
-                                            {board.author}
+                                            {board.userName}
                                         </TableCell>
                                         <TableCell align="right">
                                             {board.createdAt.slice(0, 10)}
                                         </TableCell>
                                     </TableRow>
-                                ))} */}
+                                ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
