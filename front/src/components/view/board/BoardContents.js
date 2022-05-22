@@ -12,7 +12,7 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import Confirm from "../Confirm";
+// import Confirm from "../Confirm";
 
 function BoardContents({ setIsEditing, isEditable, handleDelete, boardData }) {
     const navigate = useNavigate();
@@ -32,11 +32,7 @@ function BoardContents({ setIsEditing, isEditable, handleDelete, boardData }) {
             <Card sx={{ minWidth: 275 }}>
                 <CardHeader
                     action={
-                        <Button
-                            size="small"
-                            onClick={() => navigate("/community")}
-                            color="neutral"
-                        >
+                        <Button size="small" onClick={() => navigate("/board")}>
                             목록
                         </Button>
                     }
@@ -65,12 +61,12 @@ function BoardContents({ setIsEditing, isEditable, handleDelete, boardData }) {
                             <IconButton onClick={() => handleClickOpen()}>
                                 <DeleteIcon />
                             </IconButton>
-                            <Confirm
+                            {/* <Confirm
                                 open={open}
                                 handleClose={handleClose}
                                 handleDelete={handleDelete}
                                 title={confirmTitle}
-                            />
+                            /> */}
                         </>
                     )}
                 </CardActions>

@@ -102,7 +102,7 @@ function Board() {
                                                 { border: 0 },
                                         }}
                                         onClick={() =>
-                                            navigate(`/boards/${board.boardId}`)
+                                            navigate(`/board/${board.boardId}`)
                                         }
                                         style={{ cursor: "pointer" }}
                                         hover={true}

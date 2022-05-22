@@ -13,6 +13,7 @@ import ManageUsers from "./components/admin/ManageUsers";
 import ManageQuestions from "./components/admin/ManageQuestions";
 import QuestionEditor from "./components/admin/QuestionEditor";
 import Board from "./components/view/board/Board";
+import BoardDetail from "./components/view/board/BoardDetail";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -63,7 +64,14 @@ function App() {
                     )}
 
                     {userState?.authorized && (
-                        <Route path="/board" exact element={<Board />} />
+                        <>
+                            <Route path="/board" exact element={<Board />} />
+                            <Route
+                                path="/board/:id"
+                                exact
+                                element={<BoardDetail />}
+                            />
+                        </>
                     )}
                     <Route path="/test" exact element={<GoogleLoading />} />
                     <Route path="*" element={<Home />} />

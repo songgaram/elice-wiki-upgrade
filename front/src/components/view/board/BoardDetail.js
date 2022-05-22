@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { Box, Container, CssBaseline, Divider } from "@mui/material/";
-import ContentEditForm from "./ContentEditForm";
-import Comments from "../comment/Comments";
-import * as Api from "../../api";
+import BoardEditForm from "./BoardEditForm";
 import BoardContents from "./BoardContents";
+// import Comments from "../comment/Comments";
+import * as Api from "../../../api";
 
 function BoardDetail() {
     const navigate = useNavigate();
@@ -21,9 +21,9 @@ function BoardDetail() {
         state ? state.userReducer.user : undefined
     );
 
-    const fetchContentInfo = async (contentId) => {
+    const fetchDetailInfo = async () => {
         try {
-            const { data } = await Api.get("BoardDetails", contentId);
+            const { data } = await Api.get("boards", boardId);
             if (data.payload?.userId === userState?.__id) {
                 setIsEditable(true);
             } else {
@@ -37,7 +37,7 @@ function BoardDetail() {
     };
 
     useEffect(() => {
-        fetchContentInfo(boardId);
+        fetchDetailInfo();
     }, [params]);
 
     if (!isFetchCompleted) {
@@ -46,8 +46,8 @@ function BoardDetail() {
 
     const handleDelete = async () => {
         try {
-            await Api.delete(`BoardDetails/${params.id}/delete`);
-            navigate("/community");
+            await Api.delete("boards", boardId);
+            navigate("/board");
         } catch (error) {
             console.log(error);
         }
@@ -66,9 +66,9 @@ function BoardDetail() {
                 >
                     <Divider />
                     {isEditing ? (
-                        <ContentEditForm
+                        <BoardEditForm
                             setIsEditing={setIsEditing}
-                            contentId={boardId}
+                            boardId={boardId}
                             boardData={boardData}
                             setBoardData={setBoardData}
                         />
@@ -80,10 +80,10 @@ function BoardDetail() {
                                 isEditable={isEditable}
                                 handleDelete={handleDelete}
                             />
-                            <Comments
-                            // comments={contents.comment}
-                            // contentId={contentId}
-                            />
+                            {/* <Comments
+                            comments={contents.comment}
+                            contentId={contentId}
+                            /> */}
                         </>
                     )}
                 </Box>

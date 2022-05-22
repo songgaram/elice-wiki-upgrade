@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { MyButton, MyButton2 } from "./CommunityStyle";
-import { Box, Grid } from "@mui/material";
-import WriteForm from "./WriteForm";
-import * as Api from "../../api";
+// import { MyButton, MyButton2 } from "./CommunityStyle";
+import { Box, Button, Grid } from "@mui/material";
+// import WriteForm from "./WriteForm";
+import * as Api from "../../../api";
 
 function ContentEditForm({ boardData, setBoardData, setIsEditing, boardId }) {
     const [title, setTitle] = useState(boardData.title);
@@ -36,17 +36,15 @@ function ContentEditForm({ boardData, setBoardData, setIsEditing, boardId }) {
             }}
         >
             <form onSubmit={handleEdit}>
-                <WriteForm
+                {/* <WriteForm
                     title={title}
                     setTitle={setTitle}
                     body={body}
                     setBody={setBody}
-                />
+                /> */}
                 <Grid>
-                    <MyButton type="submit">수정 완료</MyButton>
-                    <MyButton2 onClick={() => setIsEditing(false)}>
-                        취소
-                    </MyButton2>
+                    <Button type="submit">수정 완료</Button>
+                    <Button onClick={() => setIsEditing(false)}>취소</Button>
                 </Grid>
             </form>
         </Box>
