@@ -14,6 +14,7 @@ import ManageQuestions from "./components/admin/ManageQuestions";
 import QuestionEditor from "./components/admin/QuestionEditor";
 import Board from "./components/view/board/Board";
 import BoardDetail from "./components/view/board/BoardDetail";
+import BoardAddForm from "./components/view/board/BoardAddForm";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -70,6 +71,11 @@ function App() {
                                 path="/board/:id"
                                 exact
                                 element={<BoardDetail />}
+                            />
+                            <Route
+                                path="/board/create"
+                                exact
+                                element={<BoardAddForm />}
                             />
                         </>
                     )}

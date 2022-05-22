@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-// import { MyButton, MyButton2 } from "./CommunityStyle";
 import { Box, Button, Grid } from "@mui/material";
-// import WriteForm from "./WriteForm";
+import WriteForm from "./WriteForm";
+import styled from "styled-components";
 import * as Api from "../../../api";
 
 function ContentEditForm({ boardData, setBoardData, setIsEditing, boardId }) {
@@ -36,19 +36,49 @@ function ContentEditForm({ boardData, setBoardData, setIsEditing, boardId }) {
             }}
         >
             <form onSubmit={handleEdit}>
-                {/* <WriteForm
+                <WriteForm
                     title={title}
                     setTitle={setTitle}
                     body={body}
                     setBody={setBody}
-                /> */}
+                />
                 <Grid>
-                    <Button type="submit">수정 완료</Button>
-                    <Button onClick={() => setIsEditing(false)}>취소</Button>
+                    <MyButton type="submit">수정 완료</MyButton>
+                    <MyButton2 onClick={() => setIsEditing(false)}>
+                        취소
+                    </MyButton2>
                 </Grid>
             </form>
         </Box>
     );
 }
+
+const MyButton = styled(Button)`
+    color: #82b3ed;
+    font-weight: bold;
+    size: 17px;
+    border-radius: 5px;
+    border: solid 1px #82b3ed;
+    margin: 3px;
+
+    &: hover {
+        color: #ffffff;
+        background-color: #0a82ff;
+    }
+`;
+
+const MyButton2 = styled(Button)`
+    color: #ff7878;
+    font-weight: bold;
+    size: 17px;
+    border-radius: 5px;
+    border: solid 1px #ff7878;
+    margin: 3px;
+
+    &: hover {
+        color: #ffffff;
+        background-color: #ff5a5a;
+    }
+`;
 
 export default ContentEditForm;

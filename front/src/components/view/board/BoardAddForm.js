@@ -3,8 +3,7 @@ import { useNavigate } from "react-router";
 import { Container, Box, Grid, Button } from "@mui/material";
 import styled from "styled-components";
 import WriteForm from "./WriteForm";
-
-import * as Api from "../../api";
+import * as Api from "../../../api";
 
 function BoardAddForm() {
     const navigate = useNavigate();
@@ -15,11 +14,12 @@ function BoardAddForm() {
         e.preventDefault();
         try {
             await Api.post("boards/board", {
+                postId: "",
                 title,
                 body,
             });
             alert("게시글 등록을 성공하였습니다.");
-            navigate(`/community`);
+            navigate(`/board`);
         } catch (error) {
             alert("게시글 등록에 실패하였습니다.", error);
         }
