@@ -11,7 +11,7 @@ import BoardContents from "./BoardContents";
 function BoardDetail() {
     const navigate = useNavigate();
     const params = useParams();
-    const contentId = params.id;
+    const boardId = params.id;
     const [boardData, setBoardData] = useState(undefined);
     const [isEditable, setIsEditable] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -37,7 +37,7 @@ function BoardDetail() {
     };
 
     useEffect(() => {
-        fetchContentInfo(contentId);
+        fetchContentInfo(boardId);
     }, [params]);
 
     if (!isFetchCompleted) {
@@ -68,7 +68,7 @@ function BoardDetail() {
                     {isEditing ? (
                         <ContentEditForm
                             setIsEditing={setIsEditing}
-                            contentId={contentId}
+                            contentId={boardId}
                             boardData={boardData}
                             setBoardData={setBoardData}
                         />
