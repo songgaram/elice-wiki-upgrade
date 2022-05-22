@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../../../store/actions/userAction";
 import PostList from "./PostList";
 import WeekList from "./WeekList";
-import { getPosts, getTags } from "./HomeData";
-import styled from "styled-components";
+import Goal from "./Goal";
 import TagBtn from "./TagBtn";
-import { logoutUser } from "../../../store/actions/userAction";
+import { getPosts, getTags } from "./HomeData";
+import Spinner from "../../Spinner";
+import styled from "styled-components";
 
 function UserHome() {
     const [posts, setPosts] = useState(undefined);
     const [tags, setTags] = useState(undefined);
+    const [goal, setGoal] = useState(undefined);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const userState = useSelector((state) =>
@@ -38,7 +41,7 @@ function UserHome() {
     }, [userAuthorized, navigate]);
 
     if (!isFetchCompleted) {
-        return <div>로딩중</div>;
+        return <Spinner />;
     }
     return (
         <>
@@ -46,17 +49,17 @@ function UserHome() {
                 <header style={{ height: "60px" }}>
                     <button onClick={() => handleLogout()}>로그아웃</button>
                 </header>
-                <WeekList setPosts={setPosts} posts={posts} />
+                <WeekList setPosts={setPosts} posts={posts} setGoal={setGoal} />
                 <Container>
                     <ContentsSide>
-                        <div style={{ padding: "0 4%" }}>
+                        <div style={{ padding: "0 3%" }}>
                             <TagBtn tags={tags} />
                         </div>
                     </ContentsSide>
                     <Contents>
                         <PostList posts={posts} />
                     </Contents>
-                    <ContentsSide />
+                    <ContentsSide>{goal && <Goal goal={goal} />}</ContentsSide>
                 </Container>
             </div>
         </>
@@ -76,7 +79,7 @@ const ContentsSide = styled.div`
     width: 25%;
     background-color: white;
     display: flex;
-    padding-top: 5%;
+    padding: 2% 1%;
     flex-direction: column;
     align-items: center;
 `;
@@ -91,9 +94,9 @@ const Contents = styled.div`
     //     background: #f1f1f1;
     //     margin-left: -10px;
     // }
-    // &::-webkit-scrollbar-thumb {
-    //     background: #7353ea;
-    // }
+    &::-webkit-scrollbar-thumb {
+        background: #7353ea;
+    }
     // &::-webkit-scrollbar-thumb:hover {
     //     background: #555;
     // }

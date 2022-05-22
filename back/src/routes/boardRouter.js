@@ -34,16 +34,17 @@ const boardRouter = Router();
  *                   type: string
  *                 body:
  *                   type: string
- *     responses:
- *       201:
- *         description: 새 게시판 생성 성공!!
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
+ *
+ *       responses:
+ *         201:
+ *           description: 새 게시판 생성 성공!!
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   status:
+ *                     type: string
  */
 boardRouter.post("/boards/board", loginRequired, boardController.addBoard);
 
@@ -106,8 +107,43 @@ boardRouter.get("/boards/:boardId", loginRequired, boardController.getBoard);
 boardRouter.get(
   "/boardlist/:userId",
   loginRequired,
-  boardController.getBoardList
+  boardController.getBoardListByUserId
 );
+
+/**
+ * @swagger
+ * paths:
+ *  /boardlist:
+ *    get:
+ *      tags: [Board]
+ *      summary: find boardlist
+ *      security:
+ *	       - jwt: []
+ *      responses:
+ *        200:
+ *          description: succ
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  status:
+ *                    type: string
+ *                  payload:
+ *                    type: object
+ *                    properties:
+ *                      id:
+ *                        type: number
+ *                      boardId:
+ *                        type: string
+ *                      userId:
+ *                        type: string
+ *                      title:
+ *                        type: string
+ *                      createdAt:
+ *                        type: string
+ */
+boardRouter.get("/boardlist", loginRequired, boardController.getBoardList);
 
 /**
  * @swagger

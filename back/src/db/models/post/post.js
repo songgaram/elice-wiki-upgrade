@@ -25,108 +25,131 @@ const getPostList = (posts) => {
     return postListInfo;
 };
 
+// page 계산
+const paginate = async ({ aggregator, currentPage, perPage }) => {
+    const total = await aggregator();
+    console.log(`total: ${total}`);
+
+    let totalPage = Math.ceil(total / perPage);
+    if (currentPage > totalPage) {
+        currentPage = totalPage;
+    }
+    return { currPage: currentPage, totalPage };
+};
+
+const postPagination = async ({ page, perPage, query = null }) => {
+    const paginateQuery = {
+        where: query,
+        order: [["createdAt", "DESC"]],
+        limit: perPage,
+        offset: perPage * (page - 1),
+    };
+    const { count, rows } = await models.Post.findAndCountAll(paginateQuery);
+    const totalPage = Math.ceil(count / perPage);
+
+    return { totalPage, rows };
+};
+
 class postModel {
     // post 추가
     static async insertPost({ newPost }) {
-        const insertPost = await models.Post.create(newPost);
-        if (!insertPost) {
+        try {
+            const insertPost = await models.Post.create(newPost);
+            return {
+                status: "succ",
+                payload: insertPost,
+            };
+        } catch (error) {
             return {
                 status: "failed",
                 message: "게시글을 저장할 수 없습니다.",
             };
         }
-        return {
-            status: "succ",
-            payload: insertPost,
-        };
     }
 
-    static async findAllPost() {
-        const posts = await models.Post.findAll({
-            attributes: [
-                "title",
-                "post_id",
-                "date",
-                "week",
-                "user_id",
-                "tag",
-                "createdAt",
-            ],
-            order: [["createdAt", "DESC"]],
-        });
+    static async findAllPost({ page, perPage }) {
+        try {
+            const { totalPage, rows } = await postPagination({
+                page,
+                perPage,
+            });
+            const postListInfo = getPostList(rows);
 
-        if (!posts) {
+            return {
+                status: "succ",
+                payload: { totalPage, postListInfo },
+            };
+        } catch (error) {
             return {
                 status: "failed",
                 message: "게시글이 없네요..",
             };
         }
-        const postListInfo = getPostList(posts);
-        return {
-            status: "succ",
-            payload: postListInfo,
-        };
     }
 
     static async getPostByPostId({ post_id }) {
-        // postId로 post의 정보검색
-        // 사용자가 post를 눌렀을 때 동작?
-        const getOnePost = await models.Post.findOne({
-            where: { post_id },
-            attributes: ["title", "post_id", "date", "week", "user_id", "tag"],
-        });
-        if (!getOnePost) {
+        try {
+            const getOnePost = await models.Post.findOne({
+                where: { post_id },
+            });
+            return {
+                status: "succ",
+                payload: getOnePost,
+            };
+        } catch (error) {
             return {
                 status: "failed",
                 message: "조건에 알맞은 게시글이 없습니다",
             };
         }
-
-        return {
-            status: "succ",
-            payload: getOnePost,
-        };
     }
 
-    static async findByWeek({ week }) {
-        // week를 기준으로 post 검색
-        const postList = await models.Post.findAll({
-            where: { week: week },
-            attributes: ["title", "post_id", "date", "week", "user_id", "tag"],
-            order: [["createdAt", "DESC"]],
-        });
-        if (!postList) {
+    static async findByWeek({ week, page, perPage }) {
+        try {
+            const query = {
+                week: week,
+            };
+            // week를 기준으로 post 검색
+            const { totalPage, rows } = await postPagination({
+                page,
+                perPage,
+                query,
+            });
+            const postListInfo = getPostList(rows);
+            return {
+                status: "succ",
+                payload: { totalPage, postListInfo },
+            };
+        } catch (error) {
             return {
                 status: "failed",
                 message: "조건에 알맞은 게시글이 없습니다",
             };
         }
-        const postListInfo = getPostList(postList);
-        return {
-            status: "succ",
-            payload: postListInfo,
-        };
     }
 
-    static async findByTag({ tag }) {
-        const posts = await models.Post.findAll({
-            where: {
+    static async findByTag({ tag, page, perPage }) {
+        try {
+            const query = {
                 tag: { [Op.substring]: tag },
-            },
-            order: [["createdAt", "DESC"]],
-        });
-        if (!posts) {
+            };
+            const { totalPage, rows } = await postPagination({
+                page,
+                perPage,
+                query,
+            });
+            const postListInfo = getPostList(rows);
+
+            return {
+                status: "succ",
+                payload: { totalPage, postListInfo },
+            };
+        } catch (error) {
             return {
                 status: "failed",
                 message: "조건에 알맞은 게시글이 없습니다",
             };
         }
-        const postListInfo = getPostList(posts);
-
-        return {
-            status: "succ",
-            payload: postListInfo,
-        };
     }
 
     static async updatePost({ postId, update }) {

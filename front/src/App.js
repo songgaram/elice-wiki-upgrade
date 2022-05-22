@@ -12,6 +12,10 @@ import ManagePosts from "./components/admin/ManagePosts";
 import ManageUsers from "./components/admin/ManageUsers";
 import ManageQuestions from "./components/admin/ManageQuestions";
 import QuestionEditor from "./components/admin/QuestionEditor";
+import Board from "./components/view/board/Board";
+import BoardDetail from "./components/view/board/BoardDetail";
+import BoardAddForm from "./components/view/board/BoardAddForm";
+import Spinner from "./components/Spinner";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -49,7 +53,7 @@ function App() {
     }, []);
 
     if (!isFetchCompleted) {
-        return <div>로딩중...</div>;
+        return <Spinner />;
     }
 
     return (
@@ -59,6 +63,22 @@ function App() {
                     <Route path="/" exact element={<Home />} />
                     {!userState?.authorized && (
                         <Route path="/auth" exact element={<EliceUserAuth />} />
+                    )}
+
+                    {userState?.authorized && (
+                        <>
+                            <Route path="/board" exact element={<Board />} />
+                            <Route
+                                path="/board/:id"
+                                exact
+                                element={<BoardDetail />}
+                            />
+                            <Route
+                                path="/board/create"
+                                exact
+                                element={<BoardAddForm />}
+                            />
+                        </>
                     )}
                     <Route path="/test" exact element={<GoogleLoading />} />
                     <Route path="*" element={<Home />} />
