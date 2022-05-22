@@ -41,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       boardId: DataTypes.STRING,
       userId: DataTypes.STRING,
+      userName: DataTypes.STRING,
       postId: DataTypes.STRING,
       title: DataTypes.STRING,
       body: DataTypes.STRING,
