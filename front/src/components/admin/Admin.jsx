@@ -8,6 +8,10 @@ const Admin = () => {
     const navigate = useNavigate();
 
     React.useEffect(() => {
+        navigate("users");
+    }, []);
+
+    React.useEffect(() => {
         setSelected(window.location.pathname.split("/")[2]);
     }, [window.location.pathname]);
     const clickHandler = (e) => {
@@ -22,13 +26,19 @@ const Admin = () => {
                     유저관리
                 </NavBtn>
                 <NavBtn onClick={clickHandler} name="posts" color={selected === "posts" ? "#c2c2c2" : "#e0e0e0"}>
-                    게시물관리
+                    포스트관리
                 </NavBtn>
-                {user?.admin === 0 && (
-                    <NavBtn onClick={clickHandler} name="questions" color={selected === "questions" ? "#c2c2c2" : "#e0e0e0"}>
-                        인증질답관리
-                    </NavBtn>
-                )}
+                <NavBtn onClick={clickHandler} name="board" color={selected === "board" ? "#c2c2c2" : "#e0e0e0"}>
+                    게시판관리
+                </NavBtn>
+                <NavBtn
+                    onClick={clickHandler}
+                    name="questions"
+                    color={selected === "questions" ? "#c2c2c2" : "#e0e0e0"}
+                    disabled={user?.admin === 0 ? false : true}
+                >
+                    인증질답관리
+                </NavBtn>
             </NavBar>
             <Container>
                 <Outlet />
@@ -49,9 +59,10 @@ const NavBtn = styled.button`
     height: 3rem;
     font-size: 1.2rem;
     font-weight: bold;
+    cursor: ${(props) => (props.disabled === true ? "default" : "pointer")};
     background-color: ${(props) => props.color};
     &:hover {
-        background-color: #c2c2c2;
+        background-color: ${(props) => (props.disabled === true ? "none" : "#c2c2c2")};
     }
 `;
 const Container = styled.div`

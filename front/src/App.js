@@ -11,6 +11,7 @@ import Admin from "./components/admin/Admin";
 import ManagePosts from "./components/admin/ManagePosts";
 import ManageUsers from "./components/admin/ManageUsers";
 import ManageQuestions from "./components/admin/ManageQuestions";
+import ManageBoard from "./components/admin/ManageBoard";
 import QuestionEditor from "./components/admin/QuestionEditor";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -24,9 +25,7 @@ const theme = createTheme({
 });
 function App() {
     const dispatch = useDispatch();
-    const userState = useSelector((state) =>
-        state ? state.userReducer.user : undefined
-    );
+    const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
 
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
@@ -57,20 +56,18 @@ function App() {
             <Router>
                 <Routes>
                     <Route path="/" exact element={<Home />} />
-                    {!userState?.authorized && (
-                        <Route path="/auth" exact element={<EliceUserAuth />} />
-                    )}
+                    {!userState?.authorized && <Route path="/auth" exact element={<EliceUserAuth />} />}
                     <Route path="/test" exact element={<GoogleLoading />} />
                     <Route path="*" element={<Home />} />
-                    <Route path="/admin" element={<Admin />}>
-                        <Route path="posts" element={<ManagePosts />} />
-                        <Route path="users" element={<ManageUsers />} />
-                        <Route path="questions" element={<ManageQuestions />} />
-                    </Route>
-                    <Route
-                        path="editquestion/:id"
-                        element={<QuestionEditor />}
-                    />
+                    {(userState?.admin === 0 || userState?.admin === 1) && (
+                        <Route path="/admin" element={<Admin />}>
+                            <Route path="board" element={<ManageBoard />} />
+                            <Route path="posts" element={<ManagePosts />} />
+                            <Route path="users" element={<ManageUsers />} />
+                            <Route path="questions" element={<ManageQuestions />} />
+                        </Route>
+                    )}
+                    <Route path="editquestion/:id" element={<QuestionEditor />} />
                 </Routes>
             </Router>
         </ThemeProvider>
