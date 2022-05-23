@@ -13,6 +13,7 @@ function UserHome() {
     const [posts, setPosts] = useState(undefined);
     const [tags, setTags] = useState(undefined);
     const [goal, setGoal] = useState(undefined);
+    const [page, setPage] = useState(1);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const userState = useSelector((state) =>
@@ -35,7 +36,7 @@ function UserHome() {
         }
 
         setIsFetchCompleted(true);
-        getPosts(setPosts);
+        // getPosts(posts, setPosts, page);
         getTags(setTags);
     }, [userAuthorized, navigate]);
 
@@ -56,7 +57,12 @@ function UserHome() {
                         </div>
                     </ContentsSide>
                     <Contents>
-                        <PostList posts={posts} />
+                        <PostList
+                            posts={posts}
+                            setPosts={setPosts}
+                            page={page}
+                            setPage={setPage}
+                        />
                     </Contents>
                     <ContentsSide>{goal && <Goal goal={goal} />}</ContentsSide>
                 </Container>
@@ -85,7 +91,8 @@ const ContentsSide = styled.div`
 
 const Contents = styled.div`
     width: 50%;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     // &::-webkit-scrollbar {
     //     width: 10px;
     // }
