@@ -35,6 +35,15 @@ class boardService {
   }
 
   static async getBoardListByPage({ page, perPage }) {
+    if (
+      !page ||
+      !perPage ||
+      typeof page !== "number" ||
+      typeof perPage !== "number"
+    ) {
+      const errorMessage = findError("게시판 리스트");
+      throw new Error(errorMessage);
+    }
     const boardList = await boardModel.findBoardListByPage({ page, perPage });
     return boardList;
   }

@@ -40,21 +40,15 @@ class boardModel {
   }
 
   static async findBoardListByPage({ page, perPage }) {
-    try {
-      const { totalPage, rows } = await boardPagination({
-        page,
-        perPage,
-      });
-      return {
-        status: "succ",
-        payload: { totalPage, boardList: rows },
-      };
-    } catch (error) {
-      return {
-        status: "failed",
-        message: "게시글이 없네요..",
-      };
-    }
+    const { totalPage, rows } = await boardPagination({
+      page,
+      perPage,
+    });
+    const result = {
+      totalPage,
+      boardList: rows,
+    };
+    return result;
   }
 
   static async update({ boardId, toUpdate }) {
