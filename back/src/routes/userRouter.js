@@ -11,7 +11,6 @@ const userRouter = Router();
  *  description: User API
  */
 
-userRouter.post("/user/sign", userController.sign);
 /**
  * @swagger
  * paths:
@@ -44,8 +43,8 @@ userRouter.post("/user/sign", userController.sign);
  *                          $ref: '#/components/schemas/Users'
  *
  */
+userRouter.post("/user/sign", userController.sign);
 
-userRouter.post("/user/auth", loginRequired, userController.auth);
 /**
  * @swagger
  * paths:
@@ -79,66 +78,37 @@ userRouter.post("/user/auth", loginRequired, userController.auth);
  *                          $ref: '#/components/schemas/Users'
  *
  */
+userRouter.post("/user/auth", loginRequired, userController.auth);
 
-userRouter.delete("/user/current", loginRequired, userController.deleteUser);
 /**
  * @swagger
  * paths:
- *  /user/current
+ *  /user/current:
  *   delete:
  *    tags: [User]
- *    summary: delete User by current logined userId
+ *    summary: delete User by logined userToken
+ *    description: 유저 탈퇴
  *    responses:
  *      200:
  *        description: succ
  *        content:
  *          application/json:
- *                  schema:
- *                      type: object
- *                      properties:
- *                          status:
- *                              type: string
- *                          payload:
- *                              type: object
- *                              properties:
- *                                  success:
- *                                      type: integer
- *                                  failed:
- *                                      type: integer
- *
- */
-
-userRouter.get("/users/:userId", userController.getUser);
-/**
- * @swagger
- * paths:
- *  /users/:userId:
- *   get:
- *    tags: [User]
- *    summary: get user Info by userId
- *    parameters:
- *          - name: userId
- *            in: parameters
- *            required: true
- *            description: __id(userId)
  *            schema:
- *              type: string
- *    responses:
- *      200:
- *        description: succ
- *        content:
- *            application/json:
- *              schema:
- *                  type: object
- *                  properties:
- *                      status:
- *                          type: string
- *                      payload:
- *                          $ref: '#/components/schemas/Users'
+ *                type: object
+ *                properties:
+ *                    status:
+ *                        type: string
+ *                    payload:
+ *                        type: object
+ *                        properties:
+ *                            success:
+ *                                type: integer
+ *                            failed:
+ *                                type: integer
  *
  */
+userRouter.delete("/user/current", loginRequired, userController.deleteUser);
 
-userRouter.get("/user/current", loginRequired, userController.getCurrentUser);
 /**
  * @swagger
  * paths:
@@ -161,5 +131,6 @@ userRouter.get("/user/current", loginRequired, userController.getCurrentUser);
  *                          $ref: '#/components/schemas/Users'
  *
  */
+userRouter.get("/user/current", loginRequired, userController.getCurrentUser);
 
 export { userRouter };
