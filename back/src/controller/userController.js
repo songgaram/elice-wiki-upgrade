@@ -6,9 +6,7 @@ class userController {
     static async sign(req, res, next) {
         try {
             const { accessToken } = req.body;
-            const { data } = await axios.get(
-                `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`
-            );
+            const { data } = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`);
             const user = await userService.findOrCreate({ data });
             res.status(201).json({ user });
         } catch (error) {
@@ -26,6 +24,18 @@ class userController {
         }
     }
 
+    static async getUser(req, res, next) {
+        const { userId } = req.params;
+        try {
+            const user = await userService.findUser({ userId });
+            if (!user) {
+                res.status(200).json({ status: "fail", payload: { message: "User not found" } });
+            }
+            res.status(200).json({ status: "success", payload: user });
+        } catch (error) {
+            next(error);
+        }
+    }
     static async getCurrentUser(req, res, next) {
         const { userId } = req.currentUser;
         try {
@@ -102,9 +112,7 @@ class userController {
                     userId,
                     fieldToUpdate,
                 });
-                return res
-                    .status(200)
-                    .json({ status: "success", payload: result });
+                return res.status(200).json({ status: "success", payload: result });
             }
             const result = { status: "fail", payload: "정답이 아닙니다." };
             return res.status(200).json(result);
