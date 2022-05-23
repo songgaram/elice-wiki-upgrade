@@ -21,6 +21,14 @@ const Admin = () => {
 
     return (
         <div style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+            <LogoHome
+                src="/image/logo_small.png"
+                alt="TOHOME"
+                onClick={() => {
+                    navigate("/");
+                }}
+                draggable="false"
+            />
             <NavBar>
                 <NavBtn onClick={clickHandler} name="users" color={selected === "users" ? "#c2c2c2" : "#e0e0e0"}>
                     유저관리
@@ -72,6 +80,16 @@ const Container = styled.div`
     align-items: center;
     display: flex;
     flex-direction: column;
+`;
+const LogoHome = styled.img`
+    -webkit-user-select: none;
+    cursor: pointer;
+    width: 50px;
+    position: absolute;
+    top: 10px;
+    &:hover {
+        opacity: 0.6;
+    }
 `;
 
 export default Admin;
