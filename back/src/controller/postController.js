@@ -11,8 +11,7 @@ class postController {
             // TODO: 텍스트를 어떻게 받아와야 잘 저장이 될지 고민..
             // 아래 방법으로는 md파일에 저장해도 제대로 보여주지 못함
             // front에서 바로 md파일을 만들 수 있는지 찾아보기, 백에서도 동일하게
-            const body =
-                "# title\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello";
+            const body = "# title\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello";
 
             const newPost = await postService.addPost({
                 user_id,
@@ -88,6 +87,31 @@ class postController {
         } catch (error) {
             next(error);
         }
+    }
+
+    static async deletePost(req, res, next) {
+        const postIdList = req.params.postId.split(",");
+        const deleteResult = { success: 0, failed: 0 };
+        Promise.all(
+            postIdList.map(async (id) => {
+                try {
+                    const result = await postService.deletePost({ postId: id });
+                    if (result === 0) {
+                        deleteResult.failed += 1;
+                    } else {
+                        deleteResult.success += 1;
+                    }
+                } catch (error) {
+                    next(error);
+                }
+            })
+        ).then(() => {
+            const body = {
+                status: "success",
+                payload: { ...deleteResult },
+            };
+            res.status(200).json(body);
+        });
     }
 }
 
