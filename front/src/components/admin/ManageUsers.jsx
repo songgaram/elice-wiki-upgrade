@@ -71,7 +71,7 @@ const ManageUsers = () => {
         <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
             <div style={{ width: "100%", height: "100%" }}>
                 <ControllerContainer>
-                    <Button variant="outlined" onClick={controller} name="deleteUser">
+                    <Button variant="outlined" onClick={controller} name="deleteUser" color="error">
                         유저삭제
                     </Button>
                     <Button variant="outlined" onClick={controller} name="auth">
