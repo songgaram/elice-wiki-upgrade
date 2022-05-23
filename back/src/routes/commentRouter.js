@@ -32,16 +32,16 @@ const commentRouter = Router();
  *                   type: string
  *                 content:
  *                   type: string
- *     responses:
- *       201:
- *         description: 새 댓글 생성 성공!!
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
+ *       responses:
+ *         201:
+ *           description: 새 댓글 생성 성공!!
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   status:
+ *                     type: string
  */
 commentRouter.post(
   "/comments/comment",
@@ -70,16 +70,16 @@ commentRouter.post(
  *                   $ref: '#/components/schemas/Comment'
  *                 content:
  *                   type: string
- *     responses:
- *       201:
- *         description: 새 대댓글 생성 성공!!
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
+ *       responses:
+ *         201:
+ *           description: 새 대댓글 생성 성공!!
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   status:
+ *                     type: string
  */
 commentRouter.post(
   "/comments/recomment",
