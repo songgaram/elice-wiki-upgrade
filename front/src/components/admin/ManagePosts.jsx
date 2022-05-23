@@ -28,7 +28,7 @@ const ManageUsers = () => {
 
     const checkAll = (e) => {
         if (e.target.checked) {
-            const idList = data.map((datum) => datum.post_index);
+            const idList = data.map((datum) => datum.post_id);
             setCheckedList(idList);
         } else {
             setCheckedList([]);
@@ -36,10 +36,10 @@ const ManageUsers = () => {
     };
     const checkHandler = (e) => {
         if (e.target.checked) {
-            const newCheckedList = [...checkedList, parseInt(e.target.value)];
+            const newCheckedList = [...checkedList, e.target.value];
             setCheckedList(newCheckedList);
         } else {
-            const newCheckedList = checkedList.filter((id) => id !== parseInt(e.target.value));
+            const newCheckedList = checkedList.filter((id) => id !== e.target.value);
             setCheckedList(newCheckedList);
         }
     };
@@ -48,20 +48,10 @@ const ManageUsers = () => {
     };
     const controller = async (e) => {
         const checkedIdString = checkedList.join(",");
-        if (e.target.name === "deleteQuestion") {
-            await Api.delete("auth", checkedIdString);
-            alert(`질문을 삭제하였습니다.`);
+        if (e.target.name === "deletePost") {
+            const { data } = await Api.delete("posts", checkedIdString);
+            alert(`${data.payload.success}개의 게시글이 삭제되었습니다.`);
             getData();
-        } else if (e.target.name === "setCurrentQuestion") {
-            if (checkedList.length > 1) {
-                alert("현재 질문은 1개만 설정할 수 있습니다.");
-            } else {
-                const { data } = await Api.put(`auth/${checkedList[0]}`, { current: true });
-                alert(`Id: ${data.payload.id}를 현재 질문으로 설정하였습니다.`);
-                getData();
-            }
-        } else if (e.target.name === "createNewQuestion") {
-            navigate("/editquestion/new");
         }
         setCheckedList([]);
         document.getElementById("checkAll").checked = false;
@@ -70,14 +60,8 @@ const ManageUsers = () => {
         <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
             <div style={{ width: "100%", height: "100%" }}>
                 <ControllerContainer>
-                    <Button variant="outlined" onClick={controller} name="setCurrentQuestion">
-                        현재 질문으로 설정
-                    </Button>
-                    <Button variant="outlined" onClick={controller} name="createNewQuestion">
-                        새로만들기
-                    </Button>
-                    <Button variant="outlined" onClick={controller} name="deleteQuestion">
-                        제거하기
+                    <Button variant="outlined" onClick={controller} name="deletePost">
+                        삭제하기
                     </Button>
                 </ControllerContainer>
                 <Table>
@@ -99,13 +83,13 @@ const ManageUsers = () => {
                         {data &&
                             data.map((datum, index) => {
                                 return (
-                                    <Tr key={`users/${index}`} color={checkedList.includes(datum.post_index) ? "#e0e0e0" : "white"}>
+                                    <Tr key={`users/${index}`} color={checkedList.includes(datum.post_id) ? "#e0e0e0" : "white"}>
                                         <Td>
                                             <input
                                                 type="checkbox"
-                                                value={datum.post_index}
+                                                value={datum.post_id}
                                                 onClick={checkHandler}
-                                                checked={checkedList.includes(datum.post_index) ? true : false}
+                                                checked={checkedList.includes(datum.post_id) ? true : false}
                                             />
                                         </Td>
                                         <Td>{datum.post_index}</Td>

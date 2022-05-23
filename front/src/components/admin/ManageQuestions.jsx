@@ -9,13 +9,13 @@ const ManageUsers = () => {
     const [checkedList, setCheckedList] = React.useState([]);
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
-    const [totalCount, setTotalCount] = React.useState();
+    const [totalPage, setTotalPage] = React.useState();
     const perPage = 15;
 
     const getData = React.useCallback(async () => {
-        const { data } = await Api.get(`auths?perPage=${perPage}&page=${page}`);
+        const { data } = await Api.getQuery("auths", `perPage=${perPage}&page=${page}`);
         setData(data.payload.rows);
-        setTotalCount(data.payload.count);
+        setTotalPage(Math.ceil(data.payload?.count / perPage));
     });
     const pageHandler = (event, value) => {
         setPage(value);
@@ -118,9 +118,9 @@ const ManageUsers = () => {
                     </Tbody>
                 </Table>
             </div>
-            {totalCount > perPage && (
+            {totalPage && (
                 <Stack spacing={2}>
-                    <Pagination count={Math.ceil(totalCount / perPage)} page={page} onChange={pageHandler} color="primary" />
+                    <Pagination count={totalPage} page={page} onChange={pageHandler} color="primary" />
                 </Stack>
             )}
         </div>

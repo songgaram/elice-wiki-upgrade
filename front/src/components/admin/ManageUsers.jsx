@@ -8,14 +8,14 @@ const ManageUsers = () => {
     const [data, setData] = React.useState();
     const [checkedList, setCheckedList] = React.useState([]);
     const [page, setPage] = React.useState(1);
-    const [totalCount, setTotalCount] = React.useState();
+    const [totalPage, setTotalPage] = React.useState();
     const perPage = 15;
     const user = useSelector((state) => (state ? state.userReducer.user : undefined));
 
     const getData = React.useCallback(async () => {
-        const { data } = await Api.get(`users?page=${page}&perPage=${perPage}`);
+        const { data } = await Api.getQuery("users", `page=${page}&perPage=${perPage}`);
         setData(data.payload.rows);
-        setTotalCount(data.payload.count);
+        setTotalPage(Math.ceil(data.payload?.count / perPage));
     });
 
     React.useEffect(() => {
@@ -80,16 +80,12 @@ const ManageUsers = () => {
                     <Button variant="outlined" onClick={controller} name="cancleAuth">
                         인증해제
                     </Button>
-                    {user?.admin === 0 && (
-                        <Button variant="outlined" onClick={controller} name="giveAdmin">
-                            어드민 권한부여
-                        </Button>
-                    )}
-                    {user?.admin === 0 && (
-                        <Button variant="outlined" onClick={controller} name="takeAdmin">
-                            어드민 권한박탈
-                        </Button>
-                    )}
+                    <Button variant="outlined" onClick={controller} name="giveAdmin" disabled={user?.admin === 0 ? false : true}>
+                        어드민 권한부여
+                    </Button>
+                    <Button variant="outlined" onClick={controller} name="takeAdmin" disabled={user?.admin === 0 ? false : true}>
+                        어드민 권한박탈
+                    </Button>
                 </ControllerContainer>
                 <Table>
                     <Thead>
@@ -130,9 +126,9 @@ const ManageUsers = () => {
                     </Tbody>
                 </Table>
             </div>
-            {totalCount > perPage && (
+            {totalPage && (
                 <Stack spacing={2}>
-                    <Pagination count={Math.ceil(totalCount / perPage)} page={page} onChange={pageHandler} color="primary" />
+                    <Pagination count={totalPage} page={page} onChange={pageHandler} color="primary" />
                 </Stack>
             )}
         </div>
