@@ -2,18 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../../store/actions/userAction";
-import PostList from "./PostList";
+import Loader from "../../Loader";
 import WeekList from "./WeekList";
 import Goal from "./Goal";
 import TagBtn from "./TagBtn";
-import { getPosts, getTags } from "./HomeData";
+import Post from "./Post";
+import { getTags } from "./HomeData";
 import styled from "styled-components";
+import * as Api from "../../../api";
 
 function UserHome() {
-    const [posts, setPosts] = useState(undefined);
+    const [posts, setPosts] = useState([]);
     const [tags, setTags] = useState(undefined);
     const [goal, setGoal] = useState(undefined);
+    const [target, setTarget] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
     const [page, setPage] = useState(1);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const userState = useSelector((state) =>
@@ -29,20 +34,60 @@ function UserHome() {
         navigate("/");
     };
 
+    const getPosts = async () => {
+        try {
+            const { data } = await Api.getQuery(
+                "posts",
+                `page=${page}&perPage=10`
+            );
+            setPosts((prev) => [...prev, ...data.payload.postListInfo]);
+        } catch (e) {
+            console.log("Post-List를 가져오는데 실패하였습니다.", e);
+        }
+    };
     useEffect(() => {
         if (!userAuthorized) {
             navigate("/auth");
             return;
         }
-
-        setIsFetchCompleted(true);
-        // getPosts(posts, setPosts, page);
         getTags(setTags);
-    }, [userAuthorized, navigate]);
+        setIsFetchCompleted(true);
+    }, []);
+
+    const getNextpage = () => {
+        setPage((curr) => curr + 1);
+    };
+
+    const getMorePosts = async () => {
+        setIsLoaded(true);
+        await getPosts(setPosts, page);
+        setIsLoaded(false);
+    };
+
+    const onIntersect = async ([entry], observer) => {
+        if (entry.isIntersecting && !isLoaded) {
+            getNextpage();
+            observer.unobserve(entry.target);
+            await getMorePosts();
+            observer.observe(entry.target);
+        }
+    };
+
+    useEffect(() => {
+        let observer;
+        if (target) {
+            observer = new IntersectionObserver(onIntersect, {
+                threshold: 0.4,
+            });
+            observer.observe(target);
+        }
+        return () => observer && observer.disconnect();
+    }, [target]);
 
     if (!isFetchCompleted) {
         return <div>로딩중</div>;
     }
+
     return (
         <>
             <div style={{ minHeight: "100vh", height: "auto" }}>
@@ -57,12 +102,19 @@ function UserHome() {
                         </div>
                     </ContentsSide>
                     <Contents>
-                        <PostList
-                            posts={posts}
-                            setPosts={setPosts}
-                            page={page}
-                            setPage={setPage}
-                        />
+                        <>
+                            {posts &&
+                                posts.map((post, idx) => (
+                                    <Post
+                                        key={`post_${idx}`}
+                                        post={post}
+                                        idx={idx}
+                                    />
+                                ))}
+                            <TargetElement ref={setTarget}>
+                                {isLoaded && <Loader />}
+                            </TargetElement>
+                        </>
                     </Contents>
                     <ContentsSide>{goal && <Goal goal={goal} />}</ContentsSide>
                 </Container>
@@ -72,6 +124,15 @@ function UserHome() {
 }
 
 export default UserHome;
+
+const TargetElement = styled.div`
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+`;
 
 const Container = styled.div`
     display: flex;

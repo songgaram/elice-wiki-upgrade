@@ -34,7 +34,7 @@ function PostList({ posts, setPosts, page, setPage, perPage }) {
             observer.observe(target.current);
         }
         return () => observer && observer.disconnect();
-    }, []);
+    }, [target]);
 
     return (
         <>
@@ -56,5 +56,3 @@ const TargetElement = styled.div`
     text-align: center;
     align-items: center;
 `;
-
-export default PostList;

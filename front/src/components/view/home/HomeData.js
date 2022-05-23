@@ -1,13 +1,13 @@
 import * as Api from "../../../api";
 
-export const getPosts = async (posts, setPosts, page, setPage) => {
-    try {
-        const { data } = await Api.getQuery("posts", `page=${page}&perPage=10`);
-        setPosts(...posts, ...data.payload.postListInfo);
-    } catch (e) {
-        console.log("Post-List를 가져오는데 실패하였습니다.", e);
-    }
-};
+// export const getPosts = async (setPosts, page) => {
+//     try {
+//         const { data } = await Api.getQuery("posts", `page=${page}&perPage=10`);
+//         setPosts((prev) => [...prev, ...data.payload.postListInfo]);
+//     } catch (e) {
+//         console.log("Post-List를 가져오는데 실패하였습니다.", e);
+//     }
+// };
 
 export const handleWeekClick = async (setPosts, week) => {
     try {
