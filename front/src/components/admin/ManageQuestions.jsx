@@ -71,7 +71,7 @@ const ManageUsers = () => {
                     <Button variant="outlined" onClick={controller} name="createNewQuestion">
                         새로만들기
                     </Button>
-                    <Button variant="outlined" onClick={controller} name="deleteQuestion">
+                    <Button variant="outlined" onClick={controller} name="deleteQuestion" color="error">
                         제거하기
                     </Button>
                 </ControllerContainer>
@@ -163,7 +163,7 @@ const ControllerContainer = styled.div`
 `;
 const Title = styled.a`
     text-decoration: underline;
-    color: black;
+    color: #7353ea;
     cursor: pointer;
     &:hover {
         color: gray;

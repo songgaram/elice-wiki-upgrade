@@ -2,15 +2,36 @@ import React from "react";
 import * as Api from "../../api";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Button, Pagination, Stack } from "@mui/material";
+import { Button, Pagination, Stack, Popover, Typography } from "@mui/material";
 
 const ManageUsers = () => {
-    const [data, setData] = React.useState();
+    const [data, setData] = React.useState(null);
+    const [user, setUser] = React.useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(null);
     const [checkedList, setCheckedList] = React.useState([]);
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
-    const [totalPage, setTotalPage] = React.useState();
+    const [totalPage, setTotalPage] = React.useState(null);
     const perPage = 15;
+
+    const handleClick = (event) => {
+        const userId = event.currentTarget.innerText;
+        setAnchorEl(event.currentTarget);
+        getUser(userId);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const open = Boolean(anchorEl);
+    const id = open ? "simple-popover" : undefined;
+    const getUser = React.useCallback(async (userId) => {
+        try {
+            const { data } = await Api.get("users", userId);
+            setUser(data.payload);
+        } catch (e) {
+            console.log(e);
+        }
+    });
 
     const getData = React.useCallback(async () => {
         try {
@@ -60,7 +81,7 @@ const ManageUsers = () => {
         <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
             <div style={{ width: "100%", height: "100%" }}>
                 <ControllerContainer>
-                    <Button variant="outlined" onClick={controller} name="deletePost">
+                    <Button variant="outlined" onClick={controller} name="deletePost" color="error">
                         삭제하기
                     </Button>
                 </ControllerContainer>
@@ -73,8 +94,6 @@ const ManageUsers = () => {
                             <Th>No.</Th>
                             <Th>PostId</Th>
                             <Th>Title</Th>
-                            <Th>Week</Th>
-                            <Th>Tags</Th>
                             <Th>작성자</Th>
                             <Th>최종수정</Th>
                         </Tr>
@@ -103,9 +122,23 @@ const ManageUsers = () => {
                                                 {datum.title}
                                             </Title>
                                         </Td>
-                                        <Td>{datum.week}</Td>
-                                        <Td>{datum.tag.join(" ")}</Td>
-                                        <Td>{datum.user_id}</Td>
+                                        <Td>
+                                            <a aria-describedby={id} onClick={handleClick}>
+                                                {datum.user_id}
+                                            </a>
+                                        </Td>
+                                        <Popover
+                                            id={id}
+                                            open={open}
+                                            anchorEl={anchorEl}
+                                            onClose={handleClose}
+                                            anchorOrigin={{
+                                                vertical: "bottom",
+                                                horizontal: "left",
+                                            }}
+                                        >
+                                            <Typography sx={{ p: 2 }}>{user && JSON.stringify(user)}</Typography>
+                                        </Popover>
                                         <Td>{datum.lastmod_user}</Td>
                                     </Tr>
                                 );
@@ -158,7 +191,7 @@ const ControllerContainer = styled.div`
 `;
 const Title = styled.a`
     text-decoration: underline;
-    color: black;
+    color: #7353ea;
     cursor: pointer;
     &:hover {
         color: gray;
