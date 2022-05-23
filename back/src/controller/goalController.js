@@ -11,7 +11,7 @@ class goalController {
             goal3,
             week,
         });
-        if (insert.status === "failed") {
+        if (insert.message) {
             res.status(400).json(insert.message);
         } else {
             res.status(200).json(insert.payload);

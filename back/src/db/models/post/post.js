@@ -50,6 +50,7 @@ const postPagination = async ({ page, perPage, query = null }) => {
     return { totalPage, rows };
 };
 
+// post model class
 class postModel {
     // post 추가
     static async insertPost({ newPost }) {
