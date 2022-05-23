@@ -15,8 +15,8 @@ const EliceUserAuth = () => {
 
     const getAuthData = async () => {
         try {
-            const res = await Api.get("auth");
-            setAuthData(res.data);
+            const { data } = await Api.get("auth");
+            setAuthData(data.payload);
         } catch (error) {
             console.log("데이터를 불러오는데 실패햐였습니다.", error);
         }
@@ -55,14 +55,9 @@ const EliceUserAuth = () => {
                     }}
                 />
             </Title>
-            <SubTitle>
-                * 띄어쓰기를 지켜서 작성해야 올바르게 적용됩니다.
-            </SubTitle>
+            <SubTitle>* 띄어쓰기를 지켜서 작성해야 올바르게 적용됩니다.</SubTitle>
 
-            <form
-                onSubmit={handleSubmit}
-                style={{ width: "30%", display: "flex", flexDirection: "row" }}
-            >
+            <form onSubmit={handleSubmit} style={{ width: "30%", display: "flex", flexDirection: "row" }}>
                 <TextField
                     variant="outlined"
                     size="small"
