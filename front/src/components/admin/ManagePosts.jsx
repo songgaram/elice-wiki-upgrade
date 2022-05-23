@@ -9,18 +9,23 @@ const ManageUsers = () => {
     const [checkedList, setCheckedList] = React.useState([]);
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
-    const [totalCount, setTotalCount] = React.useState();
+    const [totalPage, setTotalPage] = React.useState();
     const perPage = 15;
 
     const getData = React.useCallback(async () => {
-        const { data } = await Api.get(`posts?perPage=${perPage}&page=${page}`);
-        setData(data.payload.rows);
-        setTotalCount(data.payload.count);
+        try {
+            const { data } = await Api.getQuery("posts", `page=${page}&perPage=${perPage}`);
+            setData(data.payload?.postListInfo);
+            setTotalPage(data.payload?.totalPage);
+        } catch (e) {
+            console.log(e);
+        }
     });
 
     React.useEffect(() => {
         getData();
     }, [page]);
+
     const checkAll = (e) => {
         if (e.target.checked) {
             const idList = data.map((datum) => datum.post_index);
@@ -108,14 +113,14 @@ const ManageUsers = () => {
                                         <Td>
                                             <Title
                                                 onClick={() => {
-                                                    navigate(`/editquestion/${datum.title}`);
+                                                    navigate(`/admin/posts`);
                                                 }}
                                             >
                                                 {datum.title}
                                             </Title>
                                         </Td>
                                         <Td>{datum.week}</Td>
-                                        <Td>{datum.tag}</Td>
+                                        <Td>{datum.tag.join(" ")}</Td>
                                         <Td>{datum.user_id}</Td>
                                         <Td>{datum.lastmod_user}</Td>
                                     </Tr>
@@ -124,9 +129,9 @@ const ManageUsers = () => {
                     </Tbody>
                 </Table>
             </div>
-            {totalCount > perPage && (
+            {totalPage && (
                 <Stack spacing={2}>
-                    <Pagination count={Math.ceil(totalCount / perPage)} page={page} onChange={pageHandler} color="primary" />
+                    <Pagination count={totalPage} page={page} onChange={pageHandler} color="primary" />
                 </Stack>
             )}
         </div>
