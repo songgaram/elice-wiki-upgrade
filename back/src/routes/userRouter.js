@@ -4,7 +4,6 @@ import { loginRequired } from "../middlewares/loginRequired";
 import { userController } from "../controller/userController.js";
 const userRouter = Router();
 
-userRouter.post("/user/sign", userController.sign);
 /**
  * @swagger
  * tags:
@@ -12,6 +11,7 @@ userRouter.post("/user/sign", userController.sign);
  *  description: User API
  */
 
+userRouter.post("/user/sign", userController.sign);
 /**
  * @swagger
  * paths:
@@ -31,16 +31,17 @@ userRouter.post("/user/sign", userController.sign);
  *                  example: "ya29.a0ARrdaM8D9f31qE-bxSjjOy84qg9rGmYgPlM4TTmokf61_s7rhhnfvYZz7SLZksutwSieZBIBv8WLlLDkhKeS4--tgGS9D0oU2_xQjWsCjAOgUtFynn_h5cKOJRWSs5C1V0Su1mnLWFwUo8jkjjQlzMXYqwR6"
  *
  *    responses:
- *      200:
- *        description: success
+ *      201:
+ *        description: succ
  *        content:
- *          application/json:
- *            properties:
- *              status:
- *                type: string
- *                example: "success"
- *              payload:
- *                type: string
+ *            application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                      payload:
+ *                          $ref: '#/components/schemas/Users'
  *
  */
 
@@ -52,7 +53,6 @@ userRouter.post("/user/auth", loginRequired, userController.auth);
  *   post:
  *    tags: [User]
  *    summary: authoriztion User by Q&A
- *    requestHeaders: [Authorization]
  *    requestBody:
  *      required: true
  *      content:
@@ -66,20 +66,100 @@ userRouter.post("/user/auth", loginRequired, userController.auth);
  *
  *    responses:
  *      200:
- *        description: success
+ *        description: succ
  *        content:
- *          application/json:
- *            properties:
- *              status:
- *                type: string
- *                example: "success"
- *              payload:
- *                type: object
+ *            application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                          example: "succ"
+ *                      payload:
+ *                          $ref: '#/components/schemas/Users'
  *
  */
-userRouter.post("/user/auth", loginRequired, userController.auth);
-userRouter.delete("/users/:userId", userController.deleteUser);
+
+userRouter.delete("/user/current", loginRequired, userController.deleteUser);
+/**
+ * @swagger
+ * paths:
+ *  /user/current
+ *   delete:
+ *    tags: [User]
+ *    summary: delete User by current logined userId
+ *    responses:
+ *      200:
+ *        description: succ
+ *        content:
+ *          application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          status:
+ *                              type: string
+ *                          payload:
+ *                              type: object
+ *                              properties:
+ *                                  success:
+ *                                      type: integer
+ *                                  failed:
+ *                                      type: integer
+ *
+ */
+
 userRouter.get("/users/:userId", userController.getUser);
+/**
+ * @swagger
+ * paths:
+ *  /users/:userId:
+ *   get:
+ *    tags: [User]
+ *    summary: get user Info by userId
+ *    parameters:
+ *          - name: userId
+ *            in: parameters
+ *            required: true
+ *            description: __id(userId)
+ *            schema:
+ *              type: string
+ *    responses:
+ *      200:
+ *        description: succ
+ *        content:
+ *            application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                      payload:
+ *                          $ref: '#/components/schemas/Users'
+ *
+ */
+
 userRouter.get("/user/current", loginRequired, userController.getCurrentUser);
+/**
+ * @swagger
+ * paths:
+ *  /user/current:
+ *   get:
+ *    tags: [User]
+ *    summary: get user Info by logined userToken
+ *
+ *    responses:
+ *      200:
+ *        description: succ
+ *        content:
+ *            application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                      payload:
+ *                          $ref: '#/components/schemas/Users'
+ *
+ */
 
 export { userRouter };
