@@ -26,7 +26,15 @@ const postRouter = Router();
  *      content:
  *        application/json:
  *          schema:
- *              $ref: '#/components/schemas/Post'
+ *              type: object
+ *              properties:
+ *                  week:
+ *                      type: string
+ *                  tag:
+ *                      items:
+ *                          type: string
+ *                  title:
+ *                      type: string
  *    responses:
  *      200:
  *       description: 새 게시글 생성 성공!!

@@ -1,10 +1,18 @@
 import { postService } from "../services/postService";
+import { userService } from "../services/userService";
 
 class postController {
     static async addPost(req, res, next) {
         try {
             // 요청으로부터 데이터 받아오기
-            const { user_id, week, tag, title, lastmod_user } = req.body;
+            const user_id = req.currentUser.userId;
+            const { week, tag, title } = req.body;
+            const getUser = await userService.findUser({
+                userId: user_id,
+            });
+            const lastmod_user = getUser.name;
+            console.log(lastmod_user);
+
             // tag는 리스트로 들어옵니다
 
             // body에 text가 저장되어 올 것
