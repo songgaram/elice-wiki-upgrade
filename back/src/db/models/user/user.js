@@ -43,7 +43,15 @@ class userModel {
             const prPage = parseInt(perPage);
             const offset = prPage * (pageNum - 1);
             try {
-                const user = await models.Users.findAndCountAll({ limit: prPage, offset: offset });
+                const user = await models.Users.findAndCountAll({
+                    limit: prPage,
+                    offset: offset,
+                    where: {
+                        admin: {
+                            [Op.ne]: 0,
+                        },
+                    },
+                });
                 return user;
             } catch (err) {
                 console.log(err.message);
