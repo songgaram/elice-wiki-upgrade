@@ -61,6 +61,19 @@ class boardController {
     }
   }
 
+  static async getBoardListByPage(req, res, next) {
+    try {
+      const { page, perPage } = req.query;
+      const boardList = await boardService.getBoardListByPage({
+        page: Number(page),
+        perPage: Number(perPage),
+      });
+      res.status(200).json(boardList);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async setBoard(req, res, next) {
     try {
       const { boardId } = req.params;

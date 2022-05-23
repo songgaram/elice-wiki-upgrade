@@ -34,6 +34,11 @@ class boardService {
     return boardList;
   }
 
+  static async getBoardListByPage({ page, perPage }) {
+    const boardList = await boardModel.findBoardListByPage({ page, perPage });
+    return boardList;
+  }
+
   static async setBoard({ boardId, toUpdate }) {
     let board = await boardModel.findByBoardId({ boardId });
     if (!board) {
