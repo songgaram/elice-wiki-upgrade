@@ -56,7 +56,7 @@ boardRouter.post("/boards/board", loginRequired, boardController.addBoard);
  *      tags: [Board]
  *      summary: find board by boardId
  *      security:
- *	       - jwt: []
+ *	      - jwt: []
  *      parameters:
  *        - name: boardId
  *          in: path
@@ -80,12 +80,12 @@ boardRouter.get("/boards/:boardId", loginRequired, boardController.getBoard);
 /**
  * @swagger
  * paths:
- *  /boardlist/{userId}:
+ *  /boardlist/user/{userId}:
  *    get:
  *      tags: [Board]
  *      summary: find boardlist by userId
  *      security:
- *	       - jwt: []
+ *	      - jwt: []
  *      parameters:
  *        - name: userId
  *          in: path
@@ -105,7 +105,7 @@ boardRouter.get("/boards/:boardId", loginRequired, boardController.getBoard);
  *                    $ref: '#/components/schemas/Board'
  */
 boardRouter.get(
-  "/boardlist/:userId",
+  "/boardlist/user/:userId",
   loginRequired,
   boardController.getBoardListByUserId
 );
@@ -118,7 +118,7 @@ boardRouter.get(
  *      tags: [Board]
  *      summary: find boardlist
  *      security:
- *	       - jwt: []
+ *	      - jwt: []
  *      responses:
  *        200:
  *          description: succ
@@ -144,6 +144,50 @@ boardRouter.get(
  *                        type: string
  */
 boardRouter.get("/boardlist", loginRequired, boardController.getBoardList);
+
+/**
+ * @swagger
+ * paths:
+ *  /boardlist/pageinfo:
+ *    get:
+ *      tags: [Board]
+ *      summary: find boardlist by page
+ *      security:
+ *	      - jwt: []
+ *      parameters:
+ *        - name: page
+ *          in: query
+ *          required: false
+ *          schema:
+ *            type: string
+ *        - name: perPage
+ *          in: query
+ *          required: false
+ *          schema:
+ *            type: string
+ *      responses:
+ *        200:
+ *          description: succ
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  status:
+ *                    type: string
+ *                  payload:
+ *                    type: object
+ *                    properties:
+ *                      totalPage:
+ *                        type: number
+ *                      boardList:
+ *                        $ref: '#/components/schemas/Board'
+ */
+boardRouter.get(
+  "/boardlist/pageinfo",
+  loginRequired,
+  boardController.getBoardListByPage
+);
 
 /**
  * @swagger
