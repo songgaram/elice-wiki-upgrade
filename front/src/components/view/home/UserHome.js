@@ -13,6 +13,7 @@ function UserHome() {
     const [posts, setPosts] = useState(undefined);
     const [tags, setTags] = useState(undefined);
     const [goal, setGoal] = useState(undefined);
+    const [page, setPage] = useState(1);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const userState = useSelector((state) =>
@@ -35,7 +36,7 @@ function UserHome() {
         }
 
         setIsFetchCompleted(true);
-        getPosts(setPosts);
+        // getPosts(posts, setPosts, page);
         getTags(setTags);
     }, [userAuthorized, navigate]);
 
@@ -51,19 +52,19 @@ function UserHome() {
                 <WeekList setPosts={setPosts} posts={posts} setGoal={setGoal} />
                 <Container>
                     <ContentsSide>
-                        <div style={{ padding: "0 4%" }}>
+                        <div style={{ padding: "0 3%" }}>
                             <TagBtn tags={tags} />
                         </div>
                     </ContentsSide>
                     <Contents>
-                        <PostList posts={posts} />
+                        <PostList
+                            posts={posts}
+                            setPosts={setPosts}
+                            page={page}
+                            setPage={setPage}
+                        />
                     </Contents>
-                    <ContentsSide>
-                        {" "}
-                        <div style={{ padding: "0 4%" }}>
-                            {goal && <Goal goal={goal} />}{" "}
-                        </div>
-                    </ContentsSide>
+                    <ContentsSide>{goal && <Goal goal={goal} />}</ContentsSide>
                 </Container>
             </div>
         </>
@@ -83,14 +84,15 @@ const ContentsSide = styled.div`
     width: 25%;
     background-color: white;
     display: flex;
-    padding-top: 5%;
+    padding: 2% 1%;
     flex-direction: column;
     align-items: center;
 `;
 
 const Contents = styled.div`
     width: 50%;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     // &::-webkit-scrollbar {
     //     width: 10px;
     // }
@@ -98,9 +100,9 @@ const Contents = styled.div`
     //     background: #f1f1f1;
     //     margin-left: -10px;
     // }
-    // &::-webkit-scrollbar-thumb {
-    //     background: #7353ea;
-    // }
+    &::-webkit-scrollbar-thumb {
+        background: #7353ea;
+    }
     // &::-webkit-scrollbar-thumb:hover {
     //     background: #555;
     // }
