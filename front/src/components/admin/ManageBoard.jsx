@@ -37,8 +37,9 @@ const ManageUsers = () => {
 
     const getData = React.useCallback(async () => {
         try {
-            const { data } = await Api.get("boardlist");
-            setData(data.payload);
+            const { data } = await Api.getQuery("boardlist/pageinfo", `page=${page}&perPage=${perPage}`);
+            setData(data.payload?.boardList);
+            setTotalPage(data.payload?.totalPage);
         } catch (e) {
             console.log(e);
         }
@@ -124,9 +125,9 @@ const ManageUsers = () => {
                                             </Title>
                                         </Td>
                                         <Td>
-                                            <a aria-describedby={id} onClick={handleClick}>
+                                            <UserId aria-describedby={id} onClick={handleClick}>
                                                 {datum.userId}
-                                            </a>
+                                            </UserId>
                                         </Td>
                                         <Popover
                                             id={id}
@@ -196,6 +197,11 @@ const Title = styled.a`
     cursor: pointer;
     &:hover {
         color: gray;
+    }
+`;
+const UserId = styled.a`
+    &:hover {
+        opacity: 0.5;
     }
 `;
 export default ManageUsers;

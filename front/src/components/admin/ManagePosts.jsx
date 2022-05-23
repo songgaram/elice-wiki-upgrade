@@ -123,9 +123,9 @@ const ManageUsers = () => {
                                             </Title>
                                         </Td>
                                         <Td>
-                                            <a aria-describedby={id} onClick={handleClick}>
+                                            <UserId aria-describedby={id} onClick={handleClick}>
                                                 {datum.user_id}
-                                            </a>
+                                            </UserId>
                                         </Td>
                                         <Popover
                                             id={id}
@@ -195,6 +195,11 @@ const Title = styled.a`
     cursor: pointer;
     &:hover {
         color: gray;
+    }
+`;
+const UserId = styled.a`
+    &:hover {
+        opacity: 0.5;
     }
 `;
 export default ManageUsers;
