@@ -1,19 +1,22 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
+import { getWeekPosts } from "./HomeData";
+import { useParams } from "react-router-dom";
 import Loader from "../../Loader";
-import { getPosts } from "./HomeData";
 import { Button } from "@mui/material";
 import styled from "styled-components";
 import Post from "./Post";
 
-function PostList() {
+function WeekPost() {
     const [posts, setPosts] = useState([]);
-    // const [goal, setGoal] = useState(undefined);
+    const [goal, setGoal] = useState(undefined);
     const [observing, setObserving] = useState(false);
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(undefined);
     const [isLoaded, setIsLoaded] = useState(false);
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
     const target = useRef();
+    const params = useParams();
+    const week = params.week;
     let num = 1;
 
     const fetchSetState = (data) => {
@@ -28,9 +31,9 @@ function PostList() {
     };
 
     useEffect(() => {
-        getPosts(page, fetchSetState);
+        getWeekPosts(fetchSetState, week, page);
         setIsFetchCompleted(true);
-    }, [page]);
+    }, [page, week]);
 
     useEffect(() => {
         if (observing) {
@@ -74,4 +77,4 @@ const TargetElement = styled(Button)`
     align-items: center;
 `;
 
-export default PostList;
+export default WeekPost;

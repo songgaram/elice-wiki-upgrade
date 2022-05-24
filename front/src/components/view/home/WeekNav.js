@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
-import { handleWeekClick, getGoal } from "./HomeData";
+import { useNavigate } from "react-router-dom";
 
-const WeekList = ({ setPosts, setGoal }) => {
+const WeekNav = () => {
     const [isClicked, setIsClicked] = useState(new Array(25).fill(false));
-    const handleClick = async (e) => {
+    const navigate = useNavigate();
+
+    const handleClick = (e) => {
         const newArr = new Array(25).fill(false);
         const week = parseInt(e.target.value) + 1;
         newArr[e.target.value] = !newArr[e.target.value];
         setIsClicked(newArr);
-        handleWeekClick(setPosts, week);
-        getGoal(setGoal, week);
+        navigate(`week/${week}`);
     };
 
     return (
         <>
-            <WeekNav>
+            <NavContainer>
                 <Button disabled style={{ color: "black" }}>
                     WEEK
                 </Button>
@@ -60,12 +61,12 @@ const WeekList = ({ setPosts, setGoal }) => {
                 >
                     기타
                 </Button>
-            </WeekNav>
+            </NavContainer>
         </>
     );
 };
 
-const WeekNav = styled.div`
+const NavContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -76,4 +77,4 @@ const WeekNav = styled.div`
     border-top: 5px solid #7353ea;
 `;
 
-export default WeekList;
+export default WeekNav;
