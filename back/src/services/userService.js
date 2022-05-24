@@ -7,55 +7,67 @@ class userService {
         const email = data.email;
         const name = data.name;
 
-        let user = await userModel.findByEmail({ email });
+        const result = await userModel.findOrCreate({ email });
+        if (result.error) {
+            throw new Error(result.error);
+        }
+        const [user, isNewUser] = result;
+        const signedUser = {};
 
-        if (!user) {
+        if (isNewUser) {
             const __id = uuidv4();
-            const admin = 2;
-            const authorized = false;
-            const track = 4;
-
-            const newUser = { __id, name, email, track, admin, authorized };
-            const signedUser = await userModel.create({ newUser });
-
-            user = signedUser;
+            const fieldToUpdate = { __id, name };
+            signedUser = await userModel.findAndUpdate({ email, fieldToUpdate });
+            if (signedUser.error) {
+                throw new Error(signedUser.error);
+            }
+        } else {
+            signedUser = { ...user.dataValues };
         }
 
-        const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-        const token = jwt.sign({ userId: user.__id }, secretKey);
-        const { __id, admin, authorized, track } = user;
+        const secretKey = process.env.JWT_SECRET_KEY;
 
-        const loginUser = {
-            token,
-            __id,
-            email,
-            name,
-            track,
-            admin,
-            authorized,
-        };
-
-        return loginUser;
+        if (secretKey) {
+            const token = jwt.sign({ userId: user.__id }, secretKey);
+            const loginUser = {
+                token,
+                ...signedUser,
+            };
+            return loginUser;
+        } else {
+            throw new Error("CHECK .ENV!!");
+        }
     }
 
     static async findAll({ page, perPage }) {
         const users = await userModel.findAll({ page, perPage });
+        if (users.error) {
+            throw new Error(users.error);
+        }
         return users;
     }
 
     static async findUser({ userId }) {
         const users = await userModel.findById({ userId });
+        if (users.error) {
+            throw new Error(users.error);
+        }
         return users;
     }
 
     static async updateUser({ userId, fieldToUpdate }) {
         const user = await userModel.findAndUpdate({ userId, fieldToUpdate });
-
+        if (user.error) {
+            throw new Error(user.error);
+        }
         return user;
     }
 
     static async deleteUser({ userId }) {
         const result = await userModel.delete({ userId });
+        if (result.error) {
+            throw new Error(result.error);
+        }
         return result;
     }
 }
