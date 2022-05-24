@@ -106,6 +106,31 @@ class postController {
             next(error);
         }
     }
+
+    static async deletePost(req, res, next) {
+        const postIdList = req.params.postId.split(",");
+        const deleteResult = { success: 0, failed: 0 };
+        Promise.all(
+            postIdList.map(async (id) => {
+                try {
+                    const result = await postService.deletePost({ postId: id });
+                    if (result === 0) {
+                        deleteResult.failed += 1;
+                    } else {
+                        deleteResult.success += 1;
+                    }
+                } catch (error) {
+                    next(error);
+                }
+            })
+        ).then(() => {
+            const body = {
+                status: "success",
+                payload: { ...deleteResult },
+            };
+            res.status(200).json(body);
+        });
+    }
 }
 
 export { postController };

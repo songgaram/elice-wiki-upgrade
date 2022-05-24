@@ -24,10 +24,11 @@ class commentModel {
     return commentList;
   }
 
-  static async findByDepth({ groupId, parentCommentId, depth }) {
+  static async findByDepth({ groupId, parentId, depth }) {
     const comments = await models.Comment.findAll({
-      where: { groupId, parentCommentId, depth },
+      where: { groupId, parentId, depth },
     });
+
     return comments;
   }
 

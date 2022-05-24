@@ -106,6 +106,10 @@ class postModel {
         );
         return updatePostInfo;
     }
+    static async deletePost({ postId }) {
+        const deleteResult = await models.Post.destroy({ where: { post_id: postId } });
+        return deleteResult;
+    }
 }
 
 export { postModel };
