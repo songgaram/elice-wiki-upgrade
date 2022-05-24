@@ -1,26 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../../store/actions/userAction";
-import PostList from "./PostList";
+import Loader from "../../Loader";
 import WeekList from "./WeekList";
 import Goal from "./Goal";
 import TagBtn from "./TagBtn";
+import PostList from "./PostList";
 import { getPosts, getTags } from "./HomeData";
+import { Button } from "@mui/material";
 import styled from "styled-components";
 
 function UserHome() {
-    const [posts, setPosts] = useState(undefined);
+    const [posts, setPosts] = useState([]);
     const [tags, setTags] = useState(undefined);
     const [goal, setGoal] = useState(undefined);
+    const [observing, setObserving] = useState(false);
     const [page, setPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(undefined);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+    const target = useRef();
+    let num = 1;
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const userState = useSelector((state) =>
         state ? state.userReducer.user : undefined
     );
     const userAuthorized = userState?.authorized;
-    const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
     const handleLogout = () => {
         // dispatch 함수를 이용해 로그아웃함.
@@ -29,20 +37,50 @@ function UserHome() {
         navigate("/");
     };
 
+    const fetchSetState = (data) => {
+        setPosts((prev) => [...prev, ...data.payload.postListInfo]);
+        setObserving(true);
+        setTotalPage(data.payload.totalPage);
+        setIsLoaded(false);
+    };
+
+    const loadMore = () => {
+        setPage((curr) => curr + 1);
+    };
+
     useEffect(() => {
         if (!userAuthorized) {
             navigate("/auth");
             return;
         }
-
-        setIsFetchCompleted(true);
-        // getPosts(posts, setPosts, page);
         getTags(setTags);
-    }, [userAuthorized, navigate]);
+        getPosts(page, fetchSetState);
+        setIsFetchCompleted(true);
+    }, [page]);
+
+    useEffect(() => {
+        if (observing) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    if (entries[0].isIntersecting) {
+                        setIsLoaded(true);
+                        loadMore();
+                        num++;
+                        if (num >= totalPage) {
+                            observer.unobserve(target.current);
+                        }
+                    }
+                },
+                { threshold: 0.5 }
+            );
+            observer.observe(target.current);
+        }
+    }, [observing, num]);
 
     if (!isFetchCompleted) {
         return <div>로딩중</div>;
     }
+
     return (
         <>
             <div style={{ minHeight: "100vh", height: "auto" }}>
@@ -57,12 +95,11 @@ function UserHome() {
                         </div>
                     </ContentsSide>
                     <Contents>
-                        <PostList
-                            posts={posts}
-                            setPosts={setPosts}
-                            page={page}
-                            setPage={setPage}
-                        />
+                        <PostList posts={posts} />
+
+                        <TargetElement ref={target}>
+                            {isLoaded && <Loader />}
+                        </TargetElement>
                     </Contents>
                     <ContentsSide>{goal && <Goal goal={goal} />}</ContentsSide>
                 </Container>
@@ -72,6 +109,15 @@ function UserHome() {
 }
 
 export default UserHome;
+
+const TargetElement = styled(Button)`
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+`;
 
 const Container = styled.div`
     display: flex;
