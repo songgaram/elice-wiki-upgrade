@@ -7,7 +7,7 @@ const matchError = (value) => {
 };
 
 const addError = (value) => {
-  return `${value} 내역을 입력할 수 없습니다. 모든 항목을 작성했는지 확인해 주세요.`;
+  return `${value}을(를) 입력할 수 없습니다. 모든 항목을 작성했는지 확인해 주세요.`;
 };
 
 const findError = (value) => {
