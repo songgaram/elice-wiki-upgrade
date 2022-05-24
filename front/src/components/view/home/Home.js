@@ -1,15 +1,28 @@
+import { useSelector } from "react-redux";
+import Header from "../Header";
+import Intro from "../Intro/Intro";
+import UserHome from "./UserHome";
 import PostList from "./PostList";
 import WeekList from "./WeekList";
 import RecentList from "./RecentList";
-import styles from "./Home.module.css";
 
 const Home = () => {
+  const userState = useSelector((state) => (state ? state.userReducer.user : null));
+
   return (
-    <div className={styles["wrapper-posts"]}>
-      <WeekList />
-      <PostList />
-      <RecentList />
-    </div>
+    <>
+      {userState?.authorized ? (
+        <>
+          <UserHome />
+          <Header />
+          <WeekList />
+          <PostList />
+          <RecentList />
+        </>
+      ) : (
+        <Intro />
+      )}
+    </>
   );
 };
 
