@@ -1,21 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import Loader from "../../Loader";
 import Post from "./Post";
+import Loader from "../../Loader";
 import { getPosts } from "./HomeData";
 
 function PostList({ posts, setPosts, page, setPage, perPage }) {
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
+
   const getNextpage = () => {
     setPage((curr) => curr + 1);
   };
+
   const getMorePosts = async () => {
     setIsLoaded(true);
     await getPosts(setPosts, page, perPage);
     setIsLoaded(false);
   };
-  console.log(page);
+
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting && !isLoaded) {
       observer.unobserve(entry.target);

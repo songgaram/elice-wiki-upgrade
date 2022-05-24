@@ -1,9 +1,9 @@
 import * as Api from "../../../api";
 
-export const getPosts = async (posts, setPosts, page, setPage) => {
+export const getPosts = async (page, fetchSetState) => {
     try {
         const { data } = await Api.getQuery("posts", `page=${page}&perPage=10`);
-        setPosts(...posts, ...data.payload.postListInfo);
+        fetchSetState(data);
     } catch (e) {
         console.log("Post-List를 가져오는데 실패하였습니다.", e);
     }
