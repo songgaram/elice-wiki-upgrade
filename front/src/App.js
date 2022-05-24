@@ -13,6 +13,8 @@ import ManagePosts from "./components/admin/ManagePosts";
 import ManageUsers from "./components/admin/ManageUsers";
 import ManageQuestions from "./components/admin/ManageQuestions";
 import QuestionEditor from "./components/admin/QuestionEditor";
+import WeekPost from "./components/view/home/WeekPost";
+import PostList from "./components/view/home/PostList";
 
 const theme = createTheme({
     palette: {
@@ -57,7 +59,11 @@ function App() {
         <ThemeProvider theme={theme}>
             <Router>
                 <Routes>
-                    <Route path="/" exact element={<Home />} />
+                    <Route path="/" exact element={<Home />}>
+                        <Route index element={<PostList />} />
+                        <Route path="post" element={<PostList />} />
+                        <Route path="week/:week" element={<WeekPost />} />
+                    </Route>
                     {!userState?.authorized && (
                         <Route path="/auth" exact element={<EliceUserAuth />} />
                     )}
