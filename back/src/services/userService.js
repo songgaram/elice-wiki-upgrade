@@ -1,6 +1,7 @@
 import { userModel } from "../db/models/user/user";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
+import * as errorMessage from "../utils/errorMessages";
 
 class userService {
     static async findOrCreate({ data }) {
@@ -48,15 +49,21 @@ class userService {
     }
 
     static async findUser({ userId }) {
-        const users = await userModel.findById({ userId });
-        if (users.error) {
-            throw new Error(users.error);
+        const user = await userModel.findById({ userId });
+        if (!user) {
+            throw new Error(errorMessage.findError("유저"));
         }
-        return users;
+        if (user.error) {
+            throw new Error(user.error);
+        }
+        return user;
     }
 
     static async updateUser({ userId, fieldToUpdate }) {
         const user = await userModel.findAndUpdate({ userId, fieldToUpdate });
+        if (!user) {
+            throw new Error(errorMessage.findError("유저"));
+        }
         if (user.error) {
             throw new Error(user.error);
         }

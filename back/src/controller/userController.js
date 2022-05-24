@@ -28,9 +28,6 @@ class userController {
         const { userId } = req.params;
         try {
             const user = await userService.findUser({ userId });
-            if (!user) {
-                res.status(200).json({ status: "fail", payload: { message: "User not found" } });
-            }
             res.status(200).json({ status: "success", payload: user });
         } catch (error) {
             next(error);
@@ -114,7 +111,7 @@ class userController {
                 });
                 return res.status(200).json({ status: "success", payload: result });
             }
-            const result = { status: "success", payload: { success: false, message: "정답이 아닙니다." } };
+            const result = { status: "success", payload: { correct: false, message: "정답이 아닙니다." } };
             return res.status(200).json(result);
         } catch (error) {
             next(error);

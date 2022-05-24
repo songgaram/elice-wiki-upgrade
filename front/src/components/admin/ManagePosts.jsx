@@ -137,7 +137,7 @@ const ManageUsers = () => {
                                                 horizontal: "left",
                                             }}
                                         >
-                                            <Typography sx={{ p: 2 }}>{user && JSON.stringify(user)}</Typography>
+                                            <Typography sx={{ p: 2 }}>{(user && JSON.stringify(user)) || "해당하는 유저가 없습니다."}</Typography>
                                         </Popover>
                                         <Td>{datum.lastmod_user}</Td>
                                     </Tr>

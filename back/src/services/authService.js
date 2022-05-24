@@ -1,14 +1,26 @@
 import { authModel } from "../db/models/auth/auth";
+import * as errorMessage from "../utils/errorMessages";
 
 class authService {
     static async createQuestion(data) {
-        const createdQuestion = await authModel.create(data);
-        return createdQuestion;
+        const result = await authModel.create(data);
+        if (!result) {
+            throw new Error(errorMessage.addError("인증질문"));
+        }
+        if (result.error) {
+            throw new Error(result.error);
+        }
+        return result;
     }
 
     static async getQuestion({ id }) {
         const result = await authModel.getQuestion({ id });
-
+        if (!result) {
+            throw new Error(errorMessage.addError("인증질문"));
+        }
+        if (result.error) {
+            throw new Error(result.error);
+        }
         return result;
     }
 
