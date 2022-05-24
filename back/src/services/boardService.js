@@ -3,13 +3,13 @@ import { v4 as uuidv4 } from "uuid";
 import { addError, findError } from "../utils/errorMessages";
 
 class boardService {
-  static async addBoard({ userId, userName, postId, title, body }) {
-    if (!userId || !userName || !postId || !title || !body) {
+  static async addBoard({ userId, userName, header, title, body }) {
+    if (!userId || !userName || !header || !title || !body) {
       const errorMessage = addError("게시판");
       throw new Error(errorMessage);
     }
     const boardId = uuidv4();
-    const newBoard = { boardId, userId, userName, postId, title, body };
+    const newBoard = { boardId, userId, userName, header, title, body };
     const insertedBoard = await boardModel.insertBoard({ newBoard });
 
     return insertedBoard;

@@ -6,10 +6,10 @@ const { rds, local } = require("../config/config");
 const db = {};
 
 // let sequelize = new Sequelize(
-//     local.database,
-//     local.user,
-//     local.password,
-//     local
+//   local.database,
+//   local.user,
+//   local.password,
+//   local
 // );
 let sequelize = new Sequelize(rds.database, rds.user, rds.password, rds);
 

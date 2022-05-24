@@ -28,13 +28,17 @@ class boardModel {
   }
 
   static async findByUserId({ userId }) {
-    const boardList = await models.Board.findAll({ where: { userId } });
+    const boardList = await models.Board.findAll({
+      where: { userId },
+      order: [["createdAt", "DESC"]],
+    });
     return boardList;
   }
 
   static async findBoardList() {
     const boardList = await models.Board.findAll({
       attributes: ["id", "boardId", "userId", "userName", "title", "createdAt"],
+      order: [["createdAt", "DESC"]],
     });
     return boardList;
   }

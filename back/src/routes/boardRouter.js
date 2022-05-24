@@ -28,7 +28,7 @@ const boardRouter = Router();
  *             schema:
  *               type: object
  *               properties:
- *                 postId:
+ *                 header:
  *                   type: string
  *                 title:
  *                   type: string
@@ -204,14 +204,14 @@ boardRouter.get(
  *           type: string
  *           description: board의 고유 id
  *       requestBody:
- *         description: update board postId, title, body
+ *         description: update board header, title, body
  *         required: true
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 postId:
+ *                 header:
  *                   type: string
  *                 title:
  *                   type: string
