@@ -1,5 +1,13 @@
 import { postModel } from "../db/models/post/post";
 import { tagModel } from "../db/models/tag/index";
+import {
+    existError,
+    matchError,
+    addError,
+    findError,
+    deleteError,
+    headerError,
+} from "../utils/errorMessages";
 
 import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
@@ -79,6 +87,9 @@ class postService {
     static async addPost({ user_id, week, tag, lastmod_user, title, body }) {
         // body에서 받은 text를 md파일로 저장
         // todo: 함수 다이어트 필요
+        if (!user_id || !week || !tag || !lastmod_user || !title || !body) {
+            throw new Error(addError("post"));
+        }
 
         const { date, dateDot } = getNowDateToString();
         const post_id = uuidv4();
@@ -106,22 +117,34 @@ class postService {
     static async getPostByPostId({ post_id }) {
         // post_id를 기준으로 검색
         const getOnePost = await postModel.getPostByPostId({ post_id });
+        if (!getOnePost) {
+            throw new Error(findError("post"));
+        }
         return getOnePost;
     }
 
     static async getPostByWeek({ week, page, perPage }) {
         // week 기준으로 post 검색
         const getPosts = await postModel.findByWeek({ week, page, perPage });
+        if (!getPosts) {
+            throw new Error(findError("post"));
+        }
         return getPosts;
     }
 
     static async getPostsByTag({ tag, page, perPage }) {
         const posts = await postModel.findByTag({ tag, page, perPage });
+        if (!posts) {
+            throw new Error(findError("post"));
+        }
         return posts;
     }
 
     static async updatePost({ week, tag, title, postId }) {
         // todo: body는 이후에 수정
+        if (!week || !tag || !title || !postId) {
+            throw new Error(addError("post"));
+        }
         const getTag = makeTag({ tagList: tag, post_id: postId });
         const update = {
             postId,
