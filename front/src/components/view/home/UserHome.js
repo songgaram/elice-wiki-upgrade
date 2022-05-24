@@ -6,20 +6,22 @@ import Loader from "../../Loader";
 import WeekList from "./WeekList";
 import Goal from "./Goal";
 import TagBtn from "./TagBtn";
-import Post from "./Post";
+import PostList from "./PostList";
+import { getPosts, getTags } from "./HomeData";
 import { Button } from "@mui/material";
-import { getTags } from "./HomeData";
 import styled from "styled-components";
-import * as Api from "../../../api";
 
 function UserHome() {
     const [posts, setPosts] = useState([]);
     const [tags, setTags] = useState(undefined);
     const [goal, setGoal] = useState(undefined);
-    const [loading, setLoading] = useState(false);
+    const [observing, setObserving] = useState(false);
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(undefined);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+    const target = useRef();
+    let num = 1;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -27,7 +29,6 @@ function UserHome() {
         state ? state.userReducer.user : undefined
     );
     const userAuthorized = userState?.authorized;
-    const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
     const handleLogout = () => {
         // dispatch 함수를 이용해 로그아웃함.
@@ -36,24 +37,12 @@ function UserHome() {
         navigate("/");
     };
 
-    const getPosts = async (page) => {
-        try {
-            const { data } = await Api.getQuery(
-                "posts",
-                `page=${page}&perPage=10`
-            );
-            setPosts((prev) => [...prev, ...data.payload.postListInfo]);
-            setLoading(true);
-            setTotalPage(data.payload.totalPage);
-            setIsLoaded(false);
-        } catch (e) {
-            console.log("Post-List를 가져오는데 실패하였습니다.", e);
-        }
+    const fetchSetState = (data) => {
+        setPosts((prev) => [...prev, ...data.payload.postListInfo]);
+        setObserving(true);
+        setTotalPage(data.payload.totalPage);
+        setIsLoaded(false);
     };
-
-    // useEffect(() => {
-    //     console.log(totalPage);
-    // }, [totalPage]);
 
     const loadMore = () => {
         setPage((curr) => curr + 1);
@@ -65,14 +54,12 @@ function UserHome() {
             return;
         }
         getTags(setTags);
-        getPosts(page);
+        getPosts(page, fetchSetState);
         setIsFetchCompleted(true);
     }, [page]);
 
-    const target = useRef();
-    let num = 1;
     useEffect(() => {
-        if (loading) {
+        if (observing) {
             const observer = new IntersectionObserver(
                 (entries) => {
                     if (entries[0].isIntersecting) {
@@ -88,7 +75,7 @@ function UserHome() {
             );
             observer.observe(target.current);
         }
-    }, [loading, num]);
+    }, [observing, num]);
 
     if (!isFetchCompleted) {
         return <div>로딩중</div>;
@@ -108,20 +95,11 @@ function UserHome() {
                         </div>
                     </ContentsSide>
                     <Contents>
-                        <>
-                            {posts &&
-                                posts.map((post, idx) => (
-                                    <Post
-                                        key={`post_${idx}`}
-                                        post={post}
-                                        idx={idx}
-                                    />
-                                ))}
+                        <PostList posts={posts} />
 
-                            <TargetElement ref={target}>
-                                {isLoaded && <Loader />}
-                            </TargetElement>
-                        </>
+                        <TargetElement ref={target}>
+                            {isLoaded && <Loader />}
+                        </TargetElement>
                     </Contents>
                     <ContentsSide>{goal && <Goal goal={goal} />}</ContentsSide>
                 </Container>
@@ -134,7 +112,7 @@ export default UserHome;
 
 const TargetElement = styled(Button)`
     width: 100%;
-    height: 100px;
+    height: 50px;
     display: flex;
     justify-content: center;
     text-align: center;
