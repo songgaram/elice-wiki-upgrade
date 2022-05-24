@@ -96,6 +96,7 @@ class postModel {
                 tag: update.tag,
                 week: update.week,
                 title: update.title,
+                lastmod_user: update.lastmod_user,
             },
             {
                 where: {

@@ -125,40 +125,70 @@ class postService {
 
     static async getPostByWeek({ week, page, perPage }) {
         // week 기준으로 post 검색
-        const getPosts = await postModel.findByWeek({ week, page, perPage });
-        if (!getPosts) {
+        const { totalPage, postListInfo } = await postModel.findByWeek({
+            week,
+            page,
+            perPage,
+        });
+        if (!postListInfo) {
             throw new Error(findError("post"));
         }
-        return getPosts;
+        const payload = {
+            totalPage,
+            postListInfo,
+        };
+
+        return payload;
     }
 
     static async getPostsByTag({ tag, page, perPage }) {
-        const posts = await postModel.findByTag({ tag, page, perPage });
-        if (!posts) {
+        const { totalPage, postListInfo } = await postModel.findByTag({
+            tag,
+            page,
+            perPage,
+        });
+        if (!postListInfo) {
             throw new Error(findError("post"));
         }
-        return posts;
+        const payload = {
+            totalPage,
+            postListInfo,
+        };
+
+        return payload;
     }
 
-    static async updatePost({ week, tag, title, postId }) {
+    static async updatePost({ week, tag, title, postId, lastmod_user }) {
         // todo: body는 이후에 수정
         if (!week || !tag || !title || !postId) {
             throw new Error(addError("post"));
         }
         const getTag = makeTag({ tagList: tag, post_id: postId });
         const update = {
+            lastmod_user,
             postId,
             week,
             tag: getTag,
             title,
         };
         const updatePost = await postModel.updatePost({ postId, update });
-        return { updatePost, message: "게시글의 정보가 수정되었습니다." };
+        return updatePost;
     }
 
     static async getAllPost({ page, perPage }) {
-        const posts = await postModel.findAllPost({ page, perPage });
-        return posts;
+        const { totalPage, postListInfo } = await postModel.findAllPost({
+            page,
+            perPage,
+        });
+        if (!postListInfo) {
+            throw new Error(findError("post"));
+        }
+        const payload = {
+            totalPage,
+            postListInfo,
+        };
+
+        return payload;
     }
 }
 

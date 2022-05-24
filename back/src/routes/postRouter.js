@@ -48,7 +48,7 @@ const postRouter = Router();
  *                      payload:
  *                          $ref: '#/components/schemas/Post'
  */
-postRouter.post("/newpost", loginRequired, postController.addPost);
+postRouter.post("/newpost", postController.addPost);
 
 /**
  * @swagger
@@ -79,7 +79,7 @@ postRouter.post("/newpost", loginRequired, postController.addPost);
  *
  */
 
-postRouter.get("/post/id/:id", loginRequired, postController.getPostByPostId);
+postRouter.get("/post/id/:id", postController.getPostByPostId);
 
 /**
  * @swagger
@@ -119,7 +119,7 @@ postRouter.get("/post/id/:id", loginRequired, postController.getPostByPostId);
  *                          $ref: '#/components/schemas/Post'
  *
  */
-postRouter.get("/post/tag/:tag", loginRequired, postController.getPostsByTag);
+postRouter.get("/post/tag/:tag", postController.getPostsByTag);
 
 /**
  * @swagger
@@ -158,7 +158,7 @@ postRouter.get("/post/tag/:tag", loginRequired, postController.getPostsByTag);
  *                      payload:
  *                          $ref: '#/components/schemas/Post'
  */
-postRouter.get("/post/week/:week", loginRequired, postController.getPostByWeek);
+postRouter.get("/post/week/:week", postController.getPostByWeek);
 
 /**
  * @swagger
@@ -187,7 +187,7 @@ postRouter.get("/post/week/:week", loginRequired, postController.getPostByWeek);
  *                      payload:
  *                          $ref: '#/components/schemas/Post'
  */
-postRouter.put("/post/update/:id", loginRequired, postController.updatePost);
+postRouter.put("/post/update/:id", postController.updatePost);
 
 /**
  * @swagger
@@ -223,6 +223,6 @@ postRouter.put("/post/update/:id", loginRequired, postController.updatePost);
  *                          $ref: '#/components/schemas/Post'
  *
  */
-postRouter.get("/posts", loginRequired, postController.findAllPost);
+postRouter.get("/posts", postController.findAllPost);
 
 export { postRouter };
