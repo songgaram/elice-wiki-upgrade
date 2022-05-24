@@ -11,7 +11,6 @@ import {
   Toolbar,
 } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Search = styled("div")(({ theme }) => ({
@@ -71,15 +70,6 @@ function Header() {
       <Box sx={{ flexGrow: 1 }} style={{ width: "100%" }}>
         <AppBar position="static" style={{ backgroundColor: "#C4C4C4" }}>
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
             <img
               alt="elice_logo"
               src="../../../image/logo_large.png"

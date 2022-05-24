@@ -6,7 +6,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { loginUser } from "./store/actions/userAction";
 import * as Api from "./api";
 
-import Header from "./components/view/Header";
 import Home from "./components/view/home/Home";
 import EliceUserAuth from "./components/auth/EliceUserAuth";
 import GoogleLoading from "./components/auth/GoogleLoading";
@@ -55,7 +54,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Header />
         <Routes>
           <Route path="/" exact element={<Home />} />
           {!userState?.authorized && <Route path="/auth" exact element={<EliceUserAuth />} />}
