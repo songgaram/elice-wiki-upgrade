@@ -12,6 +12,9 @@ import {
 } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../store/actions/userAction";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -57,12 +60,22 @@ function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const menuId = "primary-search-account-menu";
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    // dispatch 함수를 이용해 로그아웃함.
+    dispatch(logoutUser());
+    // 기본 페이지로 돌아감.
+    navigate("/auth");
   };
 
   return (
@@ -73,7 +86,8 @@ function Header() {
             <img
               alt="elice_logo"
               src="../../../image/logo_large.png"
-              style={{ width: 150, imageRendering: "auto" }}
+              style={{ width: 150, imageRendering: "auto", cursor: "pointer" }}
+              onClick={() => navigate("/")}
             />
             <Box sx={{ flexGrow: 1 }} />
             <Search>
@@ -82,7 +96,16 @@ function Header() {
               </SearchIconWrapper>
               <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
             </Search>
-            <Button color="inherit">Board</Button>
+            <Button color="inherit" onClick={() => navigate("/board")}>
+              Board
+            </Button>
+
+            {(userState?.admin === 0 || userState?.admin === 1) && (
+              <Button color="inherit" onClick={() => navigate("/admin/users")}>
+                Admin
+              </Button>
+            )}
+
             <Box sx={{ display: "flex" }}>
               <IconButton
                 size="large"
@@ -102,7 +125,7 @@ function Header() {
           <MenuItem>My Page</MenuItem>
           <MenuItem>My Account</MenuItem>
           <hr />
-          <MenuItem>Logout</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </Box>
     </>
