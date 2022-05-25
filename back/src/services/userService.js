@@ -7,17 +7,18 @@ class userService {
     static async findOrCreate({ data }) {
         const email = data.email;
         const name = data.name;
+        const profile_img = data.picture;
 
         const result = await userModel.findOrCreate({ email });
         if (result.error) {
             throw new Error(result.error);
         }
         const [user, isNewUser] = result;
-        const signedUser = {};
+        let signedUser = {};
 
         if (isNewUser) {
             const __id = uuidv4();
-            const fieldToUpdate = { __id, name };
+            const fieldToUpdate = { __id, name, profile_img };
             signedUser = await userModel.findAndUpdate({ email, fieldToUpdate });
             if (signedUser.error) {
                 throw new Error(signedUser.error);
