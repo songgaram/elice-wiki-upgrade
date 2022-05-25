@@ -73,6 +73,10 @@ function App() {
                                     path="week/:week"
                                     element={<WeekPost />}
                                 />
+                                {/* <Route
+                                    path="week/:week"
+                                    render={() => <WeekPost />}
+                                /> */}
                             </Route>
                         </>
                     )}

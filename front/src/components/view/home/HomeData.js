@@ -9,13 +9,10 @@ export const getPosts = async (page, fetchSetState) => {
     }
 };
 
-export const getWeekPosts = async (fetchSetState, week, page) => {
+export const getWeekPosts = async (setPosts, week) => {
     try {
-        const { data } = await Api.getQuery(
-            `post/week/${week}`,
-            `page=${page}&perPage=10`
-        );
-        fetchSetState(data);
+        const { data } = await Api.get(`post/week/${week}`);
+        setPosts(data.payload.postListInfo);
     } catch (e) {
         console.log("Week-Post를 가져오는데 실패하였습니다.", e);
     }
