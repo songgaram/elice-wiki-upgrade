@@ -2,7 +2,7 @@ import React from "react";
 import * as Api from "../../api";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { Button, Pagination, Stack } from "@mui/material";
+import { Button, Pagination, Stack, Checkbox } from "@mui/material";
 
 const ManageUsers = () => {
     const [data, setData] = React.useState();
@@ -91,9 +91,10 @@ const ManageUsers = () => {
                     <Thead>
                         <Tr color="#C2C2C2">
                             <Th>
-                                <input type="checkbox" id="checkAll" onChange={checkAll} />
+                                <Checkbox id="checkAll" onChange={checkAll} />
                             </Th>
                             <Th>UserId</Th>
+                            <Th>Image</Th>
                             <Th>Name</Th>
                             <Th>Email</Th>
                             <Th>Track</Th>
@@ -107,14 +108,18 @@ const ManageUsers = () => {
                                 return (
                                     <Tr key={`users/${index}`} color={checkedList.includes(datum.__id) ? "#e0e0e0" : "white"}>
                                         <Td>
-                                            <input
-                                                type="checkbox"
-                                                value={datum.__id}
-                                                onChange={checkHandler}
-                                                checked={checkedList.includes(datum.__id) ? true : false}
-                                            />
+                                            <Checkbox value={datum.__id} onChange={checkHandler} checked={checkedList.includes(datum.__id) ? true : false} />
                                         </Td>
                                         <Td>{datum.__id}</Td>
+                                        <Td>
+                                            <img
+                                                src={datum.profile_img}
+                                                style={{ height: "100%" }}
+                                                onDoubleClick={() => {
+                                                    window.open(datum.profile_img);
+                                                }}
+                                            />
+                                        </Td>
                                         <Td>{datum.name}</Td>
                                         <Td style={{ color: "#7353EA" }}>{datum.email}</Td>
                                         <Td>{datum.track}</Td>
