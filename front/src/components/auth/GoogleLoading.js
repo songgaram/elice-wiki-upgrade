@@ -2,6 +2,7 @@ import * as Api from "../../api";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../store/actions/userAction";
+import Spinner from "../Spinner";
 
 const GoogleLoading = () => {
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ const GoogleLoading = () => {
     };
     googleLogin();
 
-    return <div>로딩중...</div>;
+    return <Spinner />;
 };
 
 export default GoogleLoading;
