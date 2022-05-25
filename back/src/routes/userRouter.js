@@ -31,7 +31,7 @@ const userRouter = Router();
  *
  *    responses:
  *      201:
- *        description: succ
+ *        description: success
  *        content:
  *            application/json:
  *              schema:
@@ -40,7 +40,21 @@ const userRouter = Router();
  *                      status:
  *                          type: string
  *                      payload:
- *                          $ref: '#/components/schemas/Users'
+ *                          properties:
+ *                              token:
+ *                                  type: string
+ *                              __id:
+ *                                  type: string
+ *                              name:
+ *                                  type: string
+ *                              email:
+ *                                  type: string
+ *                              admin:
+ *                                  type: integer
+ *                              authorized:
+ *                                  type: boolean
+ *                              track:
+ *                                  type: integer
  *
  */
 userRouter.post("/user/sign", userController.sign);
@@ -65,7 +79,7 @@ userRouter.post("/user/sign", userController.sign);
  *
  *    responses:
  *      200:
- *        description: succ
+ *        description: success
  *        content:
  *            application/json:
  *              schema:
@@ -73,9 +87,10 @@ userRouter.post("/user/sign", userController.sign);
  *                  properties:
  *                      status:
  *                          type: string
- *                          example: "succ"
+ *                          example: "success"
  *                      payload:
- *                          $ref: '#/components/schemas/Users'
+ *                          type: object
+ *                              $ref: '#/components/schemas/Users'
  *
  */
 userRouter.post("/user/auth", loginRequired, userController.auth);
@@ -90,7 +105,7 @@ userRouter.post("/user/auth", loginRequired, userController.auth);
  *    description: 유저 탈퇴
  *    responses:
  *      200:
- *        description: succ
+ *        description: success
  *        content:
  *          application/json:
  *            schema:
@@ -119,7 +134,7 @@ userRouter.delete("/user/current", loginRequired, userController.deleteUser);
  *
  *    responses:
  *      200:
- *        description: succ
+ *        description: success
  *        content:
  *            application/json:
  *              schema:

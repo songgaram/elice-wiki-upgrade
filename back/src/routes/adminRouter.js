@@ -26,7 +26,7 @@ const adminRouter = Router();
  *              type: string
  *      responses:
  *        200:
- *          description: succ
+ *          description: success
  *          content:
  *            application/json:
  *              schema:
@@ -60,7 +60,7 @@ adminRouter.get("/users", loginRequired, adminRequired, userController.getAllUse
  *              type: string
  *    responses:
  *      200:
- *        description: succ
+ *        description: success
  *        content:
  *          application/json:
  *                  schema:
@@ -95,7 +95,7 @@ adminRouter.delete("/users/:userId", loginRequired, adminRequired, userControlle
  *              type: string
  *    responses:
  *      200:
- *        description: succ
+ *        description: success
  *        content:
  *            application/json:
  *              schema:
@@ -128,7 +128,7 @@ adminRouter.get("/users/:userId", userController.getUser);
  *              type: string
  *    responses:
  *      200:
- *        description: succ
+ *        description: success
  *        content:
  *            application/json:
  *              schema:
@@ -161,7 +161,7 @@ adminRouter.put("/users/:userId", loginRequired, adminRequired, userController.u
  *              type: string
  *    responses:
  *      200:
- *        description: succ
+ *        description: success
  *        content:
  *            application/json:
  *              schema:
