@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { postController } from "../controller/postController";
+import { loginRequired } from "../middlewares/loginRequired";
 
 const postRouter = Router();
 
@@ -17,13 +18,23 @@ const postRouter = Router();
  *   post:
  *    tags: [Post]
  *    summary: create new post
+ *    security:
+ *	      - jwt: []
  *    requestBody:
  *      description: creat new post
  *      required: true
  *      content:
  *        application/json:
  *          schema:
- *              $ref: '#/components/schemas/Post'
+ *              type: object
+ *              properties:
+ *                  week:
+ *                      type: string
+ *                  tag:
+ *                      items:
+ *                          type: string
+ *                  title:
+ *                      type: string
  *    responses:
  *      200:
  *       description: 새 게시글 생성 성공!!
@@ -35,9 +46,12 @@ const postRouter = Router();
  *                      status:
  *                          type: string
  *                      payload:
- *                          $ref: '#/components/schemas/Post'
+ *                          typt: object
+ *                          properties:
+ *                              post_id:
+ *                                  type: string
  */
-postRouter.post("/newpost", postController.addPost);
+postRouter.post("/newpost", loginRequired, postController.addPost);
 
 /**
  * @swagger
@@ -46,6 +60,8 @@ postRouter.post("/newpost", postController.addPost);
  *   get:
  *      tags: [Post]
  *      summary: find post by post_id
+ *      security:
+ *	      - jwt: []
  *      parameters:
  *          - name: id
  *            in: path
@@ -66,7 +82,7 @@ postRouter.post("/newpost", postController.addPost);
  *
  */
 
-postRouter.get("/post/id/:id", postController.getPostByPostId);
+postRouter.get("/post/id/:id", loginRequired, postController.getPostByPostId);
 
 /**
  * @swagger
@@ -75,6 +91,8 @@ postRouter.get("/post/id/:id", postController.getPostByPostId);
  *   get:
  *      tags: [Post]
  *      summary: Post API
+ *      security:
+ *	      - jwt: []
  *      parameters:
  *          - name: tag
  *            in: path
@@ -104,7 +122,7 @@ postRouter.get("/post/id/:id", postController.getPostByPostId);
  *                          $ref: '#/components/schemas/Post'
  *
  */
-postRouter.get("/post/tag/:tag", postController.getPostsByTag);
+postRouter.get("/post/tag/:tag", loginRequired, postController.getPostsByTag);
 
 /**
  * @swagger
@@ -113,6 +131,8 @@ postRouter.get("/post/tag/:tag", postController.getPostsByTag);
  *   get:
  *      tags: [Post]
  *      summary: find posts by week
+ *      security:
+ *	      - jwt: []
  *      parameters:
  *          - name: week
  *            in: path
@@ -141,15 +161,31 @@ postRouter.get("/post/tag/:tag", postController.getPostsByTag);
  *                      payload:
  *                          $ref: '#/components/schemas/Post'
  */
-postRouter.get("/post/week/:week", postController.getPostByWeek);
+postRouter.get("/post/week/:week", loginRequired, postController.getPostByWeek);
 
 /**
  * @swagger
  * paths:
- *  /post/update/:id:
+ *  /post/update/{id}:
  *    put:
  *      tags: [Post]
  *      summary: update post info
+ *      security:
+ *	      - jwt: []
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          week:
+ *                              type: string
+ *                          tag:
+ *                              items:
+ *                                  type: string
+ *                          title:
+ *                              type: string
  *      parameters:
  *          - name: id
  *            in: path
@@ -168,7 +204,7 @@ postRouter.get("/post/week/:week", postController.getPostByWeek);
  *                      payload:
  *                          $ref: '#/components/schemas/Post'
  */
-postRouter.put("/post/update/:id", postController.updatePost);
+postRouter.put("/post/update/:id", loginRequired, postController.updatePost);
 
 /**
  * @swagger
@@ -177,6 +213,8 @@ postRouter.put("/post/update/:id", postController.updatePost);
  *    get:
  *      tags: [Post]
  *      summary: find all post
+ *      security:
+ *	      - jwt: []
  *      parameters:
  *          - name: page
  *            in: query
@@ -202,6 +240,6 @@ postRouter.put("/post/update/:id", postController.updatePost);
  *                          $ref: '#/components/schemas/Post'
  *
  */
-postRouter.get("/posts", postController.findAllPost);
+postRouter.get("/posts", loginRequired, postController.findAllPost);
 
 export { postRouter };
