@@ -9,6 +9,7 @@ class userModel {
                 defaults: {
                     authorized: false,
                     admin: 2,
+                    track: 4,
                 },
             });
             return user;
