@@ -13,7 +13,7 @@ class userService {
             const __id = uuidv4();
             const admin = 2;
             const authorized = false;
-            const track = null;
+            const track = 4;
 
             const newUser = { __id, name, email, track, admin, authorized };
             const signedUser = await userModel.create({ newUser });
@@ -38,8 +38,8 @@ class userService {
         return loginUser;
     }
 
-    static async findAll() {
-        const users = await userModel.findAll();
+    static async findAll({ page, perPage }) {
+        const users = await userModel.findAll({ page, perPage });
         return users;
     }
 

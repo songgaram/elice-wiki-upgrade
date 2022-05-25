@@ -79,6 +79,7 @@ userRouter.post("/user/auth", loginRequired, userController.auth);
  */
 userRouter.post("/user/auth", loginRequired, userController.auth);
 userRouter.delete("/users/:userId", userController.deleteUser);
+userRouter.get("/users/:userId", userController.getUser);
 userRouter.get("/user/current", loginRequired, userController.getCurrentUser);
 
 export { userRouter };

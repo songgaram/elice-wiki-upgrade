@@ -7,14 +7,15 @@ import { useSelector } from "react-redux";
 import Home from "./components/view/home/Home";
 import EliceUserAuth from "./components/auth/EliceUserAuth";
 import GoogleLoading from "./components/auth/GoogleLoading";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Admin from "./components/admin/Admin";
 import ManagePosts from "./components/admin/ManagePosts";
 import ManageUsers from "./components/admin/ManageUsers";
 import ManageQuestions from "./components/admin/ManageQuestions";
+import ManageBoard from "./components/admin/ManageBoard";
 import QuestionEditor from "./components/admin/QuestionEditor";
 import WeekPost from "./components/view/home/WeekPost";
 import PostList from "./components/view/home/PostList";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
     palette: {
@@ -24,7 +25,6 @@ const theme = createTheme({
         },
     },
 });
-
 function App() {
     const dispatch = useDispatch();
     const userState = useSelector((state) =>
@@ -59,21 +59,40 @@ function App() {
         <ThemeProvider theme={theme}>
             <Router>
                 <Routes>
-                    <Route path="/" exact element={<Home />}>
-                        <Route index element={<PostList />} />
-                        <Route path="post" element={<PostList />} />
-                        <Route path="week/:week" element={<WeekPost />} />
-                    </Route>
-                    {!userState?.authorized && (
-                        <Route path="/auth" exact element={<EliceUserAuth />} />
+                    {userState && (
+                        <>
+                            <Route
+                                path="/auth"
+                                exact
+                                element={<EliceUserAuth />}
+                            />
+                            <Route path="/" exact element={<Home />}>
+                                <Route index element={<PostList />} />
+                                <Route path="post" element={<PostList />} />
+                                <Route
+                                    path="week/:week"
+                                    element={<WeekPost />}
+                                />
+                                {/* <Route
+                                    path="week/:week"
+                                    render={() => <WeekPost />}
+                                /> */}
+                            </Route>
+                        </>
                     )}
                     <Route path="/test" exact element={<GoogleLoading />} />
                     <Route path="*" element={<Home />} />
-                    <Route path="/admin" element={<Admin />}>
-                        <Route path="posts" element={<ManagePosts />} />
-                        <Route path="users" element={<ManageUsers />} />
-                        <Route path="questions" element={<ManageQuestions />} />
-                    </Route>
+                    {(userState?.admin === 0 || userState?.admin === 1) && (
+                        <Route path="/admin" element={<Admin />}>
+                            <Route path="board" element={<ManageBoard />} />
+                            <Route path="posts" element={<ManagePosts />} />
+                            <Route path="users" element={<ManageUsers />} />
+                            <Route
+                                path="questions"
+                                element={<ManageQuestions />}
+                            />
+                        </Route>
+                    )}
                     <Route
                         path="editquestion/:id"
                         element={<QuestionEditor />}

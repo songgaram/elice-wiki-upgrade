@@ -1,14 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../store/actions/userAction";
-import Loader from "../../Loader";
 import Goal from "./Goal";
 import TagBtn from "./TagBtn";
-import PostList from "./PostList";
-import { getPosts, getTags } from "./HomeData";
+import { getTags } from "./HomeData";
 import WeekNav from "./WeekNav";
-import { Button } from "@mui/material";
 import styled from "styled-components";
 
 function UserHome() {
@@ -19,10 +16,6 @@ function UserHome() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const userState = useSelector((state) =>
-        state ? state.userReducer.user : undefined
-    );
-    const userAuthorized = userState?.authorized;
 
     const handleLogout = () => {
         // dispatch 함수를 이용해 로그아웃함.
@@ -32,10 +25,6 @@ function UserHome() {
     };
 
     useEffect(() => {
-        if (!userAuthorized) {
-            navigate("/auth");
-            return;
-        }
         getTags(setTags);
         setIsFetchCompleted(true);
     }, []);
@@ -50,7 +39,7 @@ function UserHome() {
                 <header style={{ height: "60px" }}>
                     <button onClick={() => handleLogout()}>로그아웃</button>
                 </header>
-                <WeekNav />
+                <WeekNav setGoal={setGoal} />
                 <Container>
                     <ContentsSide>
                         <div style={{ padding: "0 3%" }}>

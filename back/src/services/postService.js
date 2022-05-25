@@ -33,15 +33,9 @@ const getNowDateToString = () => {
     const year = nowDate.getUTCFullYear();
 
     // 월과 일은 2자리가 아닌경우 앞에 0을 붙여줌
-    const month =
-        nowDate.getUTCMonth().toString().length !== 2
-            ? `0${nowDate.getUTCMonth()}`
-            : nowDate.getUTCMonth();
+    const month = nowDate.getUTCMonth().toString().length !== 2 ? `0${nowDate.getUTCMonth()}` : nowDate.getUTCMonth();
 
-    const day =
-        nowDate.getUTCDate().toString().length !== 2
-            ? `0${nowDate.getUTCDate()}`
-            : nowDate.getUTCDate();
+    const day = nowDate.getUTCDate().toString().length !== 2 ? `0${nowDate.getUTCDate()}` : nowDate.getUTCDate();
 
     const date = `${year}-${month}-${day}`;
 
@@ -136,6 +130,11 @@ class postService {
     static async getAllPost({ page, perPage }) {
         const posts = await postModel.findAllPost({ page, perPage });
         return posts;
+    }
+
+    static async deletePost({ postId }) {
+        const deleteResult = await postModel.deletePost({ postId });
+        return deleteResult;
     }
 }
 
