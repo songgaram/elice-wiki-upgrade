@@ -20,7 +20,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      postId: {
+      header: {
         allowNull: false,
         type: Sequelize.STRING,
       },
