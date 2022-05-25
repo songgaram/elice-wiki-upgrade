@@ -90,24 +90,18 @@ class postModel {
     }
 
     static async updatePost({ postId, update }) {
-        const updatePostInfo = await models.Post.update(
-            {
-                // 바꿀 내용
-                tag: update.tag,
-                week: update.week,
-                title: update.title,
-                lastmod_user: update.lastmod_user,
+        const updateValue = { ...update };
+        const updatePostInfo = await models.Post.update(updateValue, {
+            where: {
+                post_id: postId,
             },
-            {
-                where: {
-                    post_id: postId,
-                },
-            }
-        );
+        });
         return updatePostInfo;
     }
     static async deletePost({ postId }) {
-        const deleteResult = await models.Post.destroy({ where: { post_id: postId } });
+        const deleteResult = await models.Post.destroy({
+            where: { post_id: postId },
+        });
         return deleteResult;
     }
 }

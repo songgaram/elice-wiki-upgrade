@@ -163,12 +163,26 @@ postRouter.get("/post/week/:week", loginRequired, postController.getPostByWeek);
 /**
  * @swagger
  * paths:
- *  /post/update/:id:
+ *  /post/update/{id}:
  *    put:
  *      tags: [Post]
  *      summary: update post info
  *      security:
  *	      - jwt: []
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          week:
+ *                              type: string
+ *                          tag:
+ *                              items:
+ *                                  type: string
+ *                          title:
+ *                              type: string
  *      parameters:
  *          - name: id
  *            in: path
