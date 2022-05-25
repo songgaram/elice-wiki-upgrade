@@ -40,9 +40,9 @@ const EliceUserAuth = () => {
             const { data } = await Api.post("user/auth", {
                 answer,
             });
-            const result = data.status;
-            if (result === "fail") {
-                alert(data.payload);
+            const result = data.payload.correct;
+            if (result === false) {
+                alert(data.payload.message);
             } else {
                 dispatch(loginUser(data.payload));
                 navigate("/", { replace: true });
@@ -62,9 +62,14 @@ const EliceUserAuth = () => {
                     }}
                 />
             </Title>
-            <SubTitle>* 띄어쓰기를 지켜서 작성해야 올바르게 적용됩니다.</SubTitle>
+            <SubTitle>
+                * 띄어쓰기를 지켜서 작성해야 올바르게 적용됩니다.
+            </SubTitle>
 
-            <form onSubmit={handleSubmit} style={{ width: "30%", display: "flex", flexDirection: "row" }}>
+            <form
+                onSubmit={handleSubmit}
+                style={{ width: "30%", display: "flex", flexDirection: "row" }}
+            >
                 <TextField
                     variant="outlined"
                     size="small"

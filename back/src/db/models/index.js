@@ -5,15 +5,12 @@ const Sequelize = require("sequelize");
 const { rds, local } = require("../config/config");
 const db = {};
 
-<<<<<<< HEAD
-=======
 // let sequelize = new Sequelize(
 //     local.database,
 //     local.user,
 //     local.password,
 //     local
 // );
->>>>>>> 31df96958a778348275bc5b1c2dc52630e61e509
 let sequelize = new Sequelize(rds.database, rds.user, rds.password, rds);
 
 const Users = require("./user")(sequelize, Sequelize.DataTypes);
