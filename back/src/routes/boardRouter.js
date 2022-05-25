@@ -138,6 +138,10 @@ boardRouter.get(
  *                        type: string
  *                      userId:
  *                        type: string
+ *                      userName:
+ *                        type: string
+ *                      header:
+ *                        type: string
  *                      title:
  *                        type: string
  *                      createdAt:
