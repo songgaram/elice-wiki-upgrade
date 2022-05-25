@@ -46,7 +46,10 @@ const postRouter = Router();
  *                      status:
  *                          type: string
  *                      payload:
- *                          $ref: '#/components/schemas/Post'
+ *                          typt: object
+ *                          properties:
+ *                              post_id:
+ *                                  type: string
  */
 postRouter.post("/newpost", loginRequired, postController.addPost);
 
