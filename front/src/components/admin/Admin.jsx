@@ -8,10 +8,6 @@ const Admin = () => {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        navigate("users");
-    }, []);
-
-    React.useEffect(() => {
         setSelected(window.location.pathname.split("/")[2]);
     }, [window.location.pathname]);
     const clickHandler = (e) => {

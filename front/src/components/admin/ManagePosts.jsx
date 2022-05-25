@@ -123,9 +123,9 @@ const ManageUsers = () => {
                                             </Title>
                                         </Td>
                                         <Td>
-                                            <a aria-describedby={id} onClick={handleClick}>
+                                            <UserId aria-describedby={id} onClick={handleClick}>
                                                 {datum.user_id}
-                                            </a>
+                                            </UserId>
                                         </Td>
                                         <Popover
                                             id={id}
@@ -137,7 +137,7 @@ const ManageUsers = () => {
                                                 horizontal: "left",
                                             }}
                                         >
-                                            <Typography sx={{ p: 2 }}>{user && JSON.stringify(user)}</Typography>
+                                            <Typography sx={{ p: 2 }}>{(user && JSON.stringify(user)) || "해당하는 유저가 없습니다."}</Typography>
                                         </Popover>
                                         <Td>{datum.lastmod_user}</Td>
                                     </Tr>
@@ -195,6 +195,11 @@ const Title = styled.a`
     cursor: pointer;
     &:hover {
         color: gray;
+    }
+`;
+const UserId = styled.a`
+    &:hover {
+        opacity: 0.5;
     }
 `;
 export default ManageUsers;

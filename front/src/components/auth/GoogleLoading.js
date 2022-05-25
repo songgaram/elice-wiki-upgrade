@@ -12,9 +12,8 @@ const GoogleLoading = () => {
 
     const googleLogin = async () => {
         try {
-            const {
-                data: { user },
-            } = await Api.post("user/sign", { accessToken });
+            const { data } = await Api.post("user/sign", { accessToken });
+            const user = data.payload;
             const jwtToken = user.token;
             sessionStorage.setItem("userToken", jwtToken);
             dispatch(loginUser(user));
