@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logoutUser } from "../../../store/actions/userAction";
+import { Outlet } from "react-router-dom";
 import Goal from "./Goal";
 import TagBtn from "./TagBtn";
 import { getTags } from "./HomeData";
@@ -15,16 +13,6 @@ function UserHome() {
   const [goal, setGoal] = useState(undefined);
 
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    // dispatch 함수를 이용해 로그아웃함.
-    dispatch(logoutUser());
-    // 기본 페이지로 돌아감.
-    navigate("/");
-  };
 
   useEffect(() => {
     getTags(setTags);

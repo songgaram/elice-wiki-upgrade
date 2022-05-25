@@ -14,6 +14,10 @@ import ManageBoard from "./components/admin/ManageBoard";
 import QuestionEditor from "./components/admin/QuestionEditor";
 import WeekPost from "./components/view/home/WeekPost";
 import PostList from "./components/view/home/PostList";
+import Board from "./components/view/board/Board";
+import BoardDetail from "./components/view/board/BoardDetail";
+import BoardAddForm from "./components/view/board/BoardAddForm";
+import Spinner from "./components/Spinner";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -24,6 +28,7 @@ const theme = createTheme({
     },
   },
 });
+
 function App() {
   const dispatch = useDispatch();
   const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
@@ -67,6 +72,9 @@ function App() {
                 <Route path="post" element={<PostList />} />
                 <Route path="week/:week" element={<WeekPost />} />
               </Route>
+              <Route path="/board" exact element={<Board />} />
+              <Route path="/board/:id" exact element={<BoardDetail />} />
+              <Route path="/board/create" exact element={<BoardAddForm />} />
             </>
           )}
           <Route path="/test" exact element={<GoogleLoading />} />
