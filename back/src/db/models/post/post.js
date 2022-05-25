@@ -63,17 +63,29 @@ class postModel {
     }
 
     static async findByWeek({ week, page, perPage }) {
-        const query = {
-            week: week,
-        };
-        // week를 기준으로 post 검색
-        const { totalPage, rows } = await postPagination({
-            page,
-            perPage,
-            query,
-        });
-        const postListInfo = getPostList(rows);
-        return { totalPage, postListInfo };
+        let rows;
+        let postListInfo;
+
+        if (!page) {
+            console.log(week);
+            rows = await models.Post.findAll({ where: { week: week } });
+            postListInfo = getPostInfo(rows);
+            console.log(rows);
+            return { totalPage: null, postListInfo };
+        }
+        if (page) {
+            const query = {
+                week: week,
+            };
+            // week를 기준으로 post 검색
+            let { totalPage, rows } = await postPagination({
+                page,
+                perPage,
+                query,
+            });
+            postListInfo = getPostList(rows);
+            return { totalPage, postListInfo };
+        }
     }
 
     static async findByTag({ tag, page, perPage }) {
