@@ -32,10 +32,10 @@ function UserHome() {
     };
 
     useEffect(() => {
-        if (!userAuthorized) {
-            navigate("/auth");
-            return;
-        }
+        // if (!userAuthorized) {
+        //     navigate("/auth");
+        //     return;
+        // }
         getTags(setTags);
         setIsFetchCompleted(true);
     }, []);

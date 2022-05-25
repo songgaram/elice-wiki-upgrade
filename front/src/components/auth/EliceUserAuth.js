@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/actions/userAction";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
@@ -12,6 +12,9 @@ const EliceUserAuth = () => {
     const [authData, setAuthData] = useState(undefined);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const userState = useSelector((state) =>
+        state ? state.userReducer.user : undefined
+    );
 
     const getAuthData = async () => {
         try {
@@ -23,6 +26,10 @@ const EliceUserAuth = () => {
     };
 
     useEffect(() => {
+        if (userState?.authorized) {
+            navigate("/");
+            return;
+        }
         getAuthData();
     }, []);
 

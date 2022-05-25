@@ -59,13 +59,22 @@ function App() {
         <ThemeProvider theme={theme}>
             <Router>
                 <Routes>
-                    <Route path="/" exact element={<Home />}>
-                        <Route index element={<PostList />} />
-                        <Route path="post" element={<PostList />} />
-                        <Route path="week/:week" element={<WeekPost />} />
-                    </Route>
-                    {!userState?.authorized && (
-                        <Route path="/auth" exact element={<EliceUserAuth />} />
+                    {userState && (
+                        <>
+                            <Route
+                                path="/auth"
+                                exact
+                                element={<EliceUserAuth />}
+                            />
+                            <Route path="/" exact element={<Home />}>
+                                <Route index element={<PostList />} />
+                                <Route path="post" element={<PostList />} />
+                                <Route
+                                    path="week/:week"
+                                    element={<WeekPost />}
+                                />
+                            </Route>
+                        </>
                     )}
                     <Route path="/test" exact element={<GoogleLoading />} />
                     <Route path="*" element={<Home />} />
