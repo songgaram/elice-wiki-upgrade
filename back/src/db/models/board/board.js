@@ -18,6 +18,13 @@ class boardModel {
     return boardList;
   }
 
+  static async findBoardList() {
+    const boardList = await models.Board.findAll({
+      attributes: ["id", "boardId", "userId", "userName", "title", "createdAt"],
+    });
+    return boardList;
+  }
+
   static async update({ boardId, toUpdate }) {
     const filter = { boardId };
     const updatedBoard = await models.Board.update(toUpdate, {
