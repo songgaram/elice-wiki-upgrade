@@ -13,12 +13,15 @@ class userService {
             throw new Error(result.error);
         }
         const [user, isNewUser] = result;
-        const signedUser = {};
+        let signedUser = {};
 
         if (isNewUser) {
             const __id = uuidv4();
             const fieldToUpdate = { __id, name };
-            signedUser = await userModel.findAndUpdate({ email, fieldToUpdate });
+            signedUser = await userModel.findAndUpdate({
+                email,
+                fieldToUpdate,
+            });
             if (signedUser.error) {
                 throw new Error(signedUser.error);
             }

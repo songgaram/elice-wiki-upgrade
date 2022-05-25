@@ -82,6 +82,7 @@ class postController {
 
             const { week, tag, title } = req.body;
             await postService.updatePost({
+                user_id: userId,
                 lastmod_user,
                 postId,
                 week,
