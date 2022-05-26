@@ -14,7 +14,7 @@ class postController {
 
             const body = "# title\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello";
 
-            await postService.addPost({
+            const create = await postService.addPost({
                 user_id,
                 week,
                 tag,
@@ -22,7 +22,10 @@ class postController {
                 lastmod_user,
                 title,
             });
-            res.status(201).json({ status: "success" });
+            res.status(201).json({
+                status: "success",
+                payload: { postId: create.post_id },
+            });
         } catch (error) {
             next(error);
         }
@@ -43,7 +46,7 @@ class postController {
     static async getPostByWeek(req, res, next) {
         try {
             const week = req.params.week;
-            const { page, perPage } = req.query;
+            const { page = 1, perPage = -1 } = req.query;
             const postList = await postService.getPostByWeek({
                 week: Number(week),
                 page: Number(page),
@@ -80,7 +83,10 @@ class postController {
             const lastmod_user = getUser.name;
 
             const { week, tag, title } = req.body;
+            const body = "# hello world\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello";
             await postService.updatePost({
+                body,
+                user_id: userId,
                 lastmod_user,
                 postId,
                 week,

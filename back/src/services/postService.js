@@ -12,15 +12,18 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
 
-const writePost = (date, postId, body) => {
+const writePost = (postId, body) => {
+    const pwd = process.env.PWD;
     // post  추가 시 content를 파일로 만들어 폴더에 저장
-    const savePath_post = "../../../front/src/_post";
-    const savePath = `${__dirname}`;
-    // postId는 라우팅 경로로 사용될 수 있으므로 shortId로 만드는 것도 괜찮을 듯
+    const savePath_post = `${pwd}/../front/src/_post`;
+    const exist_post = fs.existsSync(savePath_post);
+    if (!exist_post) {
+        fs.mkdirSync(savePath_post);
+    }
 
     // front/src/_post에 md파일이 저장된다
     fs.writeFile(
-        `${savePath}/${savePath_post}/${postId}.md`,
+        `${savePath_post}/${postId}.md`,
         "\ufeff" + body,
         {
             encoding: "utf-8",
@@ -41,9 +44,15 @@ const getNowDateToString = () => {
     const year = nowDate.getUTCFullYear();
 
     // 월과 일은 2자리가 아닌경우 앞에 0을 붙여줌
-    const month = nowDate.getUTCMonth().toString().length !== 2 ? `0${nowDate.getUTCMonth()}` : nowDate.getUTCMonth();
+    const month =
+        nowDate.getUTCMonth().toString().length !== 2
+            ? `0${nowDate.getUTCMonth()}`
+            : nowDate.getUTCMonth();
 
-    const day = nowDate.getUTCDate().toString().length !== 2 ? `0${nowDate.getUTCDate()}` : nowDate.getUTCDate();
+    const day =
+        nowDate.getUTCDate().toString().length !== 2
+            ? `0${nowDate.getUTCDate()}`
+            : nowDate.getUTCDate();
 
     const date = `${year}-${month}-${day}`;
 
@@ -87,7 +96,11 @@ class postService {
 
         const { date, dateDot } = getNowDateToString();
         const post_id = uuidv4();
-        writePost(date, post_id, body);
+        const createFile = writePost(post_id, body);
+
+        if (createFile === "error") {
+            throw new Error("create file error");
+        }
 
         // tag 테이블에 추가하기
         const storedTag = makeTag({ tagList: tag, post_id });
@@ -103,7 +116,7 @@ class postService {
         };
         const insertedPost = await postModel.insertPost({ newPost });
         let addField = { ...insertedPost };
-        addField.payload.post_id = post_id;
+        addField.post_id = post_id;
 
         return addField;
     }
@@ -148,19 +161,29 @@ class postService {
             totalPage,
             postListInfo,
         };
-
         return payload;
     }
 
-    static async updatePost({ week, tag, title, postId, lastmod_user }) {
+    static async updatePost({
+        body,
+        week,
+        tag,
+        title,
+        postId,
+        lastmod_user,
+        user_id,
+    }) {
         // todo: body는 이후에 수정
         if (!week || !tag || !title || !postId) {
             throw new Error(addError("post"));
         }
+
+        writePost(postId, body);
+
         const getTag = makeTag({ tagList: tag, post_id: postId });
         const update = {
+            user_id,
             lastmod_user,
-            postId,
             week,
             tag: getTag,
             title,

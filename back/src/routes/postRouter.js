@@ -46,9 +46,12 @@ const postRouter = Router();
  *                      status:
  *                          type: string
  *                      payload:
- *                          $ref: '#/components/schemas/Post'
+ *                          typt: object
+ *                          properties:
+ *                              post_id:
+ *                                  type: string
  */
-postRouter.post("/newpost", loginRequired, postController.addPost);
+postRouter.post("/newpost", postController.addPost);
 
 /**
  * @swagger
@@ -79,7 +82,7 @@ postRouter.post("/newpost", loginRequired, postController.addPost);
  *
  */
 
-postRouter.get("/post/id/:id", loginRequired, postController.getPostByPostId);
+postRouter.get("/post/id/:id", postController.getPostByPostId);
 
 /**
  * @swagger
@@ -119,7 +122,7 @@ postRouter.get("/post/id/:id", loginRequired, postController.getPostByPostId);
  *                          $ref: '#/components/schemas/Post'
  *
  */
-postRouter.get("/post/tag/:tag", loginRequired, postController.getPostsByTag);
+postRouter.get("/post/tag/:tag", postController.getPostsByTag);
 
 /**
  * @swagger
@@ -158,17 +161,31 @@ postRouter.get("/post/tag/:tag", loginRequired, postController.getPostsByTag);
  *                      payload:
  *                          $ref: '#/components/schemas/Post'
  */
-postRouter.get("/post/week/:week", loginRequired, postController.getPostByWeek);
+postRouter.get("/post/week/:week", postController.getPostByWeek);
 
 /**
  * @swagger
  * paths:
- *  /post/update/:id:
+ *  /post/update/{id}:
  *    put:
  *      tags: [Post]
  *      summary: update post info
  *      security:
  *	      - jwt: []
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          week:
+ *                              type: string
+ *                          tag:
+ *                              items:
+ *                                  type: string
+ *                          title:
+ *                              type: string
  *      parameters:
  *          - name: id
  *            in: path
@@ -187,7 +204,7 @@ postRouter.get("/post/week/:week", loginRequired, postController.getPostByWeek);
  *                      payload:
  *                          $ref: '#/components/schemas/Post'
  */
-postRouter.put("/post/update/:id", loginRequired, postController.updatePost);
+postRouter.put("/post/update/:id", postController.updatePost);
 
 /**
  * @swagger
@@ -223,6 +240,6 @@ postRouter.put("/post/update/:id", loginRequired, postController.updatePost);
  *                          $ref: '#/components/schemas/Post'
  *
  */
-postRouter.get("/posts", loginRequired, postController.findAllPost);
+postRouter.get("/posts", postController.findAllPost);
 
 export { postRouter };

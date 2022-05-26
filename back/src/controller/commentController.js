@@ -72,6 +72,17 @@ class commentController {
     }
   }
 
+  static async getCommentListByUserId(req, res, next) {
+    try {
+      const { userId } = req.params;
+      const foundList = await commentService.getCommentListByUserId({ userId });
+
+      res.status(200).json({ status: "success", payload: foundList });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async setComment(req, res, next) {
     try {
       const { commentId } = req.params;

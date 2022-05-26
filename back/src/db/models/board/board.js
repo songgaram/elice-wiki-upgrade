@@ -37,7 +37,15 @@ class boardModel {
 
   static async findBoardList() {
     const boardList = await models.Board.findAll({
-      attributes: ["id", "boardId", "userId", "userName", "title", "createdAt"],
+      attributes: [
+        "id",
+        "boardId",
+        "userId",
+        "userName",
+        "header",
+        "title",
+        "createdAt",
+      ],
       order: [["createdAt", "DESC"]],
     });
     return boardList;
