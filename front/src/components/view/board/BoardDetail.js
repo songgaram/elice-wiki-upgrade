@@ -5,7 +5,7 @@ import { Box, Container } from "@mui/material/";
 import BoardEditForm from "./BoardEditForm";
 import BoardContents from "./BoardContents";
 import Spinner from "../../Spinner";
-// import Comments from "../comment/Comments";
+import Comment from "../comment/Comment";
 import * as Api from "../../../api";
 
 function BoardDetail() {
@@ -65,10 +65,7 @@ function BoardDetail() {
                 setIsEditing={setIsEditing}
                 isEditable={isEditable}
               />
-              {/* <Comments
-                            comments={contents.comment}
-                            contentId={contentId}
-                            /> */}
+              <Comment boardId={boardId} />
             </>
           )}
         </Box>
