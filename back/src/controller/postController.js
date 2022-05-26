@@ -47,7 +47,7 @@ class postController {
     static async getPostByWeek(req, res, next) {
         try {
             const week = req.params.week;
-            const { page = 1, perPage = 5 } = req.query;
+            const { page = 1, perPage = -1 } = req.query;
             const postList = await postService.getPostByWeek({
                 week: Number(week),
                 page: Number(page),
