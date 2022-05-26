@@ -19,6 +19,8 @@
  *           type: string
  *          email:
  *           type: string
+ *          profile_img:
+ *           type: string
  *          admin:
  *           type: integer
  *          authorized:
@@ -45,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
             __id: DataTypes.UUID,
             name: DataTypes.STRING,
             email: DataTypes.STRING,
+            profile_img: DataTypes.STRING,
             track: DataTypes.INTEGER,
             admin: DataTypes.INTEGER,
             authorized: DataTypes.BOOLEAN,

@@ -7,6 +7,7 @@ class userService {
     static async findOrCreate({ data }) {
         const email = data.email;
         const name = data.name;
+        const profile_img = data.picture;
 
         const result = await userModel.findOrCreate({ email });
         if (result.error) {
@@ -17,11 +18,14 @@ class userService {
 
         if (isNewUser) {
             const __id = uuidv4();
-            const fieldToUpdate = { __id, name };
-            signedUser = await userModel.findAndUpdate({
-                email,
-                fieldToUpdate,
-            });
+            const fieldToUpdate = { __id, name, profile_img };
+            signedUser = await userModel.findAndUpdate({ email, fieldToUpdate });
+            if (signedUser.error) {
+                throw new Error(signedUser.error);
+            }
+        } else if (profile_img !== user.dataValues.profile_img) {
+            const fieldToUpdate = { profile_img };
+            signedUser = await userModel.findAndUpdate({ email, fieldToUpdate });
             if (signedUser.error) {
                 throw new Error(signedUser.error);
             }

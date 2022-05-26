@@ -12,6 +12,7 @@ import ManageUsers from "./components/admin/ManageUsers";
 import ManageQuestions from "./components/admin/ManageQuestions";
 import ManageBoard from "./components/admin/ManageBoard";
 import QuestionEditor from "./components/admin/QuestionEditor";
+import MyPage from "./components/mypage/MyPage";
 import WeekPost from "./components/view/home/WeekPost";
 import PostList from "./components/view/home/PostList";
 import Board from "./components/view/board/Board";
@@ -87,7 +88,8 @@ function App() {
               <Route path="questions" element={<ManageQuestions />} />
             </Route>
           )}
-          <Route path="editquestion/:id" element={<QuestionEditor />} />
+          {userState?.admin === 0 && <Route path="editquestion/:id" element={<QuestionEditor />} />}
+          <Route path="mypage" element={<MyPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

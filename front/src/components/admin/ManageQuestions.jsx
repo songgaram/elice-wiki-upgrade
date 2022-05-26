@@ -2,7 +2,7 @@ import React from "react";
 import * as Api from "../../api";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Button, Pagination, Stack } from "@mui/material";
+import { Button, Pagination, Stack, Checkbox } from "@mui/material";
 
 const ManageUsers = () => {
     const [data, setData] = React.useState();
@@ -79,7 +79,7 @@ const ManageUsers = () => {
                     <Thead>
                         <Tr color="#C2C2C2">
                             <Th>
-                                <input type="checkbox" id="checkAll" onChange={checkAll} />
+                                <Checkbox id="checkAll" onChange={checkAll} />
                             </Th>
                             <Th>No.</Th>
                             <Th>Question</Th>
@@ -93,12 +93,7 @@ const ManageUsers = () => {
                                 return (
                                     <Tr key={`users/${index}`} color={checkedList.includes(datum.id) ? "#e0e0e0" : "white"}>
                                         <Td>
-                                            <input
-                                                type="checkbox"
-                                                value={datum.id}
-                                                onClick={checkHandler}
-                                                checked={checkedList.includes(datum.id) ? true : false}
-                                            />
+                                            <Checkbox value={datum.id} onClick={checkHandler} checked={checkedList.includes(datum.id) ? true : false} />
                                         </Td>
                                         <Td>{datum.id}</Td>
                                         <Td>

@@ -12,8 +12,7 @@ class postController {
             });
             const lastmod_user = getUser.name;
 
-            const body =
-                "# title\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello";
+            const body = "# title\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello";
 
             const create = await postService.addPost({
                 user_id,
@@ -62,7 +61,7 @@ class postController {
     static async getPostsByTag(req, res, next) {
         try {
             const tag = req.params.tag;
-            const { page = 1, perPage = 5 } = req.query;
+            const { page, perPage } = req.query;
             const posts = await postService.getPostsByTag({
                 tag,
                 page: Number(page),
@@ -84,8 +83,7 @@ class postController {
             const lastmod_user = getUser.name;
 
             const { week, tag, title } = req.body;
-            const body =
-                "# hello world\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello";
+            const body = "# hello world\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello";
             await postService.updatePost({
                 body,
                 user_id: userId,
@@ -103,7 +101,7 @@ class postController {
 
     static async findAllPost(req, res, next) {
         try {
-            const { page = 1, perPage = 5 } = req.query;
+            const { page, perPage } = req.query;
             const posts = await postService.getAllPost({
                 page: Number(page),
                 perPage: Number(perPage),
