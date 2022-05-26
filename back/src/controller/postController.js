@@ -47,11 +47,11 @@ class postController {
     static async getPostByWeek(req, res, next) {
         try {
             const week = req.params.week;
-            const { page, perPage } = req.query;
+            const { page = 1, perPage = -1 } = req.query;
             const postList = await postService.getPostByWeek({
                 week: Number(week),
-                page,
-                perPage,
+                page: Number(page),
+                perPage: Number(perPage),
             });
             res.status(200).json({ status: "success", payload: postList });
         } catch (error) {
