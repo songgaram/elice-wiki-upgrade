@@ -2,24 +2,54 @@ import React from "react";
 import * as Api from "../../api";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Pagination, Stack, Popover, Typography } from "@mui/material";
 
 const ManageUsers = () => {
-    const [data, setData] = React.useState();
+    const [data, setData] = React.useState(null);
+    const [user, setUser] = React.useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(null);
     const [checkedList, setCheckedList] = React.useState([]);
     const navigate = useNavigate();
+    const [page, setPage] = React.useState(1);
+    const [totalPage, setTotalPage] = React.useState(null);
+    const perPage = 15;
+
+    const handleClick = (event) => {
+        const userId = event.currentTarget.innerText;
+        setAnchorEl(event.currentTarget);
+        getUser(userId);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const open = Boolean(anchorEl);
+    const id = open ? "simple-popover" : undefined;
+    const getUser = React.useCallback(async (userId) => {
+        try {
+            const { data } = await Api.get("users", userId);
+            setUser(data.payload);
+        } catch (e) {
+            console.log(e);
+        }
+    });
 
     const getData = React.useCallback(async () => {
-        const { data } = await Api.get("posts");
-        setData(data.payload);
+        try {
+            const { data } = await Api.getQuery("posts", `page=${page}&perPage=${perPage}`);
+            setData(data.payload?.postListInfo);
+            setTotalPage(data.payload?.totalPage);
+        } catch (e) {
+            console.log(e);
+        }
     });
 
     React.useEffect(() => {
         getData();
-    }, []);
+    }, [page]);
+
     const checkAll = (e) => {
         if (e.target.checked) {
-            const idList = data.map((datum) => datum.id);
+            const idList = data.map((datum) => datum.post_id);
             setCheckedList(idList);
         } else {
             setCheckedList([]);
@@ -27,91 +57,100 @@ const ManageUsers = () => {
     };
     const checkHandler = (e) => {
         if (e.target.checked) {
-            const newCheckedList = [...checkedList, parseInt(e.target.value)];
+            const newCheckedList = [...checkedList, e.target.value];
             setCheckedList(newCheckedList);
         } else {
-            const newCheckedList = checkedList.filter((id) => id !== parseInt(e.target.value));
+            const newCheckedList = checkedList.filter((id) => id !== e.target.value);
             setCheckedList(newCheckedList);
         }
     };
+    const pageHandler = (event, value) => {
+        setPage(value);
+    };
     const controller = async (e) => {
         const checkedIdString = checkedList.join(",");
-        if (e.target.name === "deleteQuestion") {
-            await Api.delete("auth", checkedIdString);
-            alert(`질문을 삭제하였습니다.`);
+        if (e.target.name === "deletePost") {
+            const { data } = await Api.delete("posts", checkedIdString);
+            alert(`${data.payload.success}개의 게시글이 삭제되었습니다.`);
             getData();
-        } else if (e.target.name === "setCurrentQuestion") {
-            if (checkedList.length > 1) {
-                alert("현재 질문은 1개만 설정할 수 있습니다.");
-            } else {
-                const { data } = await Api.put(`auth/${checkedList[0]}`, { current: true });
-                alert(`Id: ${data.payload.id}를 현재 질문으로 설정하였습니다.`);
-                getData();
-            }
-        } else if (e.target.name === "createNewQuestion") {
-            navigate("/editquestion/new");
         }
         setCheckedList([]);
         document.getElementById("checkAll").checked = false;
     };
     return (
-        <div style={{ width: "100%", height: "100%" }}>
-            <ControllerContainer>
-                <Button variant="outlined" onClick={controller} name="setCurrentQuestion">
-                    현재 질문으로 설정
-                </Button>
-                <Button variant="outlined" onClick={controller} name="createNewQuestion">
-                    새로만들기
-                </Button>
-                <Button variant="outlined" onClick={controller} name="deleteQuestion">
-                    제거하기
-                </Button>
-            </ControllerContainer>
-            <Table>
-                <Thead>
-                    <Tr color="#C2C2C2">
-                        <Th>
-                            <input type="checkbox" id="checkAll" onChange={checkAll} />
-                        </Th>
-                        <Th>No.</Th>
-                        <Th>PostId</Th>
-                        <Th>Title</Th>
-                        <Th>Week</Th>
-                        <Th>Tags</Th>
-                        <Th>작성자</Th>
-                        <Th>최종수정</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {data &&
-                        data.map((datum, index) => {
-                            return (
-                                <Tr key={`users/${index}`} color={checkedList.includes(datum.__id) ? "#e0e0e0" : "white"}>
-                                    <Td>
-                                        <input
-                                            type="checkbox"
-                                            value={datum.id}
-                                            onClick={checkHandler}
-                                            checked={checkedList.includes(datum.id) ? true : false}
-                                        />
-                                    </Td>
-                                    <Td>{datum.id}</Td>
-                                    <Td>
-                                        <Title
-                                            onClick={() => {
-                                                navigate(`/editquestion/${datum.id}`);
+        <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+            <div style={{ width: "100%", height: "100%" }}>
+                <ControllerContainer>
+                    <Button variant="outlined" onClick={controller} name="deletePost" color="error">
+                        삭제하기
+                    </Button>
+                </ControllerContainer>
+                <Table>
+                    <Thead>
+                        <Tr color="#C2C2C2">
+                            <Th>
+                                <input type="checkbox" id="checkAll" onChange={checkAll} />
+                            </Th>
+                            <Th>No.</Th>
+                            <Th>PostId</Th>
+                            <Th>Title</Th>
+                            <Th>작성자</Th>
+                            <Th>최종수정</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {data &&
+                            data.map((datum, index) => {
+                                return (
+                                    <Tr key={`users/${index}`} color={checkedList.includes(datum.post_id) ? "#e0e0e0" : "white"}>
+                                        <Td>
+                                            <input
+                                                type="checkbox"
+                                                value={datum.post_id}
+                                                onClick={checkHandler}
+                                                checked={checkedList.includes(datum.post_id) ? true : false}
+                                            />
+                                        </Td>
+                                        <Td>{datum.post_index}</Td>
+                                        <Td>{datum.post_id}</Td>
+                                        <Td>
+                                            <Title
+                                                onClick={() => {
+                                                    navigate(`/admin/posts`);
+                                                }}
+                                            >
+                                                {datum.title}
+                                            </Title>
+                                        </Td>
+                                        <Td>
+                                            <UserId aria-describedby={id} onClick={handleClick}>
+                                                {datum.user_id}
+                                            </UserId>
+                                        </Td>
+                                        <Popover
+                                            id={id}
+                                            open={open}
+                                            anchorEl={anchorEl}
+                                            onClose={handleClose}
+                                            anchorOrigin={{
+                                                vertical: "bottom",
+                                                horizontal: "left",
                                             }}
                                         >
-                                            {datum.question}
-                                        </Title>
-                                    </Td>
-                                    <Td>{datum.answer}</Td>
-                                    <Td>{String(datum.current)}</Td>
-                                </Tr>
-                            );
-                        })}
-                </Tbody>
-            </Table>
+                                            <Typography sx={{ p: 2 }}>{(user && JSON.stringify(user)) || "해당하는 유저가 없습니다."}</Typography>
+                                        </Popover>
+                                        <Td>{datum.lastmod_user}</Td>
+                                    </Tr>
+                                );
+                            })}
+                    </Tbody>
+                </Table>
+            </div>
+            {totalPage && (
+                <Stack spacing={2}>
+                    <Pagination count={totalPage} page={page} onChange={pageHandler} color="primary" />
+                </Stack>
+            )}
         </div>
     );
 };
@@ -132,6 +171,7 @@ const Td = styled.td`
     padding-right: 10px;
     font-size: 1.2rem;
     vertical-align: middle;
+    text-align: center;
 `;
 const Tr = styled.tr`
     background-color: ${(props) => props.color};
@@ -151,10 +191,15 @@ const ControllerContainer = styled.div`
 `;
 const Title = styled.a`
     text-decoration: underline;
-    color: black;
+    color: #7353ea;
     cursor: pointer;
     &:hover {
         color: gray;
+    }
+`;
+const UserId = styled.a`
+    &:hover {
+        opacity: 0.5;
     }
 `;
 export default ManageUsers;

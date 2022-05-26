@@ -13,12 +13,12 @@ class boardController {
       const { userId } = req.currentUser;
       const user = await userService.findUser({ userId });
       const userName = user["name"];
-      const { postId, title, body } = req.body;
+      const { header, title, body } = req.body;
 
       await boardService.addBoard({
         userId,
         userName,
-        postId,
+        header,
         title,
         body,
       });
@@ -56,6 +56,19 @@ class boardController {
       const foundList = await boardService.getBoardList();
 
       res.status(200).json({ status: "success", payload: foundList });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getBoardListByPage(req, res, next) {
+    try {
+      const { page, perPage } = req.query;
+      const boardList = await boardService.getBoardListByPage({
+        page: Number(page),
+        perPage: Number(perPage),
+      });
+      res.status(200).json({ status: "success", payload: boardList });
     } catch (error) {
       next(error);
     }

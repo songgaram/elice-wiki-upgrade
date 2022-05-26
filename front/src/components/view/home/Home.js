@@ -1,13 +1,11 @@
 import { useSelector } from "react-redux";
-import UserHome from "./UserHome";
 import Intro from "../Intro/Intro";
+import UserHome from "./UserHome";
 
 const Home = () => {
-    const userState = useSelector((state) =>
-        state ? state.userReducer.user : undefined
-    );
+  const userState = useSelector((state) => (state ? state.userReducer.user : null));
 
-    return <>{userState?.authorized ? <UserHome /> : <Intro />}</>;
+  return <>{userState?.authorized ? <UserHome /> : <Intro />}</>;
 };
 
 export default Home;
