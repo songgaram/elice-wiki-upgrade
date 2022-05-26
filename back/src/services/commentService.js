@@ -81,6 +81,11 @@ class commentService {
     return commentList;
   }
 
+  static async getCommentListByUserId({ userId }) {
+    const commentList = await commentModel.findByUserId({ userId });
+    return commentList;
+  }
+
   static async setComment({ commentId, toUpdate }) {
     let comment = await commentModel.findByCommentId({ commentId });
     if (!comment) {
