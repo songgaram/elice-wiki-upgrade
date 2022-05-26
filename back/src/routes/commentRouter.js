@@ -123,7 +123,7 @@ commentRouter.get(
 /**
  * @swagger
  * paths:
- *  /commentlist/{boardId}:
+ *  /commentlist/board/{boardId}:
  *    get:
  *      tags: [Comment]
  *      summary: find commentlist by boardId
@@ -148,9 +148,42 @@ commentRouter.get(
  *                    $ref: '#/components/schemas/Comment'
  */
 commentRouter.get(
-  "/commentlist/:boardId",
+  "/commentlist/board/:boardId",
   loginRequired,
   commentController.getCommentList
+);
+
+/**
+ * @swagger
+ * paths:
+ *  /commentlist/user/{userId}:
+ *    get:
+ *      tags: [Comment]
+ *      summary: find commentlist by userId
+ *      security:
+ *	       - jwt: []
+ *      parameters:
+ *        - name: userId
+ *          in: path
+ *          type: string
+ *          description: user의 고유 id
+ *      responses:
+ *        200:
+ *          description: succ
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  status:
+ *                    type: string
+ *                  payload:
+ *                    $ref: '#/components/schemas/Comment'
+ */
+commentRouter.get(
+  "/commentlist/user/:userId",
+  loginRequired,
+  commentController.getCommentListByUserId
 );
 
 /**
