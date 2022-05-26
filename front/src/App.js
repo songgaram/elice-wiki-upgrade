@@ -88,7 +88,7 @@ function App() {
               <Route path="questions" element={<ManageQuestions />} />
             </Route>
           )}
-          <Route path="editquestion/:id" element={<QuestionEditor />} />
+          {userState?.admin === 0 && <Route path="editquestion/:id" element={<QuestionEditor />} />}
           <Route path="mypage" element={<MyPage />} />
         </Routes>
       </Router>
