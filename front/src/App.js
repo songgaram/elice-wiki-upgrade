@@ -24,7 +24,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#7353EA",
-      // darker: "#322468",
+      darker: "#322468",
     },
   },
 });
@@ -53,11 +53,7 @@ function App() {
   }, [dispatch]);
 
   if (!isFetchCompleted) {
-    return <div>로딩중...</div>;
-  }
-
-  if (!isFetchCompleted) {
-    return <div>로딩중...</div>;
+    return <Spinner />;
   }
 
   return (

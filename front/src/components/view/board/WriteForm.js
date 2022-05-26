@@ -1,7 +1,6 @@
 import { useTheme } from "@mui/material/styles";
 import {
   Grid,
-  Box,
   TextareaAutosize,
   MenuItem,
   FormControl,
@@ -37,7 +36,7 @@ function WriteForm({ title, setTitle, body, setBody, header, setHeader }) {
           onChange={handleChange}
           input={<OutlinedInput />}
           renderValue={(selected) => {
-            if (selected.length === 0) {
+            if (selected?.length === 0) {
               return <em>머리말 선택</em>;
             }
 

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { Container, Box, Grid, Button } from "@mui/material";
-import styled from "styled-components";
 import WriteForm from "./WriteForm";
 import * as Api from "../../../api";
 
@@ -48,41 +47,15 @@ function BoardAddForm() {
               textAlign: "center",
             }}
           >
-            <MyButton type="submit">등록</MyButton>
-            <MyButton2 onClick={() => navigate(`/board`)}>취소</MyButton2>
+            <Button type="submit">등록</Button>
+            <Button color="error" onClick={() => navigate(`/board`)}>
+              취소
+            </Button>
           </Grid>
         </form>
       </Box>
     </Container>
   );
 }
-
-const MyButton = styled(Button)`
-  color: #82b3ed;
-  font-weight: bold;
-  size: 17px;
-  border-radius: 5px;
-  border: solid 1px #82b3ed;
-  margin: 3px;
-
-  &: hover {
-    color: #ffffff;
-    background-color: #0a82ff;
-  }
-`;
-
-const MyButton2 = styled(Button)`
-  color: #ff7878;
-  font-weight: bold;
-  size: 17px;
-  border-radius: 5px;
-  border: solid 1px #ff7878;
-  margin: 3px;
-
-  &: hover {
-    color: #ffffff;
-    background-color: #ff5a5a;
-  }
-`;
 
 export default BoardAddForm;

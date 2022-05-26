@@ -11,7 +11,6 @@ import RecentList from "./RecentList";
 function UserHome() {
   const [tags, setTags] = useState(undefined);
   const [goal, setGoal] = useState(undefined);
-
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
   useEffect(() => {

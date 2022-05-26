@@ -12,6 +12,8 @@ import {
   TableRow,
   Paper,
   IconButton,
+  Stack,
+  Pagination,
 } from "@mui/material";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Spinner from "../../Spinner";
@@ -23,20 +25,27 @@ function Board() {
   const navigate = useNavigate();
   const [boardList, setBoardList] = useState(undefined);
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(undefined);
 
   const fetchboardsInfo = async () => {
     try {
-      const { data } = await Api.get("boardlist");
-      setBoardList(data.payload);
+      const { data } = await Api.getQuery("boardlist/pageinfo", `page=${page}&perPage=8`);
+      setBoardList(data.payload?.boardList);
+      setTotalPage(data.payload?.totalPage);
       setIsFetchCompleted(true);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handlePage = (e, value) => {
+    setPage(value);
+  };
+
   useEffect(() => {
     fetchboardsInfo();
-  }, []);
+  }, [page]);
 
   if (!isFetchCompleted) {
     return <Spinner />;
@@ -50,7 +59,7 @@ function Board() {
           sx={{
             minWidth: "70%",
             height: "auto",
-            marginTop: "1%",
+            margin: "1% 0 2% 0",
           }}
         >
           <List
@@ -78,7 +87,7 @@ function Board() {
               </IconButton>
             </ListSubheader>
           </List>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} variant="outlined">
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -115,6 +124,11 @@ function Board() {
             </Table>
           </TableContainer>
         </Box>
+        {totalPage && (
+          <Stack spacing={2} style={{ position: "fixed", top: "85%" }}>
+            <Pagination count={totalPage} page={page} onChange={handlePage} color="primary" />
+          </Stack>
+        )}
       </Container>
     </>
   );

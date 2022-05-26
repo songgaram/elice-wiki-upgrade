@@ -87,7 +87,7 @@ function Header() {
               alt="elice_logo"
               src="../../../image/logo_large.png"
               style={{ width: 150, imageRendering: "auto", cursor: "pointer" }}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/auth")}
             />
             <Box sx={{ flexGrow: 1 }} />
             <Search>
