@@ -23,6 +23,12 @@ class userService {
             if (signedUser.error) {
                 throw new Error(signedUser.error);
             }
+        } else if (profile_img !== user.dataValues.profile_img) {
+            const fieldToUpdate = { profile_img };
+            signedUser = await userModel.findAndUpdate({ email, fieldToUpdate });
+            if (signedUser.error) {
+                throw new Error(signedUser.error);
+            }
         } else {
             signedUser = { ...user.dataValues };
         }

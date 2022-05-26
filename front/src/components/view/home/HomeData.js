@@ -3,7 +3,7 @@ import * as Api from "../../../api";
 export const getPosts = async (setPosts) => {
     try {
         const { data } = await Api.get("posts");
-        setPosts(data.payload);
+        setPosts(data.payload.postListInfo);
     } catch (e) {
         console.log("Post-List를 가져오는데 실패하였습니다.", e);
     }

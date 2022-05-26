@@ -148,4 +148,35 @@ userRouter.delete("/user/current", loginRequired, userController.deleteUser);
  */
 userRouter.get("/user/current", loginRequired, userController.getCurrentUser);
 
+/**
+ * @swagger
+ * paths:
+ *  /user/current:
+ *   put:
+ *    tags: [User]
+ *    summary: update user Info by logined userToken
+ *
+ *    requestBody:
+ *      required: true
+ *      description: fieldToUpdate
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *    responses:
+ *      200:
+ *        description: success
+ *        content:
+ *            application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      status:
+ *                          type: string
+ *                      payload:
+ *                          $ref: '#/components/schemas/Users'
+ *
+ */
+userRouter.put("/user/current", loginRequired, userController.updateCurrentUser);
+
 export { userRouter };

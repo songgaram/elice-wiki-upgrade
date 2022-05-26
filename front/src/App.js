@@ -13,6 +13,7 @@ import ManageUsers from "./components/admin/ManageUsers";
 import ManageQuestions from "./components/admin/ManageQuestions";
 import ManageBoard from "./components/admin/ManageBoard";
 import QuestionEditor from "./components/admin/QuestionEditor";
+import MyPage from "./components/mypage/MyPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -68,6 +69,7 @@ function App() {
                         </Route>
                     )}
                     <Route path="editquestion/:id" element={<QuestionEditor />} />
+                    <Route path="mypage" element={<MyPage />} />
                 </Routes>
             </Router>
         </ThemeProvider>

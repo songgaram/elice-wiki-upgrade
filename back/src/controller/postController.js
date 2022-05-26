@@ -12,8 +12,7 @@ class postController {
             });
             const lastmod_user = getUser.name;
 
-            const body =
-                "# title\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello";
+            const body = "# title\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello";
 
             await postService.addPost({
                 user_id,
@@ -44,7 +43,7 @@ class postController {
     static async getPostByWeek(req, res, next) {
         try {
             const week = req.params.week;
-            const { page = 1, perPage = 5 } = req.query;
+            const { page, perPage } = req.query;
             const postList = await postService.getPostByWeek({
                 week: Number(week),
                 page: Number(page),
@@ -59,7 +58,7 @@ class postController {
     static async getPostsByTag(req, res, next) {
         try {
             const tag = req.params.tag;
-            const { page = 1, perPage = 5 } = req.query;
+            const { page, perPage } = req.query;
             const posts = await postService.getPostsByTag({
                 tag,
                 page: Number(page),
@@ -96,7 +95,7 @@ class postController {
 
     static async findAllPost(req, res, next) {
         try {
-            const { page = 1, perPage = 5 } = req.query;
+            const { page, perPage } = req.query;
             const posts = await postService.getAllPost({
                 page: Number(page),
                 perPage: Number(perPage),
