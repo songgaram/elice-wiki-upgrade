@@ -66,6 +66,11 @@ class postModel {
         const query = {
             week: week,
         };
+        if (perPage === -1) {
+            const rows = await models.Post.findAll({ where: query });
+            const postListInfo = getPostList(rows);
+            return { totalPage: 1, postListInfo };
+        }
         // week를 기준으로 post 검색
         const { totalPage, rows } = await postPagination({
             page,
