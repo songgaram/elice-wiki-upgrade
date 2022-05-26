@@ -1,50 +1,49 @@
 import { useState } from "react";
 import { Button, Divider } from "@mui/material";
+import { getGoal } from "./HomeData";
 import styled from "styled-components";
-import { handleWeekClick, getGoal } from "./HomeData";
+import { useNavigate } from "react-router-dom";
 
-const WeekList = ({ setPosts, setGoal }) => {
+const WeekNav = ({ setGoal }) => {
     const [isClicked, setIsClicked] = useState(new Array(25).fill(false));
-    const handleClick = async (e) => {
+    const navigate = useNavigate();
+
+    const handleClick = (e) => {
         const newArr = new Array(25).fill(false);
         const week = parseInt(e.target.value) + 1;
         newArr[e.target.value] = !newArr[e.target.value];
         setIsClicked(newArr);
-        handleWeekClick(setPosts, week);
         getGoal(setGoal, week);
+        navigate(`week/${week}`);
     };
 
     return (
         <>
-            <WeekNav>
+            <NavContainer>
                 <Button disabled style={{ color: "black" }}>
                     WEEK
                 </Button>
 
-                {new Array(24).fill(null).map((_, idx) => (
-                    <>
-                        <Button
-                            value={idx}
-                            key={`week_${idx}`}
-                            size="small"
-                            variant={isClicked[idx] ? "contained" : "text"}
-                            sx={{
-                                minWidth: "2.5%",
-                                maxHeight: "60%",
-                                borderRadius: "30px",
-                                margin: "0 3px",
-                            }}
-                            onClick={handleClick}
-                        >
-                            {String(idx + 1).padStart(2, "0")}
-                        </Button>
-                        <Divider
-                            orientation="vertical"
-                            variant="middle"
-                            flexItem
-                        />
-                    </>
-                ))}
+        {new Array(24).fill(null).map((_, idx) => (
+          <>
+            <Button
+              value={idx}
+              key={`week_${idx}`}
+              size="small"
+              variant={isClicked[idx] ? "contained" : "text"}
+              sx={{
+                minWidth: "2.5%",
+                maxHeight: "60%",
+                borderRadius: "30px",
+                margin: "0 3px",
+              }}
+              onClick={handleClick}
+            >
+              {String(idx + 1).padStart(2, "0")}
+            </Button>
+            <Divider orientation="vertical" variant="middle" flexItem />
+          </>
+        ))}
 
                 <Button
                     value={24}
@@ -60,12 +59,12 @@ const WeekList = ({ setPosts, setGoal }) => {
                 >
                     기타
                 </Button>
-            </WeekNav>
+            </NavContainer>
         </>
     );
 };
 
-const WeekNav = styled.div`
+const NavContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -76,4 +75,4 @@ const WeekNav = styled.div`
     border-top: 5px solid #7353ea;
 `;
 
-export default WeekList;
+export default WeekNav;
