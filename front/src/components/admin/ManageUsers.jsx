@@ -68,7 +68,16 @@ const ManageUsers = () => {
         document.getElementById("checkAll").checked = false;
     };
     return (
-        <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <div
+            style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
             <div style={{ width: "100%", height: "100%" }}>
                 <ControllerContainer>
                     <Button variant="outlined" onClick={controller} name="deleteUser" color="error">
@@ -80,10 +89,20 @@ const ManageUsers = () => {
                     <Button variant="outlined" onClick={controller} name="cancleAuth">
                         인증해제
                     </Button>
-                    <Button variant="outlined" onClick={controller} name="giveAdmin" disabled={user?.admin === 0 ? false : true}>
+                    <Button
+                        variant="outlined"
+                        onClick={controller}
+                        name="giveAdmin"
+                        disabled={user?.admin === 0 ? false : true}
+                    >
                         어드민 권한부여
                     </Button>
-                    <Button variant="outlined" onClick={controller} name="takeAdmin" disabled={user?.admin === 0 ? false : true}>
+                    <Button
+                        variant="outlined"
+                        onClick={controller}
+                        name="takeAdmin"
+                        disabled={user?.admin === 0 ? false : true}
+                    >
                         어드민 권한박탈
                     </Button>
                 </ControllerContainer>
@@ -106,9 +125,20 @@ const ManageUsers = () => {
                         {data &&
                             data.map((datum, index) => {
                                 return (
-                                    <Tr key={`users/${index}`} color={checkedList.includes(datum.__id) ? "#e0e0e0" : "white"}>
+                                    <Tr
+                                        key={`users/${index}`}
+                                        color={
+                                            checkedList.includes(datum.__id) ? "#e0e0e0" : "white"
+                                        }
+                                    >
                                         <Td>
-                                            <Checkbox value={datum.__id} onChange={checkHandler} checked={checkedList.includes(datum.__id) ? true : false} />
+                                            <Checkbox
+                                                value={datum.__id}
+                                                onChange={checkHandler}
+                                                checked={
+                                                    checkedList.includes(datum.__id) ? true : false
+                                                }
+                                            />
                                         </Td>
                                         <Td>{datum.__id}</Td>
                                         <Td>
@@ -133,7 +163,12 @@ const ManageUsers = () => {
             </div>
             {totalPage && (
                 <Stack spacing={2}>
-                    <Pagination count={totalPage} page={page} onChange={pageHandler} color="primary" />
+                    <Pagination
+                        count={totalPage}
+                        page={page}
+                        onChange={pageHandler}
+                        color="primary"
+                    />
                 </Stack>
             )}
         </div>
@@ -152,8 +187,7 @@ const Th = styled.th`
 `;
 const Td = styled.td`
     height: 2.5rem;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 10px;
     font-size: 1.2rem;
     vertical-align: middle;
     text-align: center;

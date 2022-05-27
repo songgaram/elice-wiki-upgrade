@@ -1,8 +1,11 @@
 import React from "react";
 import { Typography, Input, Button } from "@mui/material";
 import * as Api from "../../api";
+import { loginUser } from "../../store/actions/userAction";
+import { useDispatch } from "react-redux";
 
 const MyInfo = ({ user }) => {
+    const dispatch = useDispatch();
     const [stashName, setStashName] = React.useState(null);
     const [name, setName] = React.useState(user.name);
     const [isWriting, setIsWriting] = React.useState(false);
@@ -11,7 +14,9 @@ const MyInfo = ({ user }) => {
         setIsWriting(!isWriting);
     };
     const save = React.useCallback(async () => {
-        await Api.put("user/current", { name });
+        const { data } = await Api.put("user/current", { name });
+        const user = data.payload;
+        dispatch(loginUser(user));
         setIsWriting(!isWriting);
     });
     const onChangeHandler = (e) => {

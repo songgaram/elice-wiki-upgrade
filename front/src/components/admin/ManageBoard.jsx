@@ -37,7 +37,10 @@ const ManageUsers = () => {
 
     const getData = React.useCallback(async () => {
         try {
-            const { data } = await Api.getQuery("boardlist/pageinfo", `page=${page}&perPage=${perPage}`);
+            const { data } = await Api.getQuery(
+                "boardlist/pageinfo",
+                `page=${page}&perPage=${perPage}`,
+            );
             setData(data.payload?.boardList);
             setTotalPage(data.payload?.totalPage);
         } catch (e) {
@@ -80,7 +83,16 @@ const ManageUsers = () => {
         document.getElementById("checkAll").checked = false;
     };
     return (
-        <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <div
+            style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
             <div style={{ width: "100%", height: "100%" }}>
                 <ControllerContainer>
                     <Button variant="outlined" onClick={controller} name="deletePost" color="error">
@@ -104,12 +116,23 @@ const ManageUsers = () => {
                         {data &&
                             data.map((datum, index) => {
                                 return (
-                                    <Tr key={`users/${index}`} color={checkedList.includes(datum.boardId) ? "#e0e0e0" : "white"}>
+                                    <Tr
+                                        key={`users/${index}`}
+                                        color={
+                                            checkedList.includes(datum.boardId)
+                                                ? "#e0e0e0"
+                                                : "white"
+                                        }
+                                    >
                                         <Td>
                                             <Checkbox
                                                 value={datum.boardId}
                                                 onClick={checkHandler}
-                                                checked={checkedList.includes(datum.boardId) ? true : false}
+                                                checked={
+                                                    checkedList.includes(datum.boardId)
+                                                        ? true
+                                                        : false
+                                                }
                                             />
                                         </Td>
                                         <Td>{datum.id}</Td>
@@ -138,9 +161,15 @@ const ManageUsers = () => {
                                                 horizontal: "left",
                                             }}
                                         >
-                                            <Typography sx={{ p: 2 }}>{user && JSON.stringify(user)}</Typography>
+                                            <Typography sx={{ p: 2 }}>
+                                                {user && JSON.stringify(user)}
+                                            </Typography>
                                         </Popover>
-                                        <Td>{moment(moment.utc(datum.createdAt).toDate()).format("llll")}</Td>
+                                        <Td>
+                                            {moment(moment.utc(datum.createdAt).toDate()).format(
+                                                "llll",
+                                            )}
+                                        </Td>
                                     </Tr>
                                 );
                             })}
@@ -149,7 +178,12 @@ const ManageUsers = () => {
             </div>
             {totalPage && (
                 <Stack spacing={2}>
-                    <Pagination count={totalPage} page={page} onChange={pageHandler} color="primary" />
+                    <Pagination
+                        count={totalPage}
+                        page={page}
+                        onChange={pageHandler}
+                        color="primary"
+                    />
                 </Stack>
             )}
         </div>
@@ -168,8 +202,7 @@ const Th = styled.th`
 `;
 const Td = styled.td`
     height: 2.5rem;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 10px;
     font-size: 1.2rem;
     vertical-align: middle;
     text-align: center;
