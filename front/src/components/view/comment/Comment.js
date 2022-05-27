@@ -8,8 +8,8 @@ function Comments({ boardId, commentList }) {
             <Card sx={{ width: "100%" }}>
                 <CardHeader title="댓글" />
                 <CommentAddForm boardId={boardId} />
-                {commentList?.map((comment) => (
-                    <CommentCard key={comment.commentId} comment={comment} />
+                {commentList?.map((commentData) => (
+                    <CommentCard key={commentData.commentId} commentData={commentData} />
                 ))}
             </Card>
         </>

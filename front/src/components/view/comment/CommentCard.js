@@ -32,7 +32,7 @@ function CommentCard({ comment }) {
     };
 
     return (
-        <Card sx={{ minWidth: 275 }}>
+        <div>
             <CardHeader
                 action={
                     isEditable && (
@@ -58,7 +58,7 @@ function CommentCard({ comment }) {
                     </Typography>
                 </CardContent>
             )}
-        </Card>
+        </div>
     );
 }
 

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, TextField } from "@mui/material";
+import CommentInput from "./CommentInput";
+import { Button } from "@mui/material";
 import * as Api from "../../../api";
 
 function CommentAddForm({ boardId }) {
     const navigate = useNavigate();
-    // const params = useParams();
     const [comment, setComment] = useState("");
-    // const boardId = params.id;
 
     const handlePost = async (e) => {
         e.preventDefault();
@@ -26,15 +25,7 @@ function CommentAddForm({ boardId }) {
     return (
         <form onSubmit={handlePost}>
             <div style={{ display: "flex", flexDirection: "row" }}>
-                <TextField
-                    sx={{ m: "1% 0 1% 1%", width: "100%" }}
-                    label="Comment"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                />
-                <Button sx={{ m: "1%" }} type="submit">
-                    완료
-                </Button>
+                <CommentInput comment={comment} setComment={setComment} />
             </div>
         </form>
     );
