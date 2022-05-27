@@ -212,6 +212,22 @@ class postService {
         const deleteResult = await postModel.deletePost({ postId });
         return deleteResult;
     }
+
+    static async findByUserId({ page, perPage, user_id }) {
+        const { totalPage, postListInfo } = await postModel.findByUserId({
+            page,
+            perPage,
+            user_id,
+        });
+        if (!postListInfo) {
+            throw new Error(findError("post"));
+        }
+        const payload = {
+            totalPage,
+            postListInfo,
+        };
+        return payload;
+    }
 }
 
 export { postService };

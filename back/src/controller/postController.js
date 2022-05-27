@@ -143,6 +143,21 @@ class postController {
             res.status(200).json(body);
         });
     }
+
+    static async findByUserId(req, res, next) {
+        try {
+            const user_id = req.currentUser;
+            const { page, perPage } = req.query;
+            const posts = await postService.findByUserId({
+                page: Number(page),
+                perPage: Number(perPage),
+                user_id,
+            });
+            res.status(200).json({ status: "success", payload: posts });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 export { postController };

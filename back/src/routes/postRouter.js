@@ -246,4 +246,45 @@ postRouter.put("/post/update/:id", loginRequired, postController.updatePost);
  */
 postRouter.get("/posts", loginRequired, postController.findAllPost);
 
+/**
+ * @swagger
+ * paths:
+ *  /post/userid/{id}:
+ *      get:
+ *          tags: [Post]
+ *          summary: find post by user_id
+ *          security:
+ *              - jwt: []
+ *          parameters:
+ *              - name: page
+ *                in: query
+ *                required: false
+ *                schema:
+ *                  type: string
+ *              - name: perPage
+ *                in: query
+ *                required: false
+ *                schema:
+ *                  type: string
+ *              - name: id
+ *                in: path
+ *                required: true
+ *                schema:
+ *                  type: string
+ *          responses:
+ *              200:
+ *                  description: success
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                  payload:
+ *                                      items:
+ *                                         $ref: '#/components/schemas/Post'
+ */
+postRouter.get("/post/userid/:id", postController.findByUserId);
+
 export { postRouter };
