@@ -29,23 +29,18 @@ const SubmitBtn = styled.button`
   font-size: 1rem;
 `;
 
-const Writer = ({ titleInp, hashArr }) => {
+const Writer = ({ titleInp, tag, week }) => {
   const editorRef = useRef();
-  const week = "13";
-  const user_id = "usrId18";
   const btnClickListener = async () => {
     const editorInstance = editorRef.current.getInstance();
     const getContent_md = editorInstance.getMarkdown();
-    console.log(titleInp, hashArr, getContent_md);
+    console.log(titleInp, tag, week);
 
-    await Api.post("addPost", {
-      user_id,
+    await Api.post("newpost", {
       week,
-      hashArr,
+      tag,
       titleInp,
     });
-
-    // Api.get('post', postId).then((res) => setList(res.data));
   };
 
   const checkTitle = titleInp !== "";
@@ -54,7 +49,7 @@ const Writer = ({ titleInp, hashArr }) => {
     <>
       <Editor
         plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
-        placeholder="공유하고 싶은 학습 내용을 적어보세요!"
+        // placeholder="공유하고 싶은 학습 내용을 적어보세요!"
         previewStyle="vertical"
         height="500px"
         initialEditType="markdown"

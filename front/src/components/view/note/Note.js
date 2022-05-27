@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Writer from "./Editor";
 import styled from "styled-components";
 import { useState } from "react";
+import TextField from "@mui/material/TextField";
 
 const Wrapper = styled.div`
   padding-top: 2rem;
@@ -63,13 +64,23 @@ const HashOuter = styled.div`
   }
 `;
 
+const TextOuter = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 25px;
+`;
+
 function Note() {
   // onChange로 관리할 Title 문자열
   const [titleInp, setTitleInp] = useState("");
   // onChange로 관리할 해시태그 문자열
   const [hashtag, setHashtag] = useState("");
   // 해시태그를 담을 배열
-  const [hashArr, setHashArr] = useState([]);
+  const [tag, setTag] = useState([]);
+
+  const [week, setWeek] = useState("");
 
   const onChangeTitle = (e) => {
     setTitleInp(e.target.value);
@@ -77,6 +88,10 @@ function Note() {
 
   const onChangeHashtag = (e) => {
     setHashtag(e.target.value);
+  };
+
+  const onChangeWeek = (e) => {
+    setWeek(e.target.value);
   };
 
   const onKeyUp = (e) => {
@@ -87,24 +102,20 @@ function Note() {
     if (e.keyCode === 13 && e.target.value.trim() !== "") {
       $HashWrapInner.innerHTML = e.target.value;
       $HashWrapOuter.appendChild($HashWrapInner);
-      setHashArr((hashArr) => [...hashArr, hashtag]);
+      setTag((hashArr) => [...hashArr, hashtag]);
       setHashtag("");
     }
 
     $HashWrapInner.addEventListener("click", () => {
       $HashWrapOuter?.removeChild($HashWrapInner);
-      setHashArr(hashArr.filter((hashtag) => hashtag));
+      setTag(tag.filter((hashtag) => hashtag));
     });
   };
 
   return (
     <>
       <Wrapper>
-        <Title
-          type="text"
-          placeholder="제목을 입력하세요"
-          onChange={onChangeTitle}
-        />
+        <Title type="text" placeholder="제목을 입력하세요" onChange={onChangeTitle} />
         <Line></Line>
         <div className="HashWrap">
           <HashOuter className="HashWrapOuter"></HashOuter>
@@ -116,8 +127,19 @@ function Note() {
             onKeyUp={onKeyUp}
             placeholder="태그를 입력하세요"
           />
+          <TextOuter>
+            <TextField
+              required
+              type="number"
+              label="주차를 입력하세요"
+              defaultValue="1"
+              variant="filled"
+              value={week}
+              onChange={onChangeWeek}
+            />
+          </TextOuter>
         </div>
-        <Writer titleInp={titleInp} hashArr={hashArr} />
+        <Writer titleInp={titleInp} tag={tag} week={week} />
       </Wrapper>
     </>
   );
