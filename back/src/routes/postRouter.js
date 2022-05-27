@@ -249,7 +249,7 @@ postRouter.get("/posts", loginRequired, postController.findAllPost);
 /**
  * @swagger
  * paths:
- *  /post/userid/{id}:
+ *  /post/userid:
  *      get:
  *          tags: [Post]
  *          summary: find post by user_id
@@ -266,11 +266,6 @@ postRouter.get("/posts", loginRequired, postController.findAllPost);
  *                required: false
  *                schema:
  *                  type: string
- *              - name: id
- *                in: path
- *                required: true
- *                schema:
- *                  type: string
  *          responses:
  *              200:
  *                  description: success
@@ -285,6 +280,6 @@ postRouter.get("/posts", loginRequired, postController.findAllPost);
  *                                      items:
  *                                         $ref: '#/components/schemas/Post'
  */
-postRouter.get("/post/userid/:id", postController.findByUserId);
+postRouter.get("/post/userid", loginRequired, postController.findByUserId);
 
 export { postRouter };

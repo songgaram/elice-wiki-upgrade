@@ -112,7 +112,7 @@ class postModel {
 
     static async findByUserId({ user_id, page, perPage }) {
         const query = {
-            user_id,
+            user_id: user_id,
         };
         const { totalPage, rows } = await postPagination({
             page,

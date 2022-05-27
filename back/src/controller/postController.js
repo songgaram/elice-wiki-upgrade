@@ -146,8 +146,8 @@ class postController {
 
     static async findByUserId(req, res, next) {
         try {
-            const user_id = req.currentUser;
-            const { page, perPage } = req.query;
+            const user_id = req.currentUser.userId;
+            const { page = 1, perPage = 10 } = req.query;
             const posts = await postService.findByUserId({
                 page: Number(page),
                 perPage: Number(perPage),

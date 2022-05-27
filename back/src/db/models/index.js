@@ -37,8 +37,8 @@ db.Auth.sync();
 // db.Tag.drop();
 // db.Users.drop();
 // db.Goal.drop();
-// db.Boards.drop();
-// db.Comments.drop();
+// db.Board.drop();
+// db.Comment.drop();
 // db.Auth.drop();
 
 db.sequelize = sequelize;
