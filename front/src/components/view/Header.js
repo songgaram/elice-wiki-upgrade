@@ -10,7 +10,6 @@ import {
     MenuItem,
     Toolbar,
 } from "@mui/material";
-import { AccountCircle } from "@mui/icons-material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -107,12 +106,6 @@ function Header() {
                             Board
                         </Button>
 
-                        {(userState?.admin === 0 || userState?.admin === 1) && (
-                            <Button color="inherit" onClick={() => navigate("/admin/users")}>
-                                Admin
-                            </Button>
-                        )}
-
                         <Box sx={{ display: "flex" }}>
                             <IconButton
                                 size="large"
@@ -123,13 +116,21 @@ function Header() {
                                 onClick={handleProfileMenuOpen}
                                 color="inherit"
                             >
-                                <AccountCircle />
+                                <img
+                                    src={userState?.profile_img}
+                                    style={{ width: "24px", height: "24px", borderRadius: "50%" }}
+                                />
                             </IconButton>
                         </Box>
                     </Toolbar>
                 </AppBar>
                 <Menu anchorEl={anchorEl} id={menuId} open={isMenuOpen} onClose={handleMenuClose}>
                     <MenuItem onClick={handleClick}>My Page</MenuItem>
+                    {(userState?.admin === 0 || userState?.admin === 1) && (
+                        <MenuItem color="inherit" onClick={() => navigate("/admin/users")}>
+                            Admin
+                        </MenuItem>
+                    )}
                     <hr />
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
