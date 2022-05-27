@@ -117,5 +117,19 @@ class userController {
             next(error);
         }
     }
+
+    static async updateCurrentUser(req, res, next) {
+        try {
+            const { userId } = req.currentUser;
+            const fieldToUpdate = req.body;
+            const result = await userService.updateUser({
+                userId,
+                fieldToUpdate,
+            });
+            return res.status(200).json({ status: "success", payload: result });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 export { userController };

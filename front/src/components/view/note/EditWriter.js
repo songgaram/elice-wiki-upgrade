@@ -31,20 +31,20 @@ const SubmitBtn = styled.button`
     font-size: 1rem;
 `;
 
-const Writer = ({ title, tag, week, setIsEditing }) => {
+const EditWriter = ({ title, tag, week, setIsEditing }) => {
     const editorRef = useRef();
     const navigate = useNavigate();
-    const btnClickListener = async () => {
-        const editorInstance = editorRef.current.getInstance();
-        const body = editorInstance.getMarkdown();
-        await Api.post("newpost", {
-            week,
-            tag,
-            title,
-            body,
-        });
-        navigate("/");
-    };
+    // const btnClickListener = async () => {
+    //     const editorInstance = editorRef.current.getInstance();
+    //     const body = editorInstance.getMarkdown();
+    //     await Api.post("newpost", {
+    //         week,
+    //         tag,
+    //         title,
+    //         body,
+    //     });
+    //     navigate("/");
+    // };
 
     const checkTitle = title !== "";
     const checkTag = tag !== "";
@@ -63,12 +63,12 @@ const Writer = ({ title, tag, week, setIsEditing }) => {
                 useCommandShortcut={true}
                 ref={editorRef}
             />
-            <Button onClick={() => navigate("/")}>&larr; 나가기</Button>
+            <Button onClick={() => setIsEditing(false)}>취소</Button>
             <SubmitBtn onClick={btnClickListener} disabled={!validation}>
-                출간하기
+                수정하기
             </SubmitBtn>
         </>
     );
 };
 
-export default Writer;
+export default EditWriter;

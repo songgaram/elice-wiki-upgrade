@@ -74,7 +74,7 @@ const TextOuter = styled.div`
 
 function Note() {
   // onChange로 관리할 Title 문자열
-  const [titleInp, setTitleInp] = useState("");
+  const [title, setTitle] = useState("");
   // onChange로 관리할 해시태그 문자열
   const [hashtag, setHashtag] = useState("");
   // 해시태그를 담을 배열
@@ -83,7 +83,7 @@ function Note() {
   const [week, setWeek] = useState("");
 
   const onChangeTitle = (e) => {
-    setTitleInp(e.target.value);
+    setTitle(e.target.value);
   };
 
   const onChangeHashtag = (e) => {
@@ -132,14 +132,12 @@ function Note() {
               required
               type="number"
               label="주차를 입력하세요"
-              defaultValue="1"
               variant="filled"
-              value={week}
               onChange={onChangeWeek}
             />
           </TextOuter>
         </div>
-        <Writer titleInp={titleInp} tag={tag} week={week} />
+        <Writer title={title} tag={tag} week={week} />
       </Wrapper>
     </>
   );

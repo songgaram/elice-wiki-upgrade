@@ -4,7 +4,7 @@ import styled from "styled-components";
 import moment from "moment";
 import "moment/locale/ko";
 import { useNavigate } from "react-router-dom";
-import { Button, Pagination, Stack, Popover, Typography } from "@mui/material";
+import { Button, Pagination, Stack, Popover, Typography, Checkbox } from "@mui/material";
 
 const ManageUsers = () => {
     const [data, setData] = React.useState(null);
@@ -91,7 +91,7 @@ const ManageUsers = () => {
                     <Thead>
                         <Tr color="#C2C2C2">
                             <Th>
-                                <input type="checkbox" id="checkAll" onChange={checkAll} />
+                                <Checkbox id="checkAll" onChange={checkAll} />
                             </Th>
                             <Th>No.</Th>
                             <Th>BoardId</Th>
@@ -106,8 +106,7 @@ const ManageUsers = () => {
                                 return (
                                     <Tr key={`users/${index}`} color={checkedList.includes(datum.boardId) ? "#e0e0e0" : "white"}>
                                         <Td>
-                                            <input
-                                                type="checkbox"
+                                            <Checkbox
                                                 value={datum.boardId}
                                                 onClick={checkHandler}
                                                 checked={checkedList.includes(datum.boardId) ? true : false}

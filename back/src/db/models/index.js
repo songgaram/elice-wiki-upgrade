@@ -5,12 +5,7 @@ const Sequelize = require("sequelize");
 const { rds, local } = require("../config/config");
 const db = {};
 
-let sequelize = new Sequelize(
-    rds.database,
-    rds.user,
-    rds.password,
-    rds
-);
+let sequelize = new Sequelize(rds.database, rds.user, rds.password, rds);
 
 const Users = require("./user")(sequelize, Sequelize.DataTypes);
 const Auth = require("./auth")(sequelize, Sequelize.DataTypes);
@@ -42,8 +37,8 @@ db.Auth.sync();
 // db.Tag.drop();
 // db.Users.drop();
 // db.Goal.drop();
-// db.Boards.drop();
-// db.Comments.drop();
+// db.Board.drop();
+// db.Comment.drop();
 // db.Auth.drop();
 
 db.sequelize = sequelize;
