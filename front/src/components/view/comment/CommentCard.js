@@ -3,66 +3,63 @@ import { Card, CardContent, CardHeader, Typography, IconButton } from "@mui/mate
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
+import * as Api from "../../../api";
 
 function CommentCard({ comment }) {
-  const { userName, content } = comment;
-  // const navigate = useNavigate();
-  const [isEditable, setIsEditable] = useState(false);
-  // const [open, setOpen] = useState(false);
-  // const confirmTitle = "댓글을 삭제하실 건가요?";
-  // const handleClickOpen = () => {
-  //     setOpen(true);
-  // };
+    const { userName, content, userId, commentId, boardId, isDeleted } = comment;
+    const navigate = useNavigate();
+    const [isEditable, setIsEditable] = useState(false);
 
-  // const handleClose = () => {
-  //     setOpen(false);
-  // };
+    const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
 
-  // const userState = useSelector((state) =>
-  //     state ? state.userReducer.user : undefined
-  // );
-
-  // useEffect(() => {
-  //     if (userId === userState?._id) {
-  //         setIsEditable(true);
-  //     } else {
-  //         setIsEditable(false);
-  //     }
-  // }, []);
-
-  // const handleDelete = async () => {
-  //     try {
-  //         await Api.delete(
-  //             `communitycontents/${contentId}/comment/${commentId}`
-  //         );
-  //         navigate(`/communitycontents/${contentId}`);
-  //     } catch (error) {
-  //         console.log(error);
-  //     }
-  // };
-
-  return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardHeader
-        action={
-          isEditable && (
-            <>
-              <IconButton>
-                <DeleteIcon />
-              </IconButton>
-            </>
-          )
+    useEffect(() => {
+        if (userId === userState?.__id) {
+            setIsEditable(true);
+        } else {
+            setIsEditable(false);
         }
-        subheader={userName}
-      />
+    }, []);
 
-      <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
-          {content}
-        </Typography>
-      </CardContent>
-    </Card>
-  );
+    const handleDelete = async () => {
+        try {
+            if (window.confirm("댓글을 삭제할 건가요?")) {
+                await Api.delete(`comments/${commentId}`);
+                navigate(`/board/${boardId}`);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    return (
+        <Card sx={{ minWidth: 275 }}>
+            <CardHeader
+                action={
+                    isEditable && (
+                        <>
+                            <IconButton onClick={handleDelete}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </>
+                    )
+                }
+                subheader={userName}
+            />
+            {isDeleted ? (
+                <CardContent>
+                    <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+                        삭제된 댓글입니다.
+                    </Typography>
+                </CardContent>
+            ) : (
+                <CardContent>
+                    <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+                        {content}
+                    </Typography>
+                </CardContent>
+            )}
+        </Card>
+    );
 }
 
 export default CommentCard;

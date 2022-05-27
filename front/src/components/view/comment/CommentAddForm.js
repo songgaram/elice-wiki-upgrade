@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 import * as Api from "../../../api";
 
-function CommentAddForm() {
+function CommentAddForm({ boardId }) {
     const navigate = useNavigate();
-    const params = useParams();
+    // const params = useParams();
     const [comment, setComment] = useState("");
-    const boardId = params.id;
+    // const boardId = params.id;
 
     const handlePost = async (e) => {
         e.preventDefault();
