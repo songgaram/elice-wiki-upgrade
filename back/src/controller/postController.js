@@ -6,13 +6,16 @@ class postController {
         try {
             // 요청으로부터 데이터 받아오기
             const user_id = req.currentUser.userId;
-            const { week, tag, title } = req.body;
+            const {
+                week,
+                tag,
+                title,
+                body = "# title\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello",
+            } = req.body;
             const getUser = await userService.findUser({
                 userId: user_id,
             });
             const lastmod_user = getUser.name;
-
-            const body = "# title\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello";
 
             const create = await postService.addPost({
                 user_id,
@@ -82,8 +85,12 @@ class postController {
             });
             const lastmod_user = getUser.name;
 
-            const { week, tag, title } = req.body;
-            const body = "# hello world\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello";
+            const {
+                week,
+                tag,
+                title,
+                body = "# hello world\n\n## h2\n\n- p tag   \n\n- p tag   \n\ncontent\n# hello",
+            } = req.body;
             await postService.updatePost({
                 body,
                 user_id: userId,
@@ -135,6 +142,21 @@ class postController {
             };
             res.status(200).json(body);
         });
+    }
+
+    static async findByUserId(req, res, next) {
+        try {
+            const user_id = req.currentUser.userId;
+            const { page = 1, perPage = 10 } = req.query;
+            const posts = await postService.findByUserId({
+                page: Number(page),
+                perPage: Number(perPage),
+                user_id,
+            });
+            res.status(200).json({ status: "success", payload: posts });
+        } catch (error) {
+            next(error);
+        }
     }
 }
 
