@@ -7,8 +7,10 @@ class userController {
         try {
             const { accessToken } = req.body;
             const { data } = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`);
-            const user = await userService.findOrCreate({ data });
-            res.status(201).json({ status: "success", payload: user });
+            if (!data.error) {
+                const user = await userService.findOrCreate({ data });
+                res.status(201).json({ status: "success", payload: user });
+            }
         } catch (error) {
             next(error);
         }
@@ -113,6 +115,20 @@ class userController {
             }
             const result = { status: "success", payload: { correct: false, message: "정답이 아닙니다." } };
             return res.status(200).json(result);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async updateCurrentUser(req, res, next) {
+        try {
+            const { userId } = req.currentUser;
+            const fieldToUpdate = req.body;
+            const result = await userService.updateUser({
+                userId,
+                fieldToUpdate,
+            });
+            return res.status(200).json({ status: "success", payload: result });
         } catch (error) {
             next(error);
         }

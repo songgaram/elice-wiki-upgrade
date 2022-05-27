@@ -2,7 +2,7 @@ import React from "react";
 import * as Api from "../../api";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Button, Pagination, Stack } from "@mui/material";
+import { Button, Pagination, Stack, Checkbox } from "@mui/material";
 
 const ManageUsers = () => {
     const [data, setData] = React.useState();
@@ -10,7 +10,7 @@ const ManageUsers = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     const [totalPage, setTotalPage] = React.useState();
-    const perPage = 15;
+    const perPage = 8;
 
     const getData = React.useCallback(async () => {
         const { data } = await Api.getQuery("auths", `perPage=${perPage}&page=${page}`);
@@ -62,7 +62,16 @@ const ManageUsers = () => {
         document.getElementById("checkAll").checked = false;
     };
     return (
-        <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <div
+            style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
             <div style={{ width: "100%", height: "100%" }}>
                 <ControllerContainer>
                     <Button variant="outlined" onClick={controller} name="setCurrentQuestion">
@@ -71,7 +80,12 @@ const ManageUsers = () => {
                     <Button variant="outlined" onClick={controller} name="createNewQuestion">
                         새로만들기
                     </Button>
-                    <Button variant="outlined" onClick={controller} name="deleteQuestion" color="error">
+                    <Button
+                        variant="outlined"
+                        onClick={controller}
+                        name="deleteQuestion"
+                        color="error"
+                    >
                         제거하기
                     </Button>
                 </ControllerContainer>
@@ -79,7 +93,7 @@ const ManageUsers = () => {
                     <Thead>
                         <Tr color="#C2C2C2">
                             <Th>
-                                <input type="checkbox" id="checkAll" onChange={checkAll} />
+                                <Checkbox id="checkAll" onChange={checkAll} />
                             </Th>
                             <Th>No.</Th>
                             <Th>Question</Th>
@@ -91,13 +105,17 @@ const ManageUsers = () => {
                         {data &&
                             data.map((datum, index) => {
                                 return (
-                                    <Tr key={`users/${index}`} color={checkedList.includes(datum.id) ? "#e0e0e0" : "white"}>
+                                    <Tr
+                                        key={`users/${index}`}
+                                        color={checkedList.includes(datum.id) ? "#e0e0e0" : "white"}
+                                    >
                                         <Td>
-                                            <input
-                                                type="checkbox"
+                                            <Checkbox
                                                 value={datum.id}
                                                 onClick={checkHandler}
-                                                checked={checkedList.includes(datum.id) ? true : false}
+                                                checked={
+                                                    checkedList.includes(datum.id) ? true : false
+                                                }
                                             />
                                         </Td>
                                         <Td>{datum.id}</Td>
@@ -120,7 +138,12 @@ const ManageUsers = () => {
             </div>
             {totalPage && (
                 <Stack spacing={2}>
-                    <Pagination count={totalPage} page={page} onChange={pageHandler} color="primary" />
+                    <Pagination
+                        count={totalPage}
+                        page={page}
+                        onChange={pageHandler}
+                        color="primary"
+                    />
                 </Stack>
             )}
         </div>
@@ -139,8 +162,7 @@ const Th = styled.th`
 `;
 const Td = styled.td`
     height: 2.5rem;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 10px;
     font-size: 1.2rem;
     vertical-align: middle;
     text-align: center;
