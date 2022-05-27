@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../store/actions/userAction";
 import Spinner from "../Spinner";
+import { useEffect } from "react";
 
 const GoogleLoading = () => {
     const navigate = useNavigate();
@@ -23,7 +24,10 @@ const GoogleLoading = () => {
             console.log("OAuth 에러", e);
         }
     };
-    googleLogin();
+
+    useEffect(() => {
+        googleLogin();
+    }, []);
 
     return <Spinner />;
 };
