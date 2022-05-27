@@ -14,7 +14,7 @@ const ManageUsers = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     const [totalPage, setTotalPage] = React.useState(null);
-    const perPage = 15;
+    const perPage = 8;
 
     const handleClick = (event) => {
         const userId = event.currentTarget.innerText;

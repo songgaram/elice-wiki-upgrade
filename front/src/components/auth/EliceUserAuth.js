@@ -12,9 +12,7 @@ const EliceUserAuth = () => {
     const [authData, setAuthData] = useState(undefined);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const userState = useSelector((state) =>
-        state ? state.userReducer.user : undefined
-    );
+    const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
 
     const getAuthData = async () => {
         try {
@@ -45,10 +43,11 @@ const EliceUserAuth = () => {
                 alert(data.payload.message);
             } else {
                 dispatch(loginUser(data.payload));
+                alert("인증 성공!");
                 navigate("/", { replace: true });
             }
         } catch (error) {
-            console.log("인증에 실패햐였습니다.", error);
+            console.log("인증 실패ㅠㅠ", error);
         }
     };
 
@@ -62,9 +61,7 @@ const EliceUserAuth = () => {
                     }}
                 />
             </Title>
-            <SubTitle>
-                * 띄어쓰기를 지켜서 작성해야 올바르게 적용됩니다.
-            </SubTitle>
+            <SubTitle>* 띄어쓰기를 지켜서 작성해야 올바르게 적용됩니다.</SubTitle>
 
             <form
                 onSubmit={handleSubmit}

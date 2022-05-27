@@ -10,7 +10,7 @@ const ManageUsers = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     const [totalPage, setTotalPage] = React.useState();
-    const perPage = 15;
+    const perPage = 8;
 
     const getData = React.useCallback(async () => {
         const { data } = await Api.getQuery("auths", `perPage=${perPage}&page=${page}`);
