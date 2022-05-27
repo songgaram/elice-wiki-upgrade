@@ -29,12 +29,18 @@ function SingleComment({ commentData }) {
 
     return (
         <>
-            <CommentCard commentData={commentData} />
+            <CommentCard
+                commentData={commentData}
+                onReplyClick={onReplyClick}
+                setshowReplyInput={setshowReplyInput}
+            />
 
             {/* reply 버튼을 누르면 Input이 열림. */}
             {showReplyInput && (
                 <form onSubmit={handlePost}>
-                    <CommentInput comment={comment} setComment={setComment} />
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                        <CommentInput comment={comment} setComment={setComment} />
+                    </div>
                 </form>
             )}
         </>

@@ -1,5 +1,5 @@
 import { Card, CardHeader } from "@mui/material";
-import CommentCard from "./CommentCard";
+import SingleComment from "./SingleComment";
 import CommentAddForm from "./CommentAddForm";
 
 function Comments({ boardId, commentList }) {
@@ -9,7 +9,7 @@ function Comments({ boardId, commentList }) {
                 <CardHeader title="댓글" />
                 <CommentAddForm boardId={boardId} />
                 {commentList?.map((commentData) => (
-                    <CommentCard key={commentData.commentId} commentData={commentData} />
+                    <SingleComment key={commentData.commentId} commentData={commentData} />
                 ))}
             </Card>
         </>

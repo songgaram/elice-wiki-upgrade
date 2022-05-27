@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, Typography, IconButton } from "@mui/material";
+import { CardContent, CardHeader, Typography, IconButton, Button } from "@mui/material";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import * as Api from "../../../api";
 
-function CommentCard({ comment }) {
-    const { userName, content, userId, commentId, boardId, isDeleted } = comment;
+function CommentCard({ commentData, onReplyClick, setshowReplyInput }) {
+    const { userName, content, userId, commentId, boardId, isDeleted } = commentData;
     const navigate = useNavigate();
     const [isEditable, setIsEditable] = useState(false);
 
@@ -45,17 +45,25 @@ function CommentCard({ comment }) {
                 }
                 subheader={userName}
             />
+
             {isDeleted ? (
                 <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+                    <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
                         삭제된 댓글입니다.
                     </Typography>
                 </CardContent>
             ) : (
                 <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+                    <Typography sx={{ fontSize: 15, ml: 1 }} color="text.primary" gutterBottom>
                         {content}
                     </Typography>
+                    <Button
+                        size="small"
+                        color="binary"
+                        onClick={() => onReplyClick(setshowReplyInput)}
+                    >
+                        <Typography sx={{ fontSize: 12 }}>답글 달기</Typography>
+                    </Button>
                 </CardContent>
             )}
         </div>
