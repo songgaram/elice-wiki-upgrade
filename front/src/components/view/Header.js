@@ -127,7 +127,7 @@ function Header() {
                 <Menu anchorEl={anchorEl} id={menuId} open={isMenuOpen} onClose={handleMenuClose}>
                     <MenuItem onClick={handleClick}>My Page</MenuItem>
                     {(userState?.admin === 0 || userState?.admin === 1) && (
-                        <MenuItem color="inherit" onClick={() => navigate("/admin/users")}>
+                        <MenuItem color="inherit" onClick={() => navigate("/admin")}>
                             Admin
                         </MenuItem>
                     )}
