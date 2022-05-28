@@ -5,6 +5,7 @@ import { loginUser } from "./store/actions/userAction";
 import * as Api from "./api";
 import Home from "./components/view/home/Home";
 import Note from "./components/view/note/Note";
+import UserHome from "./components/view/home/UserHome";
 import EliceUserAuth from "./components/auth/EliceUserAuth";
 import GoogleLoading from "./components/auth/GoogleLoading";
 import Admin from "./components/admin/Admin";
@@ -15,7 +16,8 @@ import ManageBoard from "./components/admin/ManageBoard";
 import QuestionEditor from "./components/admin/QuestionEditor";
 import MyPage from "./components/mypage/MyPage";
 import WeekPost from "./components/view/home/WeekPost";
-import PostList from "./components/view/home/PostList";
+import HomePost from "./components/view/home/HomePost";
+import TagPost from "./components/view/home/TagPost";
 import Board from "./components/view/board/Board";
 import BoardDetail from "./components/view/board/BoardDetail";
 import BoardAddForm from "./components/view/board/BoardAddForm";
@@ -23,6 +25,7 @@ import Spinner from "./components/Spinner";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Mdfile from "./components/view/note/Markdown";
 import PostEditForm from "./components/view/note/PostEditForm";
+import GlobalStyle from "./GlobalStyle";
 
 const theme = createTheme({
     palette: {
@@ -64,46 +67,47 @@ function App() {
         return <Spinner />;
     }
 
-  if (!isFetchCompleted) {
-    return <div>로딩중...</div>;
-  }
-
-  return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <Routes>
-          {userState && (
-            <>
-              <Route path="/auth" exact element={<EliceUserAuth />} />
-              <Route path="/" exact element={<Home />}>
-                <Route index element={<PostList />} />
-                <Route path="post" element={<PostList />} />
-                <Route path='post/:postId' element={<Mdfile />} />
-                <Route path="week/:week" element={<WeekPost />} />
-              </Route>
-              <Route path="/addPost" element={<Note />} />
-              <Route path="/editPost" element={<PostEditForm />} />
-              <Route path="/board" exact element={<Board />} />
-              <Route path="/board/:id" exact element={<BoardDetail />} />
-              <Route path="/board/create" exact element={<BoardAddForm />} />
-            </>
-          )}
-          <Route path="/test" exact element={<GoogleLoading />} />
-          <Route path="*" element={<Home />} />
-          {(userState?.admin === 0 || userState?.admin === 1) && (
-            <Route path="/admin" element={<Admin />}>
-              <Route path="board" element={<ManageBoard />} />
-              <Route path="posts" element={<ManagePosts />} />
-              <Route path="users" element={<ManageUsers />} />
-              <Route path="questions" element={<ManageQuestions />} />
-            </Route>
-          )}
-          {userState?.admin === 0 && <Route path="editquestion/:id" element={<QuestionEditor />} />}
-          <Route path="mypage" element={<MyPage />} />
-        </Routes>
-      </Router>
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <Router>
+                <Routes>
+                    <Route path="/" exact element={<Home />} />
+                    {userState && <Route path="/auth" exact element={<EliceUserAuth />} />}
+                    {userState?.authorized && (
+                        <>
+                            <Route path="/home" exact element={<UserHome />}>
+                                <Route index element={<HomePost />} />
+                                <Route path="post" element={<HomePost />} />
+                                <Route path="post/:postId" element={<Mdfile />} />
+                                <Route path="week/:week" element={<WeekPost />} />
+                                <Route path="tag/:tag" element={<TagPost />} />
+                            </Route>
+                            <Route path="/addPost" element={<Note />} />
+                            <Route path="/editPost" element={<PostEditForm />} />
+                            <Route path="/board" exact element={<Board />} />
+                            <Route path="/board/:id" exact element={<BoardDetail />} />
+                            <Route path="/board/create" exact element={<BoardAddForm />} />
+                        </>
+                    )}
+                    <Route path="/test" exact element={<GoogleLoading />} />
+                    <Route path="*" element={<Home />} />
+                    {(userState?.admin === 0 || userState?.admin === 1) && (
+                        <Route path="/admin" element={<Admin />}>
+                            <Route path="board" element={<ManageBoard />} />
+                            <Route path="posts" element={<ManagePosts />} />
+                            <Route path="users" element={<ManageUsers />} />
+                            <Route path="questions" element={<ManageQuestions />} />
+                        </Route>
+                    )}
+                    {userState?.admin === 0 && (
+                        <Route path="editquestion/:id" element={<QuestionEditor />} />
+                    )}
+                    <Route path="mypage" element={<MyPage />} />
+                </Routes>
+            </Router>
+        </ThemeProvider>
+    );
 }
 
 export default App;

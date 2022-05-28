@@ -47,7 +47,7 @@ const Writer = ({ title, week, tag }) => {
                 body,
             });
             alert("게시글을 작성했습니다.");
-            navigate("/");
+            navigate("/home");
         } catch {
             alert("게시글 작성을 실패하였습니다.");
         }

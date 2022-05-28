@@ -2,14 +2,19 @@ import React from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { Typography } from "@mui/material";
 
 const Admin = () => {
     const [selected, setSelected] = React.useState();
+    const [height, setHeight] = React.useState();
     const navigate = useNavigate();
-
+    const elementRef = React.useRef(null);
     React.useEffect(() => {
         setSelected(window.location.pathname.split("/")[2]);
     }, [window.location.pathname]);
+    React.useEffect(() => {
+        setHeight(elementRef.current?.clientHeight);
+    }, [elementRef]);
     const clickHandler = (e) => {
         navigate(e.target.name);
     };
@@ -30,7 +35,7 @@ const Admin = () => {
                 src="/image/logo_small.png"
                 alt="TOHOME"
                 onClick={() => {
-                    navigate("/");
+                    navigate("/home");
                 }}
                 draggable="false"
             />
@@ -65,8 +70,14 @@ const Admin = () => {
                     인증질답관리
                 </NavBtn>
             </NavBar>
-            <Container>
-                <Outlet />
+            <Container ref={elementRef}>
+                {window.location.pathname === "/admin" ? (
+                    <Typography sx={{ fontSize: "2rem", fontWeight: "bold" }}>
+                        이곳은 어드민 페이지 입니다.
+                    </Typography>
+                ) : (
+                    <Outlet context={height} />
+                )}
             </Container>
         </div>
     );

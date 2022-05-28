@@ -74,7 +74,7 @@ function Header() {
         // dispatch 함수를 이용해 로그아웃함.
         dispatch(logoutUser());
         // 기본 페이지로 돌아감.
-        navigate("/auth");
+        navigate("/");
     };
 
     const handleClick = () => {
@@ -90,7 +90,7 @@ function Header() {
                             alt="elice_logo"
                             src="../../../image/logo_large.png"
                             style={{ width: 150, imageRendering: "auto", cursor: "pointer" }}
-                            onClick={() => navigate("/")}
+                            onClick={() => navigate("/home")}
                         />
                         <Box sx={{ flexGrow: 1 }} />
                         <Search>
@@ -130,7 +130,7 @@ function Header() {
                 <Menu anchorEl={anchorEl} id={menuId} open={isMenuOpen} onClose={handleMenuClose}>
                     <MenuItem onClick={handleClick}>My Page</MenuItem>
                     {(userState?.admin === 0 || userState?.admin === 1) && (
-                        <MenuItem color="inherit" onClick={() => navigate("/admin/users")}>
+                        <MenuItem color="inherit" onClick={() => navigate("/admin")}>
                             Admin
                         </MenuItem>
                     )}
