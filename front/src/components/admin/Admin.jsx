@@ -35,7 +35,7 @@ const Admin = () => {
                 src="/image/logo_small.png"
                 alt="TOHOME"
                 onClick={() => {
-                    navigate("/");
+                    navigate("/home");
                 }}
                 draggable="false"
             />
