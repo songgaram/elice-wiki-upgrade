@@ -6,7 +6,9 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import moment from "moment";
 import { Button } from "@mui/material";
-import PostEditForm from "./PostEditForm";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { infoAtom, postAtom } from "../../../atoms";
 
 const TopContainer = styled.div`
     margin-top: 3rem;
@@ -73,15 +75,15 @@ const EditedAt = styled.span`
 
 const Mdfile = () => {
     let { postId } = useParams();
-    const [post, setPost] = useState("");
-    const [info, setInfo] = useState("");
-    const [isEditing, setIsEditing] = useState(false);
+    const navigate = useNavigate();
+    const [post, setPost] = useRecoilState(postAtom);
+    const [info, setInfo] = useRecoilState(infoAtom);
 
     const fetchboardsInfo = async () => {
         try {
             const { data } = await Api.get(`post/id/${postId}`);
             setInfo(data.payload);
-            console.log(data.payload);
+            // console.log(data.payload);
         } catch (error) {
             console.log(error);
         }
@@ -99,30 +101,24 @@ const Mdfile = () => {
     }, []);
     return (
         <TopContainer>
-            {!isEditing ? (
-                <HeadWrapper>
-                    <Title>{info.title}</Title>
-                    <InfoWrapper>
-                        <Information>
-                            <EditedBy>
-                                last edited by <span>{info.lastmod_user}</span>
-                            </EditedBy>
-                            <Separator>·</Separator>
-                            <EditedAt>
-                                {moment(info.updatedAt).format("YYYY-MM-DD HH:mm:ss")}
-                            </EditedAt>
-                        </Information>
-                        <Button variant="contained" onClick={() => setIsEditing(true)}>
-                            편집하기
-                        </Button>
-                    </InfoWrapper>
-                    <Content>
-                        <Markdown>{post}</Markdown>
-                    </Content>
-                </HeadWrapper>
-            ) : (
-                <PostEditForm setIsEditing={setIsEditing} />
-            )}
+            <HeadWrapper>
+                <Title>{info.title}</Title>
+                <InfoWrapper>
+                    <Information>
+                        <EditedBy>
+                            last edited by <span>{info.lastmod_user}</span>
+                        </EditedBy>
+                        <Separator>·</Separator>
+                        <EditedAt>{moment(info.updatedAt).format("YYYY-MM-DD HH:mm:ss")}</EditedAt>
+                    </Information>
+                    <Button variant="contained" onClick={() => navigate("/editPost")}>
+                        편집하기
+                    </Button>
+                </InfoWrapper>
+                <Content>
+                    <Markdown>{post}</Markdown>
+                </Content>
+            </HeadWrapper>
         </TopContainer>
     );
 };

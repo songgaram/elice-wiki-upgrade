@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Alert, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { tagAtom, titleAtom, weekAtom } from "../../../atoms";
 
 const SubmitBtn = styled.button`
     display: inline-flex;
@@ -31,19 +33,24 @@ const SubmitBtn = styled.button`
     font-size: 1rem;
 `;
 
-const Writer = ({ title, tag, week, setIsEditing }) => {
+const Writer = ({ title, week, tag }) => {
     const editorRef = useRef();
     const navigate = useNavigate();
     const btnClickListener = async () => {
         const editorInstance = editorRef.current.getInstance();
         const body = editorInstance.getMarkdown();
-        await Api.post("newpost", {
-            week,
-            tag,
-            title,
-            body,
-        });
-        navigate("/");
+        try{
+            await Api.post("newpost", {
+                week,
+                tag,
+                title,
+                body,
+            });
+            alert("게시글을 작성했습니다.");
+            navigate("/");
+        } catch {
+            alert("게시글 작성을 실패하였습니다.");
+        }
     };
 
     const checkTitle = title !== "";
@@ -56,17 +63,17 @@ const Writer = ({ title, tag, week, setIsEditing }) => {
             <Editor
                 plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
                 placeholder="공유하고 싶은 학습 내용을 적어보세요!"
-                initialValue="내용을 입력하세요..."
+                // initialValue="내용을 입력하세요..."
                 previewStyle="vertical"
                 height="500px"
                 initialEditType="markdown"
                 useCommandShortcut={true}
                 ref={editorRef}
             />
-            <Button onClick={() => navigate("/")}>&larr; 나가기</Button>
-            <SubmitBtn onClick={btnClickListener} disabled={!validation}>
+            <Button onClick={() => navigate(-1)}>&larr; 이전으로</Button>
+            <Button variant="contained" onClick={btnClickListener} disabled={!validation}>
                 출간하기
-            </SubmitBtn>
+            </Button>
         </>
     );
 };

@@ -22,6 +22,7 @@ import BoardAddForm from "./components/view/board/BoardAddForm";
 import Spinner from "./components/Spinner";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Mdfile from "./components/view/note/Markdown";
+import PostEditForm from "./components/view/note/PostEditForm";
 
 const theme = createTheme({
   palette: {
@@ -77,6 +78,7 @@ function App() {
                 <Route path="week/:week" element={<WeekPost />} />
               </Route>
               <Route path="/addPost" element={<Note />} />
+              <Route path="/editPost" element={<PostEditForm />} />
               <Route path="/board" exact element={<Board />} />
               <Route path="/board/:id" exact element={<BoardDetail />} />
               <Route path="/board/create" exact element={<BoardAddForm />} />

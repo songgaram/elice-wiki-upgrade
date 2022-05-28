@@ -1,8 +1,22 @@
-import { Link } from "react-router-dom";
+import Writer from "./Editor";
 import styled from "styled-components";
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
-import EditWriter from "./EditWriter";
+import * as Api from "../../../api";
+import Prism from "prismjs";
+// 여기 css를 수정해서 코드 하이라이팅 커스텀 가능
+import "prismjs/themes/prism.css";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import { Editor } from "@toast-ui/react-editor";
+
+import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
+import { useRef } from "react";
+import { Link } from "react-router-dom";
+import { Alert, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { hashtagAtom, infoAtom, postAtom, tagAtom, titleAtom, weekAtom } from "../../../atoms";
 
 const Wrapper = styled.div`
     padding-top: 2rem;
@@ -72,26 +86,53 @@ const TextOuter = styled.div`
     margin-left: 25px;
 `;
 
-function PostEditForm({ setIsEditing }) {
-    // onChange로 관리할 Title 문자열
-    const [title, setTitle] = useState("");
-    // onChange로 관리할 해시태그 문자열
-    const [hashtag, setHashtag] = useState("");
-    // 해시태그를 담을 배열
-    const [tag, setTag] = useState([]);
+function PostEditForm() {
+    const info = useRecoilValue(infoAtom);
+    const post = useRecoilValue(postAtom);
 
-    const [week, setWeek] = useState("");
+    const setTitle = useSetRecoilState(titleAtom);
+    const setTag = useSetRecoilState(tagAtom);
+    const setWeek = useSetRecoilState(weekAtom);
+
+    // onChange로 관리할 Title 문자열
+    const [curtitle, setCurTitle] = useState(info.title);
+    // onChange로 관리할 해시태그 문자열
+    const [curHashtag, setCurHashtag] = useState("");
+    // 해시태그를 담을 배열
+    const [curTag, setCurTag] = useState([info.tag]);
+
+    const [curWeek, setCurWeek] = useState(info.week);
+
+    const editorRef = useRef();
+    const navigate = useNavigate();
+    const btnClickListener = async () => {
+        const editorInstance = editorRef.current.getInstance();
+        const body = editorInstance.getMarkdown();
+        await Api.put(`post/update/${info.post_id}`, {
+            week: curWeek,
+            tag: curTag,
+            title: curtitle,
+            body,
+        });
+        setTitle(curtitle);
+        setTag(curTag);
+        setWeek(curWeek);
+        alert("게시글을 수정하였습니다.");
+        navigate(-1);
+    };
+
+    const checkTitle = curtitle !== "";
 
     const onChangeTitle = (e) => {
-        setTitle(e.target.value);
+        setCurTitle(e.target.value);
     };
 
     const onChangeHashtag = (e) => {
-        setHashtag(e.target.value);
+        setCurHashtag(e.target.value);
     };
 
     const onChangeWeek = (e) => {
-        setWeek(e.target.value);
+        setCurWeek(e.target.value);
     };
 
     const onKeyUp = (e) => {
@@ -102,27 +143,33 @@ function PostEditForm({ setIsEditing }) {
         if (e.keyCode === 13 && e.target.value.trim() !== "") {
             $HashWrapInner.innerHTML = e.target.value;
             $HashWrapOuter.appendChild($HashWrapInner);
-            setTag((hashArr) => [...hashArr, hashtag]);
-            setHashtag("");
+            setCurTag((hashArr) => [...hashArr, curHashtag]);
+            setCurHashtag("");
         }
 
         $HashWrapInner.addEventListener("click", () => {
             $HashWrapOuter?.removeChild($HashWrapInner);
-            setTag(tag.filter((hashtag) => hashtag));
+            setCurTag(curTag.filter((hashtag) => hashtag));
         });
     };
 
     return (
         <>
             <Wrapper>
-                <Title type="text" placeholder="제목을 입력하세요" onChange={onChangeTitle} />
+                <Title
+                    type="text"
+                    placeholder="제목을 입력하세요"
+                    defaultValue={curtitle}
+                    onChange={onChangeTitle}
+                />
                 <Line></Line>
                 <div className="HashWrap">
                     <HashOuter className="HashWrapOuter"></HashOuter>
                     <TagInput
                         className="HashInput"
                         type="text"
-                        value={hashtag}
+                        value={curHashtag}
+                        defaultValue={curTag}
                         onChange={onChangeHashtag}
                         onKeyUp={onKeyUp}
                         placeholder="태그를 입력하세요"
@@ -130,14 +177,28 @@ function PostEditForm({ setIsEditing }) {
                     <TextOuter>
                         <TextField
                             required
-                            type="number"
+                            type="text"
                             label="주차를 입력하세요"
                             variant="filled"
+                            defaultValue={curWeek}
                             onChange={onChangeWeek}
                         />
                     </TextOuter>
                 </div>
-                <EditWriter title={title} tag={tag} week={week} setIsEditing={setIsEditing} />
+                <Editor
+                    plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
+                    placeholder="공유하고 싶은 학습 내용을 적어보세요!"
+                    previewStyle="vertical"
+                    height="500px"
+                    initialEditType="markdown"
+                    initialValue={post}
+                    useCommandShortcut={true}
+                    ref={editorRef}
+                />
+                <Button onClick={() => navigate(-1)}>&larr; 이전으로</Button>
+                <Button variant="contained" onClick={btnClickListener} disabled={!checkTitle}>
+                    수정하기
+                </Button>
             </Wrapper>
         </>
     );
