@@ -9,7 +9,7 @@ const ManageUsers = () => {
     const [checkedList, setCheckedList] = React.useState([]);
     const [page, setPage] = React.useState(1);
     const [totalPage, setTotalPage] = React.useState();
-    const perPage = 15;
+    const perPage = 8;
     const user = useSelector((state) => (state ? state.userReducer.user : undefined));
 
     const getData = React.useCallback(async () => {
@@ -131,7 +131,7 @@ const ManageUsers = () => {
                                             checkedList.includes(datum.__id) ? "#e0e0e0" : "white"
                                         }
                                     >
-                                        <Td>
+                                        <Td style={{ width: "3%" }}>
                                             <Checkbox
                                                 value={datum.__id}
                                                 onChange={checkHandler}
@@ -140,8 +140,8 @@ const ManageUsers = () => {
                                                 }
                                             />
                                         </Td>
-                                        <Td>{datum.__id}</Td>
-                                        <Td>
+                                        <Td style={{ width: "34%" }}>{datum.__id}</Td>
+                                        <Td style={{ width: "5%" }}>
                                             <img
                                                 src={datum.profile_img}
                                                 style={{ height: "100%" }}
@@ -150,11 +150,13 @@ const ManageUsers = () => {
                                                 }}
                                             />
                                         </Td>
-                                        <Td>{datum.name}</Td>
-                                        <Td style={{ color: "#7353EA" }}>{datum.email}</Td>
-                                        <Td>{datum.track}</Td>
-                                        <Td>{String(datum.authorized)}</Td>
-                                        <Td>{datum.admin}</Td>
+                                        <Td style={{ width: "16%" }}>{datum.name}</Td>
+                                        <Td style={{ color: "#7353EA", width: "20%" }}>
+                                            {datum.email}
+                                        </Td>
+                                        <Td style={{ width: "6%" }}>{datum.track}</Td>
+                                        <Td style={{ width: "10%" }}>{String(datum.authorized)}</Td>
+                                        <Td style={{ width: "6%" }}>{datum.admin}</Td>
                                     </Tr>
                                 );
                             })}

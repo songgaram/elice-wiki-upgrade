@@ -12,12 +12,12 @@ const ManageUsers = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     const [totalPage, setTotalPage] = React.useState(null);
-    const perPage = 15;
+    const perPage = 8;
 
     const handleClick = (event) => {
         const userId = event.currentTarget.innerText;
-        setAnchorEl(event.currentTarget);
         getUser(userId);
+        setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
@@ -29,6 +29,7 @@ const ManageUsers = () => {
             const { data } = await Api.get("users", userId);
             setUser(data.payload);
         } catch (e) {
+            setUser(null);
             console.log(e);
         }
     });
@@ -119,7 +120,7 @@ const ManageUsers = () => {
                                                 : "white"
                                         }
                                     >
-                                        <Td>
+                                        <Td style={{ width: "3%" }}>
                                             <Checkbox
                                                 value={datum.post_id}
                                                 onClick={checkHandler}
@@ -130,9 +131,9 @@ const ManageUsers = () => {
                                                 }
                                             />
                                         </Td>
-                                        <Td>{datum.post_index}</Td>
-                                        <Td>{datum.post_id}</Td>
-                                        <Td>
+                                        <Td style={{ width: "3%" }}>{datum.post_index}</Td>
+                                        <Td style={{ width: "34%" }}>{datum.post_id}</Td>
+                                        <Td style={{ width: "12%" }}>
                                             <Title
                                                 onClick={() => {
                                                     navigate(`/admin/posts`);
@@ -141,7 +142,7 @@ const ManageUsers = () => {
                                                 {datum.title}
                                             </Title>
                                         </Td>
-                                        <Td>
+                                        <Td style={{ width: "34%" }}>
                                             <UserId aria-describedby={id} onClick={handleClick}>
                                                 {datum.user_id}
                                             </UserId>
@@ -156,12 +157,70 @@ const ManageUsers = () => {
                                                 horizontal: "left",
                                             }}
                                         >
-                                            <Typography sx={{ p: 2 }}>
-                                                {(user && JSON.stringify(user)) ||
-                                                    "해당하는 유저가 없습니다."}
-                                            </Typography>
+                                            {user ? (
+                                                <div
+                                                    style={{
+                                                        display: "flex",
+                                                        flexDirection: "column",
+                                                        alignItems: "center",
+                                                        padding: "15px",
+                                                    }}
+                                                >
+                                                    <img
+                                                        src={user.profile_img}
+                                                        style={{
+                                                            width: "40px",
+                                                            height: "40px",
+                                                        }}
+                                                    />
+                                                    <Typography
+                                                        sx={{ p: 0, alignSelf: "flex-start" }}
+                                                    >
+                                                        <span style={{ fontWeight: "bold" }}>
+                                                            Name
+                                                        </span>
+                                                        {`: ${user.name}`}
+                                                    </Typography>
+                                                    <Typography
+                                                        sx={{ p: 0, alignSelf: "flex-start" }}
+                                                    >
+                                                        <span style={{ fontWeight: "bold" }}>
+                                                            Email
+                                                        </span>
+                                                        {`: ${user.email}`}
+                                                    </Typography>
+                                                    <Typography
+                                                        sx={{ p: 0, alignSelf: "flex-start" }}
+                                                    >
+                                                        <span style={{ fontWeight: "bold" }}>
+                                                            Track
+                                                        </span>
+                                                        {`: ${user.track}`}
+                                                    </Typography>
+                                                    <Typography
+                                                        sx={{ p: 0, alignSelf: "flex-start" }}
+                                                    >
+                                                        <span style={{ fontWeight: "bold" }}>
+                                                            Admin
+                                                        </span>
+                                                        {`: ${user.admin}`}
+                                                    </Typography>
+                                                    <Typography
+                                                        sx={{ p: 0, alignSelf: "flex-start" }}
+                                                    >
+                                                        <span style={{ fontWeight: "bold" }}>
+                                                            Authorized
+                                                        </span>
+                                                        {`: ${user.authorized}`}
+                                                    </Typography>
+                                                </div>
+                                            ) : (
+                                                <Typography sx={{ p: 2 }}>
+                                                    해당하는 유저가 없습니다.
+                                                </Typography>
+                                            )}
                                         </Popover>
-                                        <Td>{datum.lastmod_user}</Td>
+                                        <Td style={{ width: "14%" }}>{datum.lastmod_user}</Td>
                                     </Tr>
                                 );
                             })}

@@ -10,7 +10,7 @@ const ManageUsers = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     const [totalPage, setTotalPage] = React.useState();
-    const perPage = 15;
+    const perPage = 8;
 
     const getData = React.useCallback(async () => {
         const { data } = await Api.getQuery("auths", `perPage=${perPage}&page=${page}`);
@@ -109,7 +109,7 @@ const ManageUsers = () => {
                                         key={`users/${index}`}
                                         color={checkedList.includes(datum.id) ? "#e0e0e0" : "white"}
                                     >
-                                        <Td>
+                                        <Td style={{ width: "3%" }}>
                                             <Checkbox
                                                 value={datum.id}
                                                 onClick={checkHandler}
@@ -118,8 +118,8 @@ const ManageUsers = () => {
                                                 }
                                             />
                                         </Td>
-                                        <Td>{datum.id}</Td>
-                                        <Td>
+                                        <Td style={{ width: "3%" }}>{datum.id}</Td>
+                                        <Td style={{ width: "70%" }}>
                                             <Title
                                                 onClick={() => {
                                                     navigate(`/editquestion/${datum.id}`);
@@ -128,8 +128,8 @@ const ManageUsers = () => {
                                                 {datum.question}
                                             </Title>
                                         </Td>
-                                        <Td>{datum.answer}</Td>
-                                        <Td>{String(datum.current)}</Td>
+                                        <Td style={{ width: "14%" }}>{datum.answer}</Td>
+                                        <Td style={{ width: "10%" }}>{String(datum.current)}</Td>
                                     </Tr>
                                 );
                             })}
