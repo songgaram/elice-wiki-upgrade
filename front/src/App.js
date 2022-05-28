@@ -20,6 +20,7 @@ import TagPost from "./components/view/home/TagPost";
 import Board from "./components/view/board/Board";
 import BoardDetail from "./components/view/board/BoardDetail";
 import BoardAddForm from "./components/view/board/BoardAddForm";
+import Search from "./components/view/home/Search";
 import Spinner from "./components/Spinner";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import GlobalStyle from "./GlobalStyle";
@@ -82,6 +83,7 @@ function App() {
                             <Route path="/board" exact element={<Board />} />
                             <Route path="/board/:id" exact element={<BoardDetail />} />
                             <Route path="/board/create" exact element={<BoardAddForm />} />
+                            <Route path="/posts" element={<Search />} />
                         </>
                     )}
                     <Route path="/test" exact element={<GoogleLoading />} />

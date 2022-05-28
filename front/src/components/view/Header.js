@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../store/actions/userAction";
 
-const Search = styled("div")(({ theme }) => ({
+const Search = styled("form")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -81,6 +81,11 @@ function Header() {
         navigate("/mypage");
     };
 
+    const SearchSubmit = (event) => {
+        event.preventDefault();
+        return (window.location.href = `/posts?search=${event.target[0].value}`);
+    };
+
     return (
         <>
             <Box sx={{ flexGrow: 1 }} style={{ width: "100%", height: "60px" }}>
@@ -93,7 +98,7 @@ function Header() {
                             onClick={() => navigate("/home")}
                         />
                         <Box sx={{ flexGrow: 1 }} />
-                        <Search>
+                        <Search onSubmit={SearchSubmit}>
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
