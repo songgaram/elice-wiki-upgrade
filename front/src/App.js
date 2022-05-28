@@ -22,6 +22,7 @@ import BoardDetail from "./components/view/board/BoardDetail";
 import BoardAddForm from "./components/view/board/BoardAddForm";
 import Spinner from "./components/Spinner";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import GlobalStyle from "./GlobalStyle";
 
 const theme = createTheme({
     palette: {
@@ -65,6 +66,7 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
+            <GlobalStyle />
             <Router>
                 <Routes>
                     <Route path="/" exact element={<Home />} />

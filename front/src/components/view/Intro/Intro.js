@@ -21,20 +21,15 @@ const Intro = () => {
                                 <br />
                                 학습 내용을 내 것으로
                             </h1>
-                            <div
-                                className={styles["description"]}
-                                {...animatedItem[0]}
-                            >
-                                본 서비스는 엘리스에서 주관하는 교육 상황에서의
-                                빠르고 많은
+                            <div className={styles["description"]} {...animatedItem[0]}>
+                                본 서비스는 엘리스에서 주관하는 교육 상황에서의 빠르고 많은
                                 <br />
-                                학습량과 구글링을 중심으로 한 프로그래밍 학습의
-                                특성을 반영하여
+                                학습량과 구글링을 중심으로 한 프로그래밍 학습의 특성을 반영하여
                                 <br />
                                 제안된 위키 서비스입니다.
                             </div>
                             <div className={styles["btnWrapper"]}>
-                                    <OAuthButton />
+                                <OAuthButton />
                             </div>
                         </div>
                     </div>
@@ -42,13 +37,11 @@ const Intro = () => {
             </section>
             <div className={styles["subSection"]}>
                 <p className={styles["subDescription"]} {...animatedItem[1]}>
-                    모든 레이서들의 학습을 한눈에 보고, 자신의 학습을
-                    기록해보세요.
+                    자신의 학습을 기록하고, 다른 레이서들의 기록으로 함께 학습해보세요.
                     <br />
-                    <span>#elice-wiki</span> 는 엘리스 AI 트랙에 참여하는
-                    레이서를 위한
+                    <span>#elice-wiki</span>는 엘리스 AI 트랙에 참여하는 레이서들의
                     <br />
-                    <span>위키 서비스</span>입니다.
+                    <span>지식 공동체</span>입니다.
                 </p>
             </div>
             <CardSection />
