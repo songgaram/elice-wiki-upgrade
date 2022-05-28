@@ -140,7 +140,7 @@ const ManageUsers = () => {
                                         <Td>
                                             <Title
                                                 onClick={() => {
-                                                    navigate(`/admin/posts`);
+                                                    navigate(`/board/${datum.boardId}`);
                                                 }}
                                             >
                                                 {datum.title}
