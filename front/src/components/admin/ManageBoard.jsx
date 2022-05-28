@@ -3,7 +3,7 @@ import * as Api from "../../api";
 import styled from "styled-components";
 import moment from "moment";
 import "moment/locale/ko";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { Button, Pagination, Stack, Popover, Typography, Checkbox } from "@mui/material";
 
 const ManageUsers = () => {
@@ -14,7 +14,8 @@ const ManageUsers = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     const [totalPage, setTotalPage] = React.useState(null);
-    const perPage = 8;
+    const height = useOutletContext();
+    const perPage = Math.floor(height / 64.2) - 1 || 8;
 
     const handleClick = (event) => {
         const userId = event.currentTarget.innerText;
@@ -103,14 +104,14 @@ const ManageUsers = () => {
                 <Table>
                     <Thead>
                         <Tr color="#C2C2C2">
-                            <Th>
+                            <Th style={{ width: "3%" }}>
                                 <Checkbox id="checkAll" onChange={checkAll} />
                             </Th>
-                            <Th>No.</Th>
-                            <Th>BoardId</Th>
-                            <Th>Title</Th>
-                            <Th>작성자</Th>
-                            <Th>작성시간</Th>
+                            <Th style={{ width: "3%" }}>No.</Th>
+                            <Th style={{ width: "34%" }}>BoardId</Th>
+                            <Th style={{ width: "13%" }}>Title</Th>
+                            <Th style={{ width: "34%" }}>작성자</Th>
+                            <Th style={{ width: "13%" }}>작성시간</Th>
                         </Tr>
                     </Thead>
                     <Tbody>

@@ -2,6 +2,7 @@ import React from "react";
 import * as Api from "../../api";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { useOutletContext } from "react-router-dom";
 import { Button, Pagination, Stack, Checkbox } from "@mui/material";
 
 const ManageUsers = () => {
@@ -9,7 +10,8 @@ const ManageUsers = () => {
     const [checkedList, setCheckedList] = React.useState([]);
     const [page, setPage] = React.useState(1);
     const [totalPage, setTotalPage] = React.useState();
-    const perPage = 8;
+    const height = useOutletContext();
+    const perPage = Math.floor(height / 64.2) - 1 || 8;
     const user = useSelector((state) => (state ? state.userReducer.user : undefined));
 
     const getData = React.useCallback(async () => {
@@ -17,7 +19,6 @@ const ManageUsers = () => {
         setData(data.payload.rows);
         setTotalPage(Math.ceil(data.payload?.count / perPage));
     });
-
     React.useEffect(() => {
         getData();
     }, [page]);
@@ -109,16 +110,16 @@ const ManageUsers = () => {
                 <Table>
                     <Thead>
                         <Tr color="#C2C2C2">
-                            <Th>
+                            <Th style={{ width: "3%" }}>
                                 <Checkbox id="checkAll" onChange={checkAll} />
                             </Th>
-                            <Th>UserId</Th>
-                            <Th>Image</Th>
-                            <Th>Name</Th>
-                            <Th>Email</Th>
-                            <Th>Track</Th>
-                            <Th>Authorized</Th>
-                            <Th>Admin</Th>
+                            <Th style={{ width: "34%" }}>UserId</Th>
+                            <Th style={{ width: "5%" }}>Image</Th>
+                            <Th style={{ width: "16%" }}>Name</Th>
+                            <Th style={{ width: "20%" }}>Email</Th>
+                            <Th style={{ width: "6%" }}>Track</Th>
+                            <Th style={{ width: "10%" }}>Authorized</Th>
+                            <Th style={{ width: "6%" }}>Admin</Th>
                         </Tr>
                     </Thead>
                     <Tbody>

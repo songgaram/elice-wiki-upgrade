@@ -1,7 +1,7 @@
 import React from "react";
 import * as Api from "../../api";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { Button, Pagination, Stack, Checkbox } from "@mui/material";
 
 const ManageUsers = () => {
@@ -10,7 +10,8 @@ const ManageUsers = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     const [totalPage, setTotalPage] = React.useState();
-    const perPage = 8;
+    const height = useOutletContext();
+    const perPage = Math.floor(height / 64.2) - 1 || 8;
 
     const getData = React.useCallback(async () => {
         const { data } = await Api.getQuery("auths", `perPage=${perPage}&page=${page}`);
@@ -92,13 +93,13 @@ const ManageUsers = () => {
                 <Table>
                     <Thead>
                         <Tr color="#C2C2C2">
-                            <Th>
+                            <Th style={{ width: "3%" }}>
                                 <Checkbox id="checkAll" onChange={checkAll} />
                             </Th>
-                            <Th>No.</Th>
-                            <Th>Question</Th>
-                            <Th>Answer</Th>
-                            <Th>Current</Th>
+                            <Th style={{ width: "3%" }}>No.</Th>
+                            <Th style={{ width: "70%" }}>Question</Th>
+                            <Th style={{ width: "14%" }}>Answer</Th>
+                            <Th style={{ width: "10%" }}>Current</Th>
                         </Tr>
                     </Thead>
                     <Tbody>

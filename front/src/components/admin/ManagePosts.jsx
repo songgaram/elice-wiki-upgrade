@@ -1,7 +1,7 @@
 import React from "react";
 import * as Api from "../../api";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { Button, Pagination, Stack, Popover, Typography, Checkbox } from "@mui/material";
 
 const ManageUsers = () => {
@@ -12,7 +12,8 @@ const ManageUsers = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     const [totalPage, setTotalPage] = React.useState(null);
-    const perPage = 8;
+    const height = useOutletContext();
+    const perPage = Math.floor(height / 64.2) - 1 || 8;
 
     const handleClick = (event) => {
         const userId = event.currentTarget.innerText;
@@ -33,7 +34,6 @@ const ManageUsers = () => {
             console.log(e);
         }
     });
-
     const getData = React.useCallback(async () => {
         try {
             const { data } = await Api.getQuery("posts", `page=${page}&perPage=${perPage}`);
@@ -98,14 +98,14 @@ const ManageUsers = () => {
                 <Table>
                     <Thead>
                         <Tr color="#C2C2C2">
-                            <Th>
+                            <Th style={{ width: "3%" }}>
                                 <Checkbox id="checkAll" onChange={checkAll} />
                             </Th>
-                            <Th>No.</Th>
-                            <Th>PostId</Th>
-                            <Th>Title</Th>
-                            <Th>작성자</Th>
-                            <Th>최종수정</Th>
+                            <Th style={{ width: "3%" }}>No.</Th>
+                            <Th style={{ width: "34%" }}>PostId</Th>
+                            <Th style={{ width: "12%" }}>Title</Th>
+                            <Th style={{ width: "34%" }}>작성자</Th>
+                            <Th style={{ width: "14%" }}>최종수정</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
