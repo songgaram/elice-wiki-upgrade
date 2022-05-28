@@ -20,7 +20,7 @@ export const getWeekPosts = async (setPosts, week) => {
 
 export const getTagPosts = async (setPosts, tag) => {
     try {
-        const { data } = await Api.getQuery(`post/tag/${tag}`, `page=1&perPage=5`);
+        const { data } = await Api.get(`post/tag/${tag}`);
         setPosts(data.payload.postListInfo);
     } catch (e) {
         console.log("tag-Post를 가져오는데 실패하였습니다.", e);
