@@ -12,7 +12,7 @@ const ManageUsers = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     const [totalPage, setTotalPage] = React.useState(null);
-    const perPage = 15;
+    const perPage = 8;
 
     const handleClick = (event) => {
         const userId = event.currentTarget.innerText;
@@ -78,7 +78,16 @@ const ManageUsers = () => {
         document.getElementById("checkAll").checked = false;
     };
     return (
-        <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <div
+            style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
             <div style={{ width: "100%", height: "100%" }}>
                 <ControllerContainer>
                     <Button variant="outlined" onClick={controller} name="deletePost" color="error">
@@ -102,12 +111,23 @@ const ManageUsers = () => {
                         {data &&
                             data.map((datum, index) => {
                                 return (
-                                    <Tr key={`users/${index}`} color={checkedList.includes(datum.post_id) ? "#e0e0e0" : "white"}>
+                                    <Tr
+                                        key={`users/${index}`}
+                                        color={
+                                            checkedList.includes(datum.post_id)
+                                                ? "#e0e0e0"
+                                                : "white"
+                                        }
+                                    >
                                         <Td>
                                             <Checkbox
                                                 value={datum.post_id}
                                                 onClick={checkHandler}
-                                                checked={checkedList.includes(datum.post_id) ? true : false}
+                                                checked={
+                                                    checkedList.includes(datum.post_id)
+                                                        ? true
+                                                        : false
+                                                }
                                             />
                                         </Td>
                                         <Td>{datum.post_index}</Td>
@@ -136,7 +156,10 @@ const ManageUsers = () => {
                                                 horizontal: "left",
                                             }}
                                         >
-                                            <Typography sx={{ p: 2 }}>{(user && JSON.stringify(user)) || "해당하는 유저가 없습니다."}</Typography>
+                                            <Typography sx={{ p: 2 }}>
+                                                {(user && JSON.stringify(user)) ||
+                                                    "해당하는 유저가 없습니다."}
+                                            </Typography>
                                         </Popover>
                                         <Td>{datum.lastmod_user}</Td>
                                     </Tr>
@@ -147,7 +170,12 @@ const ManageUsers = () => {
             </div>
             {totalPage && (
                 <Stack spacing={2}>
-                    <Pagination count={totalPage} page={page} onChange={pageHandler} color="primary" />
+                    <Pagination
+                        count={totalPage}
+                        page={page}
+                        onChange={pageHandler}
+                        color="primary"
+                    />
                 </Stack>
             )}
         </div>
@@ -166,8 +194,7 @@ const Th = styled.th`
 `;
 const Td = styled.td`
     height: 2.5rem;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 10px;
     font-size: 1.2rem;
     vertical-align: middle;
     text-align: center;

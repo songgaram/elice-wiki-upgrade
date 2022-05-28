@@ -25,40 +25,44 @@ import Mdfile from "./components/view/note/Markdown";
 import PostEditForm from "./components/view/note/PostEditForm";
 
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#7353EA",
-      // darker: "#322468",
+    palette: {
+        primary: {
+            main: "#7353EA",
+            darker: "#322468",
+        },
+        binary: {
+            main: "#757575",
+            darker: "#3A3A3A",
+        },
     },
-  },
 });
 
 function App() {
-  const dispatch = useDispatch();
-  const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
+    const dispatch = useDispatch();
+    const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
 
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+    const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const { data } = await Api.get("user/current");
-        const currentUser = data.payload;
-        // dispatch 함수를 통해 로그인 성공 상태로 만듦.
-        dispatch(loginUser(currentUser));
+    useEffect(() => {
+        const fetchCurrentUser = async () => {
+            try {
+                const { data } = await Api.get("user/current");
+                const currentUser = data.payload;
+                // dispatch 함수를 통해 로그인 성공 상태로 만듦.
+                dispatch(loginUser(currentUser));
 
-        console.log("%c sessionStorage에 토큰 있음.", "color: #d93d1a;");
-      } catch {
-        console.log("%c SessionStorage에 토큰 없음.", "color: #d93d1a;");
-      }
-      setIsFetchCompleted(true);
-    };
-    fetchCurrentUser();
-  }, [dispatch]);
+                console.log("%c sessionStorage에 토큰 있음.", "color: #d93d1a;");
+            } catch {
+                console.log("%c SessionStorage에 토큰 없음.", "color: #d93d1a;");
+            }
+            setIsFetchCompleted(true);
+        };
+        fetchCurrentUser();
+    }, [dispatch]);
 
-  if (!isFetchCompleted) {
-    return <div>로딩중...</div>;
-  }
+    if (!isFetchCompleted) {
+        return <Spinner />;
+    }
 
   if (!isFetchCompleted) {
     return <div>로딩중...</div>;
