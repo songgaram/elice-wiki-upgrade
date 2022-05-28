@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { CardContent, CardHeader, Typography, IconButton, Button } from "@mui/material";
+import { CardContent, CardHeader, Typography, IconButton, Button, Avatar } from "@mui/material";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { timeForToday } from "./CommentTool";
 import * as Api from "../../../api";
 
 function CommentCard({ commentData, onReplyClick, setshowReplyInput }) {
-    const { userName, content, userId, commentId, boardId, isDeleted } = commentData;
+    const { userName, content, userId, commentId, boardId, isDeleted, profileImg, createdAt } =
+        commentData;
     const navigate = useNavigate();
     const [isEditable, setIsEditable] = useState(false);
 
@@ -34,6 +36,9 @@ function CommentCard({ commentData, onReplyClick, setshowReplyInput }) {
     return (
         <div>
             <CardHeader
+                avatar={
+                    <Avatar sx={{ width: 24, height: 24 }} alt="유저 프로필" src={profileImg} />
+                }
                 action={
                     isEditable && (
                         <>
@@ -43,7 +48,7 @@ function CommentCard({ commentData, onReplyClick, setshowReplyInput }) {
                         </>
                     )
                 }
-                subheader={userName}
+                title={`${userName} | ${timeForToday(createdAt)}`}
             />
 
             {isDeleted ? (
@@ -53,7 +58,7 @@ function CommentCard({ commentData, onReplyClick, setshowReplyInput }) {
                     </Typography>
                 </CardContent>
             ) : (
-                <CardContent>
+                <CardContent style={{ paddingBottom: "0" }}>
                     <Typography sx={{ fontSize: 15, ml: 1 }} color="text.primary" gutterBottom>
                         {content}
                     </Typography>

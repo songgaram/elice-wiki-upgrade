@@ -53,9 +53,15 @@ function ReplyComment({ commentData, commentList }) {
             {childCommentNumber > 0 && (
                 <div
                     onClick={onClickViewMore}
-                    style={{ margin: "0 0 20px 15px", width: "auto", cursor: "pointer" }}
+                    style={{
+                        margin: "0 0 20px 25px",
+                        width: "auto",
+                        cursor: "pointer",
+                        fontSize: "13px",
+                    }}
                 >
-                    {openReply ? "▼" : "▶"} {childCommentNumber}개의 답글
+                    {openReply ? "▼" : "▶"}{" "}
+                    <span style={{ color: "#757575" }}>{childCommentNumber}개의 답글</span>
                 </div>
             )}
             {openReply && RenderReply(commentData.id)}

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommentInput from "./CommentInput";
-import { Button } from "@mui/material";
 import * as Api from "../../../api";
 
 function CommentAddForm({ boardId }) {
