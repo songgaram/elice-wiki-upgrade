@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "./store/actions/userAction";
 import * as Api from "./api";
 import Home from "./components/view/home/Home";
+import UserHome from "./components/view/home/UserHome";
 import EliceUserAuth from "./components/auth/EliceUserAuth";
 import GoogleLoading from "./components/auth/GoogleLoading";
 import Admin from "./components/admin/Admin";
@@ -66,10 +67,11 @@ function App() {
         <ThemeProvider theme={theme}>
             <Router>
                 <Routes>
-                    {userState && (
+                    <Route path="/" exact element={<Home />} />
+                    {userState && <Route path="/auth" exact element={<EliceUserAuth />} />}
+                    {userState?.authorized && (
                         <>
-                            <Route path="/auth" exact element={<EliceUserAuth />} />
-                            <Route path="/" exact element={<Home />}>
+                            <Route path="/home" exact element={<UserHome />}>
                                 <Route index element={<HomePost />} />
                                 <Route path="post" element={<HomePost />} />
                                 <Route path="week/:week" element={<WeekPost />} />
