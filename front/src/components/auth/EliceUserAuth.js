@@ -25,7 +25,7 @@ const EliceUserAuth = () => {
 
     useEffect(() => {
         if (userState?.authorized) {
-            navigate("/");
+            navigate("/home");
             return;
         }
         getAuthData();
@@ -44,7 +44,7 @@ const EliceUserAuth = () => {
             } else {
                 dispatch(loginUser(data.payload));
                 alert("인증 성공!");
-                navigate("/", { replace: true });
+                navigate("/home", { replace: true });
             }
         } catch (error) {
             console.log("인증 실패ㅠㅠ", error);
