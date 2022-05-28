@@ -14,7 +14,8 @@ import ManageBoard from "./components/admin/ManageBoard";
 import QuestionEditor from "./components/admin/QuestionEditor";
 import MyPage from "./components/mypage/MyPage";
 import WeekPost from "./components/view/home/WeekPost";
-import PostList from "./components/view/home/PostList";
+import HomePost from "./components/view/home/HomePost";
+import TagPost from "./components/view/home/TagPost";
 import Board from "./components/view/board/Board";
 import BoardDetail from "./components/view/board/BoardDetail";
 import BoardAddForm from "./components/view/board/BoardAddForm";
@@ -69,9 +70,10 @@ function App() {
                         <>
                             <Route path="/auth" exact element={<EliceUserAuth />} />
                             <Route path="/" exact element={<Home />}>
-                                <Route index element={<PostList />} />
-                                <Route path="post" element={<PostList />} />
+                                <Route index element={<HomePost />} />
+                                <Route path="post" element={<HomePost />} />
                                 <Route path="week/:week" element={<WeekPost />} />
+                                <Route path="tag/:tag" element={<TagPost />} />
                             </Route>
                             <Route path="/board" exact element={<Board />} />
                             <Route path="/board/:id" exact element={<BoardDetail />} />
