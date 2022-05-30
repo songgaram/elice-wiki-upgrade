@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "./store/actions/userAction";
 import * as Api from "./api";
 import Home from "./components/view/home/Home";
+import Note from "./components/view/note/Note";
 import UserHome from "./components/view/home/UserHome";
 import EliceUserAuth from "./components/auth/EliceUserAuth";
 import GoogleLoading from "./components/auth/GoogleLoading";
@@ -23,6 +24,8 @@ import BoardAddForm from "./components/view/board/BoardAddForm";
 import Search from "./components/view/home/Search";
 import Spinner from "./components/Spinner";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Mdfile from "./components/view/note/Markdown";
+import PostEditForm from "./components/view/note/PostEditForm";
 import GlobalStyle from "./GlobalStyle";
 
 const theme = createTheme({
@@ -77,9 +80,12 @@ function App() {
                             <Route path="/home" exact element={<UserHome />}>
                                 <Route index element={<HomePost />} />
                                 <Route path="post" element={<HomePost />} />
+                                <Route path="post/:postId" element={<Mdfile />} />
                                 <Route path="week/:week" element={<WeekPost />} />
                                 <Route path="tag/:tag" element={<TagPost />} />
                             </Route>
+                            <Route path="/addPost" element={<Note />} />
+                            <Route path="/editPost" element={<PostEditForm />} />
                             <Route path="/board" exact element={<Board />} />
                             <Route path="/board/:id" exact element={<BoardDetail />} />
                             <Route path="/board/create" exact element={<BoardAddForm />} />

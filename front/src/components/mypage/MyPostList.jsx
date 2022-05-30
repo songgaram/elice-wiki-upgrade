@@ -29,13 +29,11 @@ const AccordionSummary = Styled((props) => <MuiAccordionSummary {...props} />)((
     },
     "& .MuiAccordionSummary-content": {
         marginLeft: theme.spacing(0),
+        marginBottom: 0,
     },
 }));
 
-const AccordionDetails = Styled(MuiAccordionDetails)(({ theme }) => ({
-    marginLeft: theme.spacing(2),
-    marginTop: "-1rem",
-}));
+const AccordionDetails = Styled(MuiAccordionDetails)(({ theme }) => ({ paddingTop: "0" }));
 
 const MyPostList = ({ user }) => {
     const navigate = useNavigate();
@@ -95,82 +93,68 @@ const MyPostList = ({ user }) => {
     return (
         <div style={{ width: "60vw" }}>
             <Wrapper>
-                <Accordion expanded={expanded.includes("POSTS")}>
-                    <AccordionSummary
-                        aria-controls="POSTS"
-                        id="POSTS"
-                        expandIcon={
-                            expanded.includes("POSTS") ? (
-                                <div
-                                    style={{
-                                        fontSize: "0.8rem",
-                                        cursor: "pointer",
-                                        marginTop: "36px",
-                                    }}
-                                    onClick={() => handleClick("POSTS")}
-                                >
-                                    - 줄이기
-                                </div>
-                            ) : (
-                                <div
-                                    style={{
-                                        fontSize: "0.8rem",
-                                        cursor: "pointer",
-                                        marginTop: "36px",
-                                    }}
-                                    onClick={() => handleClick("POSTS")}
-                                >
-                                    + 더보기
-                                </div>
-                            )
-                        }
-                    >
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                height: "fit-content",
-                            }}
-                        >
-                            <div style={{ display: "flex", flexDirection: "column" }}>
-                                <div style={{ display: "flex", flexDirection: "row" }}>
-                                    <CreateRounded sx={{ fontSize: "3rem" }} />
-                                    <Typography
-                                        sx={{
-                                            fontSize: "2.2rem",
-                                            fontWeight: "bold",
-                                            marginLeft: "1rem",
-                                            height: "48px",
-                                        }}
-                                    >
-                                        포스팅
-                                    </Typography>
-                                </div>
-                                <div style={{ marginTop: "2rem", marginLeft: "1rem" }}>
-                                    <ul>
-                                        {postFirstList &&
-                                            postFirstList.map((post, index) => {
-                                                return (
-                                                    <List key={`Fpost-${index}`}>
-                                                        <Link
-                                                            onClick={() => {
-                                                                /*navigate(`/board/${post.post_id}`)*/
-                                                            }}
-                                                        >
-                                                            {post.title}
-                                                        </Link>
-                                                    </List>
-                                                );
-                                            })}
-                                    </ul>
-                                </div>
-                            </div>
-                            <Typography
-                                sx={{ marginLeft: "0.7rem", position: "relative", top: "22px" }}
+                <AccordionSummary
+                    aria-controls="POSTS"
+                    id="POSTS"
+                    expandIcon={
+                        expanded.includes("POSTS") ? (
+                            <div
+                                style={{
+                                    fontSize: "0.8rem",
+                                    cursor: "pointer",
+                                    marginTop: "36px",
+                                }}
+                                onClick={() => handleClick("POSTS")}
                             >
-                                내가 작성한 포스트
-                            </Typography>
-                        </div>
+                                - 줄이기
+                            </div>
+                        ) : (
+                            <div
+                                style={{
+                                    fontSize: "0.8rem",
+                                    cursor: "pointer",
+                                    marginTop: "36px",
+                                }}
+                                onClick={() => handleClick("POSTS")}
+                            >
+                                + 더보기
+                            </div>
+                        )
+                    }
+                >
+                    <CreateRounded sx={{ fontSize: "3rem" }} />
+                    <Typography
+                        sx={{
+                            fontSize: "2.2rem",
+                            fontWeight: "bold",
+                            marginLeft: "1rem",
+                            height: "48px",
+                        }}
+                    >
+                        포스팅
+                    </Typography>
+                    <Typography sx={{ marginLeft: "0.7rem", position: "relative", top: "22px" }}>
+                        내가 작성한 포스트
+                    </Typography>
+                </AccordionSummary>
+                <Accordion expanded={expanded.includes("POSTS")}>
+                    <AccordionSummary>
+                        <ul>
+                            {postFirstList &&
+                                postFirstList.map((post, index) => {
+                                    return (
+                                        <List key={`Fpost-${index}`}>
+                                            <Link
+                                                onClick={() => {
+                                                    /*navigate(`/board/${post.post_id}`)*/
+                                                }}
+                                            >
+                                                {post.title}
+                                            </Link>
+                                        </List>
+                                    );
+                                })}
+                        </ul>
                     </AccordionSummary>
                     <AccordionDetails>
                         <ul>
@@ -192,83 +176,69 @@ const MyPostList = ({ user }) => {
                     </AccordionDetails>
                 </Accordion>
             </Wrapper>
-            <Wrapper style={{ borderTop: "2px solid #7353ea" }}>
-                <Accordion expanded={expanded.includes("BOARD")}>
-                    <AccordionSummary
-                        aria-controls="BOARD"
-                        id="BOARD"
-                        expandIcon={
-                            expanded.includes("BOARD") ? (
-                                <div
-                                    style={{
-                                        fontSize: "0.8rem",
-                                        cursor: "pointer",
-                                        marginTop: "36px",
-                                    }}
-                                    onClick={() => handleClick("BOARD")}
-                                >
-                                    - 줄이기
-                                </div>
-                            ) : (
-                                <div
-                                    style={{
-                                        fontSize: "0.8rem",
-                                        cursor: "pointer",
-                                        marginTop: "36px",
-                                    }}
-                                    onClick={() => handleClick("BOARD")}
-                                >
-                                    + 더보기
-                                </div>
-                            )
-                        }
-                    >
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                height: "fit-content",
-                            }}
-                        >
-                            <div style={{ display: "flex", flexDirection: "column" }}>
-                                <div style={{ display: "flex", flexDirection: "row" }}>
-                                    <LibraryBooksRounded sx={{ fontSize: "3rem" }} />
-                                    <Typography
-                                        sx={{
-                                            fontSize: "2.2rem",
-                                            fontWeight: "bold",
-                                            marginLeft: "1rem",
-                                            height: "48px",
-                                        }}
-                                    >
-                                        게시판
-                                    </Typography>
-                                </div>
-                                <div style={{ marginTop: "2rem", marginLeft: "1rem" }}>
-                                    <ul>
-                                        {boardFirstList &&
-                                            boardFirstList.map((board, index) => {
-                                                return (
-                                                    <List key={`Fboard-${index}`}>
-                                                        <Link
-                                                            onClick={() => {
-                                                                navigate(`/board/${board.boardId}`);
-                                                            }}
-                                                        >
-                                                            {board.title}
-                                                        </Link>
-                                                    </List>
-                                                );
-                                            })}
-                                    </ul>
-                                </div>
-                            </div>
-                            <Typography
-                                sx={{ marginLeft: "0.7rem", position: "relative", top: "22px" }}
+            <Wrapper style={{ borderTop: "1px solid #9880F0" }}>
+                <AccordionSummary
+                    aria-controls="BOARD"
+                    id="BOARD"
+                    expandIcon={
+                        expanded.includes("BOARD") ? (
+                            <div
+                                style={{
+                                    fontSize: "0.8rem",
+                                    cursor: "pointer",
+                                    marginTop: "36px",
+                                }}
+                                onClick={() => handleClick("BOARD")}
                             >
-                                내가 작성한 게시글
-                            </Typography>
-                        </div>
+                                - 줄이기
+                            </div>
+                        ) : (
+                            <div
+                                style={{
+                                    fontSize: "0.8rem",
+                                    cursor: "pointer",
+                                    marginTop: "36px",
+                                }}
+                                onClick={() => handleClick("BOARD")}
+                            >
+                                + 더보기
+                            </div>
+                        )
+                    }
+                >
+                    <LibraryBooksRounded sx={{ fontSize: "3rem" }} />
+                    <Typography
+                        sx={{
+                            fontSize: "2.2rem",
+                            fontWeight: "bold",
+                            marginLeft: "1rem",
+                            height: "48px",
+                        }}
+                    >
+                        게시판
+                    </Typography>
+                    <Typography sx={{ marginLeft: "0.7rem", position: "relative", top: "22px" }}>
+                        내가 작성한 게시글
+                    </Typography>
+                </AccordionSummary>
+                <Accordion expanded={expanded.includes("BOARD")}>
+                    <AccordionSummary>
+                        <ul>
+                            {boardFirstList &&
+                                boardFirstList.map((board, index) => {
+                                    return (
+                                        <List key={`Fboard-${index}`}>
+                                            <Link
+                                                onClick={() => {
+                                                    navigate(`/board/${board.boardId}`);
+                                                }}
+                                            >
+                                                {board.title}
+                                            </Link>
+                                        </List>
+                                    );
+                                })}
+                        </ul>
                     </AccordionSummary>
                     <AccordionDetails>
                         <ul>
@@ -290,85 +260,69 @@ const MyPostList = ({ user }) => {
                     </AccordionDetails>
                 </Accordion>
             </Wrapper>
-            <Wrapper style={{ borderTop: "2px solid #7353ea" }}>
-                <Accordion expanded={expanded.includes("COMMENTS")}>
-                    <AccordionSummary
-                        aria-controls="COMMENTS"
-                        id="COMMENTS"
-                        expandIcon={
-                            expanded.includes("COMMENTS") ? (
-                                <div
-                                    style={{
-                                        fontSize: "0.8rem",
-                                        cursor: "pointer",
-                                        marginTop: "36px",
-                                    }}
-                                    onClick={() => handleClick("COMMENTS")}
-                                >
-                                    - 줄이기
-                                </div>
-                            ) : (
-                                <div
-                                    style={{
-                                        fontSize: "0.8rem",
-                                        cursor: "pointer",
-                                        marginTop: "36px",
-                                    }}
-                                    onClick={() => handleClick("COMMENTS")}
-                                >
-                                    + 더보기
-                                </div>
-                            )
-                        }
-                    >
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                height: "fit-content",
-                            }}
-                        >
-                            <div style={{ display: "flex", flexDirection: "column" }}>
-                                <div style={{ display: "flex", flexDirection: "row" }}>
-                                    <CommentRounded sx={{ fontSize: "3rem" }} />
-                                    <Typography
-                                        sx={{
-                                            fontSize: "2.2rem",
-                                            fontWeight: "bold",
-                                            marginLeft: "1rem",
-                                            height: "48px",
-                                        }}
-                                    >
-                                        댓글
-                                    </Typography>
-                                </div>
-                                <div style={{ marginTop: "2rem", marginLeft: "1rem" }}>
-                                    <ul>
-                                        {commentFirstList &&
-                                            commentFirstList.map((comment, index) => {
-                                                return (
-                                                    <List key={`Fcomment-${index}`}>
-                                                        <Link
-                                                            onClick={() => {
-                                                                navigate(
-                                                                    `/board/${comment.boardId}`,
-                                                                );
-                                                            }}
-                                                        >
-                                                            {comment.content}
-                                                        </Link>
-                                                    </List>
-                                                );
-                                            })}
-                                    </ul>
-                                </div>
-                            </div>
-                            <Typography
-                                sx={{ marginLeft: "0.7rem", position: "relative", top: "22px" }}
+            <Wrapper style={{ borderTop: "1px solid #9880F0" }}>
+                <AccordionSummary
+                    aria-controls="COMMENTS"
+                    id="COMMENTS"
+                    expandIcon={
+                        expanded.includes("COMMENTS") ? (
+                            <div
+                                style={{
+                                    fontSize: "0.8rem",
+                                    cursor: "pointer",
+                                    marginTop: "36px",
+                                }}
+                                onClick={() => handleClick("COMMENTS")}
                             >
-                                내가 작성한 댓글
-                            </Typography>
-                        </div>
+                                - 줄이기
+                            </div>
+                        ) : (
+                            <div
+                                style={{
+                                    fontSize: "0.8rem",
+                                    cursor: "pointer",
+                                    marginTop: "36px",
+                                }}
+                                onClick={() => handleClick("COMMENTS")}
+                            >
+                                + 더보기
+                            </div>
+                        )
+                    }
+                >
+                    <CommentRounded sx={{ fontSize: "3rem" }} />
+                    <Typography
+                        sx={{
+                            fontSize: "2.2rem",
+                            fontWeight: "bold",
+                            marginLeft: "1rem",
+                            height: "48px",
+                        }}
+                    >
+                        댓글
+                    </Typography>
+                    <Typography sx={{ marginLeft: "0.7rem", position: "relative", top: "22px" }}>
+                        내가 작성한 댓글
+                    </Typography>
+                </AccordionSummary>
+                <Accordion expanded={expanded.includes("COMMENTS")}>
+                    <AccordionSummary>
+                        <ul>
+                            {commentFirstList &&
+                                commentFirstList.map((comment, index) => {
+                                    return (
+                                        <List key={`Fcomment-${index}`}>
+                                            <Link
+                                                onClick={() => {
+                                                    navigate(`/board/${comment.boardId}`);
+                                                }}
+                                            >
+                                                {comment.content}
+                                            </Link>
+                                        </List>
+                                    );
+                                })}
+                        </ul>
                     </AccordionSummary>
                     <AccordionDetails>
                         <ul>
@@ -395,16 +349,20 @@ const MyPostList = ({ user }) => {
 };
 
 const Link = styled.a`
-    text-decoration: underline;
-    cursor: pointer;
     font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    text-decoration: underline;
+    &:hover {
+        opacity: 0.5;
+    }
 `;
 const Wrapper = styled.div`
     padding: 30px 0 30px 0;
 `;
 const List = styled.li`
-    padding: 8px;
-    margin-left: 35px;
+    padding: 4px;
+    margin: 12px 0 0 2rem;
 `;
 
 export default MyPostList;
