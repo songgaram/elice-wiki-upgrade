@@ -3,7 +3,7 @@ import * as Api from "../../api";
 import styled from "styled-components";
 import moment from "moment";
 import "moment/locale/ko";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { Button, Pagination, Stack, Popover, Typography, Checkbox } from "@mui/material";
 
 const ManageUsers = () => {
@@ -14,12 +14,13 @@ const ManageUsers = () => {
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
     const [totalPage, setTotalPage] = React.useState(null);
-    const perPage = 8;
+    const height = useOutletContext();
+    const perPage = Math.floor(height / 64.2) - 1 || 8;
 
     const handleClick = (event) => {
         const userId = event.currentTarget.innerText;
-        setAnchorEl(event.currentTarget);
         getUser(userId);
+        setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
@@ -31,6 +32,7 @@ const ManageUsers = () => {
             const { data } = await Api.get("users", userId);
             setUser(data.payload);
         } catch (e) {
+            setUser(null);
             console.log(e);
         }
     });
@@ -102,14 +104,14 @@ const ManageUsers = () => {
                 <Table>
                     <Thead>
                         <Tr color="#C2C2C2">
-                            <Th>
+                            <Th style={{ width: "3%" }}>
                                 <Checkbox id="checkAll" onChange={checkAll} />
                             </Th>
-                            <Th>No.</Th>
-                            <Th>BoardId</Th>
-                            <Th>Title</Th>
-                            <Th>작성자</Th>
-                            <Th>작성시간</Th>
+                            <Th style={{ width: "3%" }}>No.</Th>
+                            <Th style={{ width: "34%" }}>BoardId</Th>
+                            <Th style={{ width: "13%" }}>Title</Th>
+                            <Th style={{ width: "34%" }}>작성자</Th>
+                            <Th style={{ width: "13%" }}>작성시간</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
@@ -124,7 +126,7 @@ const ManageUsers = () => {
                                                 : "white"
                                         }
                                     >
-                                        <Td>
+                                        <Td style={{ width: "3%" }}>
                                             <Checkbox
                                                 value={datum.boardId}
                                                 onClick={checkHandler}
@@ -135,18 +137,18 @@ const ManageUsers = () => {
                                                 }
                                             />
                                         </Td>
-                                        <Td>{datum.id}</Td>
-                                        <Td>{datum.boardId}</Td>
-                                        <Td>
+                                        <Td style={{ width: "3%" }}>{datum.id}</Td>
+                                        <Td style={{ width: "34%" }}>{datum.boardId}</Td>
+                                        <Td style={{ width: "13%" }}>
                                             <Title
                                                 onClick={() => {
-                                                    navigate(`/admin/posts`);
+                                                    navigate(`/board/${datum.boardId}`);
                                                 }}
                                             >
                                                 {datum.title}
                                             </Title>
                                         </Td>
-                                        <Td>
+                                        <Td style={{ width: "34%" }}>
                                             <UserId aria-describedby={id} onClick={handleClick}>
                                                 {datum.userId}
                                             </UserId>
@@ -161,11 +163,70 @@ const ManageUsers = () => {
                                                 horizontal: "left",
                                             }}
                                         >
-                                            <Typography sx={{ p: 2 }}>
-                                                {user && JSON.stringify(user)}
-                                            </Typography>
+                                            {user ? (
+                                                <div
+                                                    style={{
+                                                        display: "flex",
+                                                        flexDirection: "column",
+                                                        alignItems: "center",
+                                                        padding: "15px",
+                                                    }}
+                                                >
+                                                    <img
+                                                        src={user.profile_img}
+                                                        style={{
+                                                            width: "40px",
+                                                            height: "40px",
+                                                        }}
+                                                    />
+                                                    <Typography
+                                                        sx={{ p: 0, alignSelf: "flex-start" }}
+                                                    >
+                                                        <span style={{ fontWeight: "bold" }}>
+                                                            Name
+                                                        </span>
+                                                        {`: ${user.name}`}
+                                                    </Typography>
+                                                    <Typography
+                                                        sx={{ p: 0, alignSelf: "flex-start" }}
+                                                    >
+                                                        <span style={{ fontWeight: "bold" }}>
+                                                            Email
+                                                        </span>
+                                                        {`: ${user.email}`}
+                                                    </Typography>
+                                                    <Typography
+                                                        sx={{ p: 0, alignSelf: "flex-start" }}
+                                                    >
+                                                        <span style={{ fontWeight: "bold" }}>
+                                                            Track
+                                                        </span>
+                                                        {`: ${user.track}`}
+                                                    </Typography>
+                                                    <Typography
+                                                        sx={{ p: 0, alignSelf: "flex-start" }}
+                                                    >
+                                                        <span style={{ fontWeight: "bold" }}>
+                                                            Admin
+                                                        </span>
+                                                        {`: ${user.admin}`}
+                                                    </Typography>
+                                                    <Typography
+                                                        sx={{ p: 0, alignSelf: "flex-start" }}
+                                                    >
+                                                        <span style={{ fontWeight: "bold" }}>
+                                                            Authorized
+                                                        </span>
+                                                        {`: ${user.authorized}`}
+                                                    </Typography>
+                                                </div>
+                                            ) : (
+                                                <Typography sx={{ p: 2 }}>
+                                                    해당하는 유저가 없습니다.
+                                                </Typography>
+                                            )}
                                         </Popover>
-                                        <Td>
+                                        <Td style={{ width: "13%" }}>
                                             {moment(moment.utc(datum.createdAt).toDate()).format(
                                                 "llll",
                                             )}

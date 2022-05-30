@@ -38,7 +38,7 @@ const Wrapper = styled.div`
     align-items: center;
 `;
 const Delete = styled.p`
-    color: red;
+    color: #922820;
     font-weight: bold;
     font-size: 1.2rem;
     cursor: pointer;

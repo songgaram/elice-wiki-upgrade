@@ -110,6 +110,9 @@ function Header() {
                         <Button color="inherit" onClick={() => navigate("/board")}>
                             Board
                         </Button>
+                        <Button color="inherit" onClick={() => navigate("/addPost")}>
+                            새 글 쓰기
+                        </Button>
 
                         <Box sx={{ display: "flex" }}>
                             <IconButton
@@ -132,7 +135,7 @@ function Header() {
                 <Menu anchorEl={anchorEl} id={menuId} open={isMenuOpen} onClose={handleMenuClose}>
                     <MenuItem onClick={handleClick}>My Page</MenuItem>
                     {(userState?.admin === 0 || userState?.admin === 1) && (
-                        <MenuItem color="inherit" onClick={() => navigate("/admin/users")}>
+                        <MenuItem color="inherit" onClick={() => navigate("/admin")}>
                             Admin
                         </MenuItem>
                     )}
