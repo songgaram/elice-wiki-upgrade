@@ -60,8 +60,8 @@ function ReplyComment({ commentData, commentList }) {
                         fontSize: "13px",
                     }}
                 >
-                    {openReply ? "▼" : "▶"}{" "}
-                    <span style={{ color: "#757575" }}>{childCommentNumber}개의 답글</span>
+                    {openReply ? "▼" : "▶"} {/* <span style={{ color: "#757575" }}></span> */}
+                    {childCommentNumber}개의 답글
                 </div>
             )}
             {openReply && RenderReply(commentData.id)}
