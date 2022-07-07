@@ -1,10 +1,17 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import App from "./App";
+import { RecoilRoot } from "recoil";
+import store from "./store/index";
+import { Provider } from "react-redux";
 
-ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById("root")
+const container = document.getElementById("root");
+const root = ReactDOM.createRoot(container);
+
+root.render(
+    <RecoilRoot>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </RecoilRoot>,
 );
