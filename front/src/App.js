@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "./store/actions/userAction";
-import * as Api from "./api";
+import * as Api from "libs/api";
 import Home from "view/home/Home";
 import Note from "view/note/Note";
 import UserHome from "view/home/UserHome";

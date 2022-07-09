@@ -3,7 +3,7 @@ import MyInfo from "./MyInfo";
 import MyPostList from "./MyPostList";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import * as Api from "../../api";
+import * as Api from "libs/api";
 import { useNavigate } from "react-router-dom";
 import Header from "view/Header";
 import { logoutUser } from "../../store/actions/userAction";

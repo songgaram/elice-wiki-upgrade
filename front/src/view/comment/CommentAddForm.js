@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommentInput from "./CommentInput";
-import * as Api from "../../../api";
+import * as Api from "libs/api";
 
 function CommentAddForm({ boardId }) {
     const navigate = useNavigate();

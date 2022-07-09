@@ -1,4 +1,4 @@
-import * as Api from "../../../api";
+import * as Api from "libs/api";
 import Prism from "prismjs";
 // 여기 css를 수정해서 코드 하이라이팅 커스텀 가능
 import "prismjs/themes/prism.css";
@@ -39,7 +39,7 @@ const Writer = ({ title, week, tag }) => {
     const btnClickListener = async () => {
         const editorInstance = editorRef.current.getInstance();
         const body = editorInstance.getMarkdown();
-        try{
+        try {
             await Api.post("newpost", {
                 week,
                 tag,

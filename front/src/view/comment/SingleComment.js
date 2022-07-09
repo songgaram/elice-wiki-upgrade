@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CommentInput from "./CommentInput";
 import CommentCard from "./CommentCard";
-import * as Api from "../../../api";
+import * as Api from "libs/api";
 
 function SingleComment({ commentData }) {
     const [comment, setComment] = useState("");

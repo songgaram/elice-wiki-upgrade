@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import * as Api from "../../api";
+import * as Api from "libs/api";
 import DOMPurify from "dompurify";
 
 const QuestionEditor = () => {
@@ -107,7 +107,7 @@ const QuestionEditor = () => {
                         <Tooltip show={tooltipShow.imgTooltip}>
                             1. <strong>Image url</strong> from web (
                             https://images.unsplash.com/photo-164... )<br />
-                            2. <strong>Image path</strong> ( /image/filename )
+                            2. <strong>Image path</strong> ( assets/images/filename )
                         </Tooltip>
                     </div>
                     <Input

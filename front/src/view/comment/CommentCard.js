@@ -3,7 +3,7 @@ import { CardContent, CardHeader, Typography, IconButton, Button } from "@mui/ma
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
-import * as Api from "../../../api";
+import * as Api from "libs/api";
 
 function CommentCard({ commentData, onReplyClick, setshowReplyInput }) {
     const { userName, content, userId, commentId, boardId, isDeleted } = commentData;

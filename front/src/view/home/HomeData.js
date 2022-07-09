@@ -1,4 +1,4 @@
-import * as Api from "../../../api";
+import * as Api from "libs/api";
 
 export const getPosts = async (page, fetchSetState) => {
     try {
