@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import * as Api from "libs/api";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../store/actions/userAction";
-import Spinner from "../Spinner";
+import { loginUser } from "store/actions/userAction";
+import Spinner from "components/Spinner";
 
 const GoogleLoading = () => {
     const navigate = useNavigate();

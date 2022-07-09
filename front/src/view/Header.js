@@ -4,7 +4,7 @@ import { AppBar, Box, Button, IconButton, InputBase, Menu, MenuItem, Toolbar } f
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../store/actions/userAction";
+import { logoutUser } from "store/actions/userAction";
 
 const Search = styled("div")(({ theme }) => ({
     position: "relative",

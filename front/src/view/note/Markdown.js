@@ -8,7 +8,7 @@ import moment from "moment";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { infoAtom, postAtom } from "../../../atoms";
+import { infoAtom, postAtom } from "atoms";
 
 const TopContainer = styled.div`
     margin-top: 3rem;
@@ -90,7 +90,7 @@ const Mdfile = () => {
     };
     useEffect(() => {
         fetchboardsInfo();
-        import(`../../../_post/${postId}.md`)
+        import(`_post/${postId}.md`)
             .then((res) => {
                 fetch(res.default)
                     .then((res) => res.text())

@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { Alert, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState, useRecoilValue } from "recoil";
-import { hashtagAtom, infoAtom, postAtom, tagAtom, titleAtom, weekAtom } from "../../../atoms";
+import { hashtagAtom, infoAtom, postAtom, tagAtom, titleAtom, weekAtom } from "atoms";
 
 const Wrapper = styled.div`
     padding-top: 2rem;

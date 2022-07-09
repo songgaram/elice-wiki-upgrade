@@ -13,7 +13,7 @@ import styled from "styled-components";
 import { Alert, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { tagAtom, titleAtom, weekAtom } from "../../../atoms";
+import { tagAtom, titleAtom, weekAtom } from "atoms";
 
 const SubmitBtn = styled.button`
     display: inline-flex;

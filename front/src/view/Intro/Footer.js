@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import useScrollFadeIn from "/hooks/useScrollFadeIn";
+import useScrollFadeIn from "hooks/useScrollFadeIn";
 import { handleGoogleLogin } from "view/auth/OAuthButton";
 
 const FooterSection = styled.section`

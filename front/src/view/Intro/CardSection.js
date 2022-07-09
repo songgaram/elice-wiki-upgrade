@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Card1 } from "./Cards/Card1";
 import { Card2 } from "./Cards/Card2";
-import useScrollFadeIn from "/hooks/useScrollFadeIn";
+import useScrollFadeIn from "hooks/useScrollFadeIn";
 
 const TopContainer = styled.div`
     display: flex;
