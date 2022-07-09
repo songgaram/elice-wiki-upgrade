@@ -88,7 +88,7 @@ function Header() {
                     <Toolbar>
                         <img
                             alt="elice_logo"
-                            src="../../../image/logo_large.png"
+                            src="assets/images/logo_large.png"
                             style={{ width: 150, imageRendering: "auto", cursor: "pointer" }}
                             onClick={() => navigate("/home")}
                         />

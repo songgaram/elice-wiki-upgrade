@@ -80,13 +80,23 @@ const QuestionEditor = () => {
             <Wrapper>
                 <div style={{ width: "40vw" }}>
                     <label for="title">Question</label>
-                    <Input id="title" placeholder="Question" value={title} onChange={onChangeHandler} />
+                    <Input
+                        id="title"
+                        placeholder="Question"
+                        value={title}
+                        onChange={onChangeHandler}
+                    />
                     <label for="answer">Answer</label>
-                    <Input id="answer" placeholder="Answer" value={answer} onChange={onChangeHandler} />
+                    <Input
+                        id="answer"
+                        placeholder="Answer"
+                        value={answer}
+                        onChange={onChangeHandler}
+                    />
                     <label for="imgurl">Img URL</label>
                     <div style={{ display: "inline-block", marginLeft: "10px" }}>
                         <img
-                            src="/image/questionMark.png"
+                            src="assets/images/questionMark.png"
                             name="imgTooltip"
                             style={{ height: "14px", WebkitUserSelect: "none" }}
                             onMouseDown={showTooltip}
@@ -95,16 +105,22 @@ const QuestionEditor = () => {
                             draggable="false"
                         />
                         <Tooltip show={tooltipShow.imgTooltip}>
-                            1. <strong>Image url</strong> from web ( https://images.unsplash.com/photo-164... )<br />
+                            1. <strong>Image url</strong> from web (
+                            https://images.unsplash.com/photo-164... )<br />
                             2. <strong>Image path</strong> ( /image/filename )
                         </Tooltip>
                     </div>
-                    <Input id="imgurl" placeholder="Img URL" value={url} onChange={onChangeHandler} />
+                    <Input
+                        id="imgurl"
+                        placeholder="Img URL"
+                        value={url}
+                        onChange={onChangeHandler}
+                    />
 
                     <label for="sourcecode">Source Code</label>
                     <div style={{ display: "inline-block", marginLeft: "10px" }}>
                         <img
-                            src="/image/questionMark.png"
+                            src="assets/images/questionMark.png"
                             name="codeTooltip"
                             style={{ height: "14px", WebkitUserSelect: "none" }}
                             onMouseDown={showTooltip}
@@ -124,10 +140,20 @@ const QuestionEditor = () => {
                             5. Content line max length : upto 4
                         </Tooltip>
                     </div>
-                    <InputArea id="sourcecode" placeholder="Type your source code here..." value={source} onChange={onChangeHandler} />
+                    <InputArea
+                        id="sourcecode"
+                        placeholder="Type your source code here..."
+                        value={source}
+                        onChange={onChangeHandler}
+                    />
                 </div>
                 <MiddleWrapper>
-                    <Img draggable={false} src="/image/rightArrow.png" alt="ArrowRight Png" style={{ width: "100px", WebkitUserSelect: "none" }} />
+                    <Img
+                        draggable={false}
+                        src="assets/images/rightArrow.png"
+                        alt="ArrowRight Png"
+                        style={{ width: "100px", WebkitUserSelect: "none" }}
+                    />
                     <Button onClick={clickHandler}>미리보기</Button>
                     <Button onClick={saveData} style={{ marginTop: "5%" }}>
                         저장하기
@@ -139,19 +165,43 @@ const QuestionEditor = () => {
                 <div>
                     <label for="preview">Preview</label>
                     <Preview id="preview">
-                        <div style={{ height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+                        <div
+                            style={{
+                                height: "100%",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
                             <div style={{ height: "45%", marginBottom: "3%" }}>
                                 {value && (
                                     <div style={{ height: "100%" }}>
-                                        <img draggable={false} src={value.url || "/image/Default.png"} style={{ height: "70%" }} />
+                                        <img
+                                            draggable={false}
+                                            src={value.url || "assets/images/Default.png"}
+                                            style={{ height: "70%" }}
+                                        />
                                         <div
-                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(value.source) || "<h5>소스코드입력</h5>" }}
-                                            style={{ height: "30%", textAlign: "center", fontWeight: "bold" }}
+                                            dangerouslySetInnerHTML={{
+                                                __html:
+                                                    DOMPurify.sanitize(value.source) ||
+                                                    "<h5>소스코드입력</h5>",
+                                            }}
+                                            style={{
+                                                height: "30%",
+                                                textAlign: "center",
+                                                fontWeight: "bold",
+                                            }}
                                         />
                                     </div>
                                 )}
                             </div>
-                            <img draggable={false} src="/image/Answer_the_question.png" style={{ height: "8%" }} />
+                            <img
+                                draggable={false}
+                                src="assets/images/Answer_the_question.png"
+                                style={{ height: "8%" }}
+                            />
                         </div>
                     </Preview>
                 </div>
@@ -187,19 +237,19 @@ const Preview = styled.div`
     -webkit-user-select: none;
 `;
 const MiddleWrapper = styled.div`
-  margin: 0 1vw 0 1vw
-  height: 40vh;
-  width: 10vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  @media only screen and (max-width: 1000px) {
-    width: 80vw;
-    position: fixed;
-    top: 10px;
-    flex-direction: row;
-  }
+    margin: 0 1vw 0 1vw;
+    height: 40vh;
+    width: 10vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @media only screen and (max-width: 1000px) {
+        width: 80vw;
+        position: fixed;
+        top: 10px;
+        flex-direction: row;
+    }
 `;
 const Button = styled.button`
     width: 100px;

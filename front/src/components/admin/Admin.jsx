@@ -32,7 +32,7 @@ const Admin = () => {
             }}
         >
             <LogoHome
-                src="/image/logo_small.png"
+                src="assets/images/logo_small.png"
                 alt="TOHOME"
                 onClick={() => {
                     navigate("/home");
