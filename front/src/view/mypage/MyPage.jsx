@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import * as Api from "../../api";
 import { useNavigate } from "react-router-dom";
-import Header from "../view/Header";
+import Header from "view/Header";
 import { logoutUser } from "../../store/actions/userAction";
 
 const MyPage = () => {

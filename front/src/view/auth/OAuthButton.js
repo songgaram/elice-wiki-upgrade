@@ -1,5 +1,5 @@
 import GoogleIcon from "@mui/icons-material/Google";
-import styles from "../view/Intro/Intro.module.css";
+import styles from "view/Intro/Intro.module.css";
 
 export const handleGoogleLogin = () => {
     const protocol = window.location.protocol;

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Box, Container } from "@mui/material/";
 import BoardEditForm from "./BoardEditForm";
 import BoardContents from "./BoardContents";
-import Spinner from "../../Spinner";
+import Spinner from "components/Spinner";
 import Comment from "../comment/Comment";
 import * as Api from "../../../api";
 

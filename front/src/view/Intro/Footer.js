@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import useScrollFadeIn from "../../../hooks/useScrollFadeIn";
-import { handleGoogleLogin } from "../../auth/OAuthButton";
+import useScrollFadeIn from "/hooks/useScrollFadeIn";
+import { handleGoogleLogin } from "view/auth/OAuthButton";
 
 const FooterSection = styled.section`
     min-height: 300px;

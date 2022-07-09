@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import useScrollFadeIn from "../../../hooks/useScrollFadeIn";
+import useScrollFadeIn from "/hooks/useScrollFadeIn";
 
 const DescWrapper = styled.section`
     background: #f9fafb;

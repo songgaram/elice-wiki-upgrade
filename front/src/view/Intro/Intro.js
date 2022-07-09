@@ -2,8 +2,8 @@ import { Footer } from "./Footer";
 import CardSection from "./CardSection";
 import styles from "./Intro.module.css";
 import { DescSection } from "./DescSection";
-import useScrollFadeIn from "../../../hooks/useScrollFadeIn";
-import OAuthButton from "../../auth/OAuthButton";
+import useScrollFadeIn from "hooks/useScrollFadeIn";
+import OAuthButton from "view/auth/OAuthButton";
 
 const Intro = () => {
     const animatedItem = {

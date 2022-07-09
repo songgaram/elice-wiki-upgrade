@@ -16,7 +16,7 @@ import {
     Pagination,
 } from "@mui/material";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
-import Spinner from "../../Spinner";
+import Spinner from "components/Spinner";
 import Header from "../Header";
 import styled from "styled-components";
 import * as Api from "../../../api";
