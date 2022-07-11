@@ -1,9 +1,4 @@
-import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "./store/actions/userAction";
-import Api from "libs/api";
-
 import Home from "view/home/Home";
 import Note from "view/note/Note";
 import UserHome from "view/home/UserHome";
@@ -26,32 +21,13 @@ import Spinner from "components/Spinner";
 import Mdfile from "view/note/Markdown";
 import PostEditForm from "view/note/PostEditForm";
 
+import { useGetCurrentUser } from "queries/userQuery";
+
 function App() {
-    const dispatch = useDispatch();
-    const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
+    const { data, status } = useGetCurrentUser();
+    const userState = data?.userState?.payload;
 
-    const [isFetchCompleted, setIsFetchCompleted] = useState(false);
-
-    useEffect(() => {
-        const fetchCurrentUser = async () => {
-            try {
-                const { data } = await Api.get("user/current");
-                const currentUser = data.payload;
-                // dispatch 함수를 통해 로그인 성공 상태로 만듦.
-                dispatch(loginUser(currentUser));
-
-                console.log("%c sessionStorage에 토큰 있음.", "color: #d93d1a;");
-            } catch {
-                console.log("%c SessionStorage에 토큰 없음.", "color: #d93d1a;");
-            }
-            setIsFetchCompleted(true);
-        };
-        fetchCurrentUser();
-    }, [dispatch]);
-
-    if (!isFetchCompleted) {
-        return <Spinner />;
-    }
+    if (status === "loading") return <Spinner />;
 
     return (
         <Router>

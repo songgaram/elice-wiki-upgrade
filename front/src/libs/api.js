@@ -1,19 +1,19 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const SERVER_PORT_NUMBER = process.env.REACT_APP_SERVER_PORT;
+const SERVER_PORT_NUMBER = 5001;
 const SERVER_URL = `http://${window.location.hostname}:${SERVER_PORT_NUMBER}/`;
 
 // axios 생성
 const Api = axios.create({
     baseURL: SERVER_URL, // 데이터를 요청할 기본 주소
-    timeout: 30000,
+    timeout: 5000,
 });
 
 // axios request 처리
 Api.interceptors.request.use(
     async (config) => {
-        const accessToken = sessionStorage.getItem("accessToken");
+        const userToken = sessionStorage.getItem("userToken");
 
         if (
             config.url === "tour/image" ||
@@ -21,14 +21,14 @@ Api.interceptors.request.use(
             config.url === "user/profileImg"
         ) {
             config.headers["Content-Type"] = "multipart/form-data";
-            accessToken && (config.headers["Authorization"] = `Bearer ${accessToken}`);
+            userToken && (config.headers["Authorization"] = `Bearer ${userToken}`);
 
             return config;
         }
 
         // config에 header 설정
         config.headers["Content-Type"] = "application/json; charset=utf-8";
-        accessToken && (config.headers["Authorization"] = `Bearer ${accessToken}`);
+        userToken && (config.headers["Authorization"] = `Bearer ${userToken}`);
 
         return config;
     },
@@ -49,7 +49,7 @@ Api.interceptors.response.use(
         console.log("🚀 ~ response error : ", error);
 
         if (error.response.status === 401) {
-            sessionStorage.removeItem("accessToken");
+            sessionStorage.removeItem("userToken");
             const navigate = useNavigate();
 
             return navigate("/home");
