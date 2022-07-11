@@ -1,5 +1,6 @@
 import { CardContent } from "@mui/material";
 import styled from "styled-components";
+import logo_small from "assets/images/logo_small.png";
 
 function Goal({ goal }) {
     const { week, title, core_goal, goalList } = goal;
@@ -9,7 +10,7 @@ function Goal({ goal }) {
                 <GoalHeader>
                     <img
                         style={{ width: "10%", marginRight: "5px" }}
-                        src="assets/images/logo_small.png"
+                        src={logo_small}
                         alt="엘리스위키 로고"
                     />
                     <HeaderTitle>Elice Racer's Goal</HeaderTitle>

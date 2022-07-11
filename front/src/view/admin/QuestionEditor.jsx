@@ -3,6 +3,10 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Api from "libs/api";
 import DOMPurify from "dompurify";
+import questionMark from "assets/images/questionMark.png";
+import rightArrow from "assets/images/rightArrow.png";
+import Default from "assets/images/Default.png";
+import Answer_the_question from "assets/images/Answer_the_question.png";
 
 const QuestionEditor = () => {
     const navigate = useNavigate();
@@ -96,8 +100,9 @@ const QuestionEditor = () => {
                     <label for="imgurl">Img URL</label>
                     <div style={{ display: "inline-block", marginLeft: "10px" }}>
                         <img
-                            src="assets/images/questionMark.png"
+                            src={questionMark}
                             name="imgTooltip"
+                            alt="questionMark"
                             style={{ height: "14px", WebkitUserSelect: "none" }}
                             onMouseDown={showTooltip}
                             onMouseUp={unshowTooltip}
@@ -120,8 +125,9 @@ const QuestionEditor = () => {
                     <label for="sourcecode">Source Code</label>
                     <div style={{ display: "inline-block", marginLeft: "10px" }}>
                         <img
-                            src="assets/images/questionMark.png"
+                            src={questionMark}
                             name="codeTooltip"
+                            alt="questionMark"
                             style={{ height: "14px", WebkitUserSelect: "none" }}
                             onMouseDown={showTooltip}
                             onMouseUp={unshowTooltip}
@@ -150,7 +156,7 @@ const QuestionEditor = () => {
                 <MiddleWrapper>
                     <Img
                         draggable={false}
-                        src="assets/images/rightArrow.png"
+                        src={rightArrow}
                         alt="ArrowRight Png"
                         style={{ width: "100px", WebkitUserSelect: "none" }}
                     />
@@ -179,7 +185,8 @@ const QuestionEditor = () => {
                                     <div style={{ height: "100%" }}>
                                         <img
                                             draggable={false}
-                                            src={value.url || "assets/images/Default.png"}
+                                            src={value.url || Default}
+                                            alt="기본값"
                                             style={{ height: "70%" }}
                                         />
                                         <div
@@ -199,7 +206,8 @@ const QuestionEditor = () => {
                             </div>
                             <img
                                 draggable={false}
-                                src="assets/images/Answer_the_question.png"
+                                src={Answer_the_question}
+                                alt="인풋창"
                                 style={{ height: "8%" }}
                             />
                         </div>
