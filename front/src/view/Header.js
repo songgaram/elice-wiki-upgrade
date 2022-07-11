@@ -5,6 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "store/actions/userAction";
+import logo_large from "assets/images/logo_large.png";
 
 const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -79,7 +80,7 @@ function Header() {
                     <Toolbar>
                         <img
                             alt="elice_logo"
-                            src="assets/images/logo_large.png"
+                            src={logo_large}
                             style={{ width: 150, imageRendering: "auto", cursor: "pointer" }}
                             onClick={() => navigate("/home")}
                         />

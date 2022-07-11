@@ -3,6 +3,7 @@ import { useNavigate, Outlet } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
+import logo_small from "assets/images/logo_small.png";
 
 const Admin = () => {
     const [selected, setSelected] = React.useState();
@@ -32,7 +33,7 @@ const Admin = () => {
             }}
         >
             <LogoHome
-                src="assets/images/logo_small.png"
+                src={logo_small}
                 alt="TOHOME"
                 onClick={() => {
                     navigate("/home");

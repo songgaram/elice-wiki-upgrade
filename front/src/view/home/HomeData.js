@@ -1,8 +1,8 @@
-import * as Api from "libs/api";
+import Api from "libs/api";
 
 export const getPosts = async (page, fetchSetState) => {
     try {
-        const { data } = await Api.getQuery("posts", `page=${page}&perPage=10`);
+        const { data } = await Api.get("posts", `page=${page}&perPage=10`);
         fetchSetState(data);
     } catch (e) {
         console.log("Post-List를 가져오는데 실패하였습니다.", e);

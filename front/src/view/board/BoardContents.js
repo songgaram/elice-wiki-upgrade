@@ -10,7 +10,7 @@ import {
 } from "@mui/material/";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import * as Api from "libs/api";
+import Api from "libs/api";
 
 function BoardContents({ setIsEditing, isEditable, boardData }) {
     const navigate = useNavigate();
