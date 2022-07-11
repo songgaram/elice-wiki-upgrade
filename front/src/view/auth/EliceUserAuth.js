@@ -1,63 +1,57 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../store/actions/userAction";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import styled from "styled-components";
 import DOMPurify from "dompurify";
-import Api from "libs/api";
+import Spinner from "components/Spinner";
+import { useGetCurrentUser, usePostAuthAnswer } from "queries/userQuery";
+import { useGetAuthData } from "queries/authQuery";
 
 const EliceUserAuth = () => {
-    const [answer, setAnswer] = useState(undefined);
-    const [authData, setAuthData] = useState(undefined);
-    const dispatch = useDispatch();
+    const [curAnswer, setCurAnswer] = useState(undefined);
+    // const [authData, setAuthData] = useState(undefined);
     const navigate = useNavigate();
-    const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
 
-    const getAuthData = async () => {
-        try {
-            const { data } = await Api.get("auth");
-            setAuthData(data.payload);
-        } catch (error) {
-            console.log("데이터를 불러오는데 실패햐였습니다.", error);
-        }
-    };
+    const { userData } = useGetCurrentUser();
+    const { data, status } = useGetAuthData();
+    const userState = userData?.userState?.payload || {};
+    const { url, source } = data?.authData?.payload || {};
+
+    const postAuthAnswer = usePostAuthAnswer();
 
     useEffect(() => {
         if (userState?.authorized) {
             navigate("/home");
             return;
         }
-        getAuthData();
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const answer = { answer: curAnswer };
 
-        try {
-            const { data } = await Api.post("user/auth", {
-                answer,
-            });
-            const result = data.payload.correct;
-            if (result === false) {
-                alert(data.payload.message);
-            } else {
-                dispatch(loginUser(data.payload));
-                alert("인증 성공!");
-                navigate("/home", { replace: true });
-            }
-        } catch (error) {
-            console.log("인증 실패ㅠㅠ", error);
-        }
+        postAuthAnswer.mutate(answer, {
+            onSuccess: (res) => {
+                const result = res.data?.payload?.correct;
+                if (result === false) {
+                    alert(res.data.payload.message);
+                } else {
+                    alert("인증 성공!");
+                    navigate("/home");
+                }
+            },
+        });
     };
+
+    if (status === "loading") return <Spinner />;
 
     return (
         <Container>
-            <img src={authData?.url} alt="거북이" style={{ width: "40%" }} />
+            <img src={url} alt="거북이" style={{ width: "40%" }} />
             <Title>
                 <div
                     dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(authData?.source),
+                        __html: DOMPurify.sanitize(source),
                     }}
                 />
             </Title>
@@ -72,8 +66,8 @@ const EliceUserAuth = () => {
                     size="small"
                     sx={{ width: "90%", minHeight: "50%" }}
                     placeholder="정답을 적어주세요."
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
+                    value={curAnswer}
+                    onChange={(e) => setCurAnswer(e.target.value)}
                 />
                 <Button variant="contained" type="submit">
                     제출
