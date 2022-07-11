@@ -13,7 +13,7 @@ const Api = axios.create({
 // axios request 처리
 Api.interceptors.request.use(
     async (config) => {
-        const accessToken = localStorage.getItem("accessToken");
+        const accessToken = sessionStorage.getItem("accessToken");
 
         if (
             config.url === "tour/image" ||
@@ -49,7 +49,7 @@ Api.interceptors.response.use(
         console.log("🚀 ~ response error : ", error);
 
         if (error.response.status === 401) {
-            localStorage.removeItem("accessToken");
+            sessionStorage.removeItem("accessToken");
             const navigate = useNavigate();
 
             return navigate("/home");

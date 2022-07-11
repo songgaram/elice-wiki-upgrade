@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Grid } from "@mui/material";
 import WriteForm from "./WriteForm";
-import * as Api from "libs/api";
+import Api from "libs/api";
 
 function ContentEditForm({ boardData, setBoardData, setIsEditing, boardId }) {
     const [title, setTitle] = useState(boardData.title);

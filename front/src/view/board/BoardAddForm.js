@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { Container, Box, Grid, Button } from "@mui/material";
 import WriteForm from "./WriteForm";
-import * as Api from "libs/api";
+import Api from "libs/api";
 
 function BoardAddForm() {
     const navigate = useNavigate();

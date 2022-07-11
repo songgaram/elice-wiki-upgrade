@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Markdown from "markdown-to-jsx";
 
-import * as Api from "libs/api";
+import Api from "libs/api";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import moment from "moment";

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import * as Api from "libs/api";
+import Api from "libs/api";
 import DOMPurify from "dompurify";
 import questionMark from "assets/images/questionMark.png";
 import rightArrow from "assets/images/rightArrow.png";

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import styled from "styled-components";
 import DOMPurify from "dompurify";
-import * as Api from "libs/api";
+import Api from "libs/api";
 
 const EliceUserAuth = () => {
     const [answer, setAnswer] = useState(undefined);

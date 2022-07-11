@@ -19,7 +19,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Spinner from "components/Spinner";
 import Header from "../Header";
 import styled from "styled-components";
-import * as Api from "libs/api";
+import Api from "libs/api";
 
 function Board() {
     const navigate = useNavigate();

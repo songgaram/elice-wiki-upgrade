@@ -2,7 +2,7 @@ import React from "react";
 import { CreateRounded, LibraryBooksRounded, CommentRounded } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import * as Api from "libs/api";
+import Api from "libs/api";
 import styled from "styled-components";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";

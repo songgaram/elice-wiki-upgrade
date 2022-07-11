@@ -2,7 +2,7 @@ import Writer from "./Editor";
 import styled from "styled-components";
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
-import * as Api from "libs/api";
+import Api from "libs/api";
 import Prism from "prismjs";
 // 여기 css를 수정해서 코드 하이라이팅 커스텀 가능
 import "prismjs/themes/prism.css";

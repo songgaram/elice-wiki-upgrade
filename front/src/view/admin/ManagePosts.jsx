@@ -1,5 +1,5 @@
 import React from "react";
-import * as Api from "libs/api";
+import Api from "libs/api";
 import styled from "styled-components";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { Button, Pagination, Stack, Popover, Typography, Checkbox } from "@mui/material";
