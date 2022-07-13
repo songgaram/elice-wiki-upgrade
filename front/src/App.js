@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "view/home/Home";
 import Note from "view/note/Note";
 import UserHome from "view/home/UserHome";
 import EliceUserAuth from "view/auth/EliceUserAuth";
@@ -20,19 +19,20 @@ import BoardAddForm from "view/board/BoardAddForm";
 import Spinner from "components/Spinner";
 import Mdfile from "view/note/Markdown";
 import PostEditForm from "view/note/PostEditForm";
+import Intro from "view/Intro/Intro";
 
 import { useGetCurrentUser } from "queries/userQuery";
 
 function App() {
-    const { data, status } = useGetCurrentUser();
+    const { data, isFetching } = useGetCurrentUser();
     const userState = data?.userState?.payload;
 
-    if (status === "loading") return <Spinner />;
+    if (isFetching) return <Spinner />;
 
     return (
         <Router>
             <Routes>
-                <Route path="/" exact element={<Home />} />
+                <Route path="/" exact element={<Intro />} />
                 {userState && <Route path="/auth" exact element={<EliceUserAuth />} />}
                 {userState?.authorized && (
                     <>
@@ -51,7 +51,7 @@ function App() {
                     </>
                 )}
                 <Route path="/test" exact element={<GoogleLoading />} />
-                <Route path="*" element={<Home />} />
+                {/* <Route path="*" element={<Home />} /> */}
                 {(userState?.admin === 0 || userState?.admin === 1) && (
                     <Route path="/admin" element={<Admin />}>
                         <Route path="board" element={<ManageBoard />} />

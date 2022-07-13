@@ -3,9 +3,8 @@ import { styled, alpha } from "@mui/material/styles";
 import { AppBar, Box, Button, IconButton, InputBase, Menu, MenuItem, Toolbar } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "store/actions/userAction";
 import logo_large from "assets/images/logo_large.png";
+import { useQueryClient } from "react-query";
 
 const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -52,8 +51,10 @@ function Header() {
     const isMenuOpen = Boolean(anchorEl);
     const menuId = "primary-search-account-menu";
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
+
+    const queryClient = useQueryClient();
+    const { userState } = queryClient.getQueryData("userState") || {};
+    const { profile_img, admin } = userState?.payload;
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -63,8 +64,10 @@ function Header() {
     };
 
     const handleLogout = () => {
-        // dispatch 함수를 이용해 로그아웃함.
-        dispatch(logoutUser());
+        // userToken 삭제 후 userState update
+        sessionStorage.removeItem("userToken");
+        queryClient.invalidateQueries("userState");
+
         // 기본 페이지로 돌아감.
         navigate("/");
     };
@@ -112,8 +115,9 @@ function Header() {
                                 color="inherit"
                             >
                                 <img
-                                    src={userState?.profile_img}
+                                    src={profile_img}
                                     style={{ width: "24px", height: "24px", borderRadius: "50%" }}
+                                    alt="유저 프로필"
                                 />
                             </IconButton>
                         </Box>
@@ -121,7 +125,7 @@ function Header() {
                 </AppBar>
                 <Menu anchorEl={anchorEl} id={menuId} open={isMenuOpen} onClose={handleMenuClose}>
                     <MenuItem onClick={handleClick}>My Page</MenuItem>
-                    {(userState?.admin === 0 || userState?.admin === 1) && (
+                    {(admin === 0 || admin === 1) && (
                         <MenuItem color="inherit" onClick={() => navigate("/admin")}>
                             Admin
                         </MenuItem>

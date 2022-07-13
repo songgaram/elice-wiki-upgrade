@@ -4,24 +4,27 @@ import { TextField, Button } from "@mui/material";
 import styled from "styled-components";
 import DOMPurify from "dompurify";
 import Spinner from "components/Spinner";
-import { useGetCurrentUser, usePostAuthAnswer } from "queries/userQuery";
+import { usePostAuthAnswer } from "queries/userQuery";
 import { useGetAuthData } from "queries/authQuery";
+import { useQueryClient } from "react-query";
 
 const EliceUserAuth = () => {
-    const [curAnswer, setCurAnswer] = useState(undefined);
-    // const [authData, setAuthData] = useState(undefined);
     const navigate = useNavigate();
 
-    const { userData } = useGetCurrentUser();
+    const [curAnswer, setCurAnswer] = useState(undefined);
+
+    const queryClient = useQueryClient();
+    const { userState } = queryClient.getQueryData("userState");
+    const authorized = userState?.payload?.authorized;
+
     const { data, status } = useGetAuthData();
-    const userState = userData?.userState?.payload || {};
     const { url, source } = data?.authData?.payload || {};
 
     const postAuthAnswer = usePostAuthAnswer();
 
     useEffect(() => {
-        if (userState?.authorized) {
-            navigate("/home");
+        if (authorized) {
+            navigate("/home", { replace: true });
             return;
         }
     }, []);
@@ -30,17 +33,7 @@ const EliceUserAuth = () => {
         e.preventDefault();
         const answer = { answer: curAnswer };
 
-        postAuthAnswer.mutate(answer, {
-            onSuccess: (res) => {
-                const result = res.data?.payload?.correct;
-                if (result === false) {
-                    alert(res.data.payload.message);
-                } else {
-                    alert("인증 성공!");
-                    navigate("/home");
-                }
-            },
-        });
+        postAuthAnswer.mutate(answer);
     };
 
     if (status === "loading") return <Spinner />;
