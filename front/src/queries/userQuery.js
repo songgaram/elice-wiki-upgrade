@@ -40,6 +40,7 @@ export const usePostAuthAnswer = () => {
     });
 };
 
+// 유저 로그인
 export const useUserLoginHandler = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
@@ -55,6 +56,7 @@ export const useUserLoginHandler = () => {
     });
 };
 
+// 유저 탈퇴
 export const useDeleteUserHandler = () => {
     const navigate = useNavigate();
 
@@ -65,5 +67,17 @@ export const useDeleteUserHandler = () => {
             navigate("/");
         },
         onError: (err) => console.log("탈퇴 실패ㅠㅠ", err),
+    });
+};
+
+// 유저 정보 수정
+export const useEditUserInfo = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation((name) => Api.put("user/current", { name }), {
+        onSuccess: () => {
+            queryClient.invalidateQueries("userState");
+        },
+        onError: (err) => console.log("수정 실패ㅠㅠ", err),
     });
 };
