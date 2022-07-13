@@ -2,8 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { RecoilRoot } from "recoil";
-import store from "./store/index";
-import { Provider } from "react-redux";
+
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
@@ -31,12 +30,11 @@ root.render(
     <RecoilRoot>
         <QueryClientProvider client={queryClient}>
             <ReactQueryDevtools initialIsOpen={true} />
-            <Provider store={store}>
-                <ThemeProvider theme={theme}>
-                    <GlobalStyle />
-                    <App />
-                </ThemeProvider>
-            </Provider>
+
+            <ThemeProvider theme={theme}>
+                <GlobalStyle />
+                <App />
+            </ThemeProvider>
         </QueryClientProvider>
     </RecoilRoot>,
 );
