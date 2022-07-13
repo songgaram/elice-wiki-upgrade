@@ -1,23 +1,21 @@
 import React from "react";
 import { Typography, Input, Button } from "@mui/material";
-import Api from "libs/api";
-import { loginUser } from "../../store/actions/userAction";
-import { useDispatch } from "react-redux";
 import eliceprofile from "assets/images/eliceprofile.png";
+import { useEditUserInfo } from "queries/userQuery";
 
 const MyInfo = ({ user }) => {
-    const dispatch = useDispatch();
     const [stashName, setStashName] = React.useState(null);
     const [name, setName] = React.useState(user.name);
     const [isWriting, setIsWriting] = React.useState(false);
+
+    const editUserInfo = useEditUserInfo();
+
     const onClickHandler = () => {
         setStashName(name);
         setIsWriting(!isWriting);
     };
     const save = React.useCallback(async () => {
-        const { data } = await Api.put("user/current", { name });
-        const user = data.payload;
-        dispatch(loginUser(user));
+        editUserInfo.mutate(name);
         setIsWriting(!isWriting);
     });
     const onChangeHandler = (e) => {

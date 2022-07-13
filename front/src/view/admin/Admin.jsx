@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
 import logo_small from "assets/images/logo_small.png";
+import { useQueryClient } from "react-query";
 
 const Admin = () => {
     const [selected, setSelected] = React.useState();
@@ -19,7 +19,9 @@ const Admin = () => {
     const clickHandler = (e) => {
         navigate(e.target.name);
     };
-    const user = useSelector((state) => (state ? state.userReducer.user : undefined));
+    const queryClient = useQueryClient();
+    const { userState } = queryClient.getQueryData("userState");
+    const admin = userState?.payload?.admin;
 
     return (
         <div
@@ -66,7 +68,7 @@ const Admin = () => {
                     onClick={clickHandler}
                     name="questions"
                     color={selected === "questions" ? "#c2c2c2" : "#e0e0e0"}
-                    disabled={user?.admin === 0 ? false : true}
+                    disabled={admin === 0 ? false : true}
                 >
                     인증질답관리
                 </NavBtn>

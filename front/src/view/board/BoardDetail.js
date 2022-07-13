@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { Box, Container } from "@mui/material/";
 import BoardEditForm from "./BoardEditForm";
 import BoardContents from "./BoardContents";
 import Spinner from "components/Spinner";
 import Comment from "../comment/Comment";
 import Api from "libs/api";
+import { useQueryClient } from "react-query";
 
 function BoardDetail() {
     const params = useParams();
@@ -17,7 +17,9 @@ function BoardDetail() {
     const [isEditing, setIsEditing] = useState(false);
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
-    const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
+    const queryClient = useQueryClient();
+    const { userState } = queryClient.getQueryData("userState");
+    const userId = userState?.payload?.__id;
 
     const fetchCommentList = async () => {
         try {
@@ -31,7 +33,7 @@ function BoardDetail() {
     const fetchDetailInfo = async () => {
         try {
             const { data } = await Api.get("boards", boardId);
-            if (data.payload?.userId === userState?.__id) {
+            if (data.payload?.userId === userId) {
                 setIsEditable(true);
             } else {
                 setIsEditable(false);

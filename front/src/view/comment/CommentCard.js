@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { CardContent, CardHeader, Typography, IconButton, Button } from "@mui/material";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Api from "libs/api";
+import { useQueryClient } from "react-query";
 
 function CommentCard({ commentData, onReplyClick, setshowReplyInput }) {
     const { userName, content, userId, commentId, boardId, isDeleted } = commentData;
     const navigate = useNavigate();
     const [isEditable, setIsEditable] = useState(false);
 
-    const userState = useSelector((state) => (state ? state.userReducer.user : undefined));
+    const queryClient = useQueryClient();
+    const { userState } = queryClient.getQueryData("userState");
+    const curUserId = userState?.payload?.__id;
 
     useEffect(() => {
-        if (userId === userState?.__id) {
+        if (userId === curUserId) {
             setIsEditable(true);
         } else {
             setIsEditable(false);
