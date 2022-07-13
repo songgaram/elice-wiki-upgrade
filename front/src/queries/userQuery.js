@@ -54,3 +54,16 @@ export const useUserLoginHandler = () => {
         onError: (err) => console.log("로그인 실패ㅠㅠ", err),
     });
 };
+
+export const useDeleteUserHandler = () => {
+    const navigate = useNavigate();
+
+    return useMutation(() => Api.delete("user/current"), {
+        onSuccess: () => {
+            sessionStorage.removeItem("userToken");
+            alert("탈퇴가 완료되었습니다.");
+            navigate("/");
+        },
+        onError: (err) => console.log("탈퇴 실패ㅠㅠ", err),
+    });
+};
