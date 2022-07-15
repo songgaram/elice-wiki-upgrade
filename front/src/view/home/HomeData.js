@@ -1,32 +1,5 @@
 import Api from "libs/api";
 
-export const getPosts = async (page, fetchSetState) => {
-    try {
-        const { data } = await Api.get("posts", `page=${page}&perPage=10`);
-        fetchSetState(data);
-    } catch (e) {
-        console.log("Post-List를 가져오는데 실패하였습니다.", e);
-    }
-};
-
-export const getWeekPosts = async (setPosts, week) => {
-    try {
-        const { data } = await Api.get(`post/week/${week}`);
-        setPosts(data.payload.postListInfo);
-    } catch (e) {
-        console.log("Week-Post를 가져오는데 실패하였습니다.", e);
-    }
-};
-
-export const getTagPosts = async (setPosts, tag) => {
-    try {
-        const { data } = await Api.get(`post/tag/${tag}`);
-        setPosts(data.payload.postListInfo);
-    } catch (e) {
-        console.log("tag-Post를 가져오는데 실패하였습니다.", e);
-    }
-};
-
 export const getTags = async (setTags) => {
     try {
         const { data } = await Api.get("tags");
