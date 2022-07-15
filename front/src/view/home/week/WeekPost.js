@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Loader from "components/Loader";
 import { useGetWeekPosts } from "queries/postQuery";
-import Post from "./Post";
+import Post from "../Post";
 import { useInView } from "react-intersection-observer";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
