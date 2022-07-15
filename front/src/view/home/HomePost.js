@@ -1,77 +1,41 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import Loader from "components/Loader";
-import { getPosts } from "./HomeData";
-import { Button } from "@mui/material";
-import styled from "styled-components";
+import { useGetPostList } from "queries/postQuery";
 import Post from "./Post";
+import { useInView } from "react-intersection-observer";
+import styled from "styled-components";
 
 function HomePost() {
-    const [posts, setPosts] = useState([]);
-    // const [goal, setGoal] = useState(undefined);
-    const [observing, setObserving] = useState(false);
-    const [page, setPage] = useState(1);
-    const [totalPage, setTotalPage] = useState(undefined);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [isFetchCompleted, setIsFetchCompleted] = useState(false);
-    const target = useRef();
-    let num = 1;
+    const { data, status, fetchNextPage, isFetchingNextPage } = useGetPostList();
 
-    const fetchSetState = (data) => {
-        setPosts((prev) => [...prev, ...data.payload.postListInfo]);
-        setObserving(true);
-        setTotalPage(data.payload.totalPage);
-        setIsLoaded(false);
-    };
+    const { ref, inView } = useInView();
 
-    const loadMore = () => {
-        setPage((curr) => curr + 1);
-    };
+    console.log(data);
 
     useEffect(() => {
-        getPosts(page, fetchSetState);
-        setIsFetchCompleted(true);
-    }, [page]);
+        if (inView) fetchNextPage();
+    }, [inView]);
 
-    useEffect(() => {
-        if (observing) {
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    if (entries[0].isIntersecting) {
-                        setIsLoaded(true);
-                        loadMore();
-                        num++;
-                        if (num >= totalPage) {
-                            observer.unobserve(target.current);
-                        }
-                    }
-                },
-                { threshold: 0.5 },
-            );
-            observer.observe(target.current);
-        }
-    }, [observing, num]);
-
-    if (!isFetchCompleted) {
-        return <div>로딩중</div>;
-    }
+    if (status === "loading") return <Loader />;
 
     return (
         <>
-            {posts.map((post, idx) => (
-                <Post key={`post_${idx}`} post={post} idx={idx} />
-            ))}
-            <TargetElement ref={target}>{isLoaded && <Loader />}</TargetElement>
+            {data?.pages
+                ?.flatMap((page) => {
+                    return page.postListInfo;
+                })
+                .map((post, idx) => (
+                    <Post post={post} idx={idx} key={`post_${idx}`} />
+                ))}
+
+            {isFetchingNextPage ? <Loader /> : <TargetElement ref={ref}></TargetElement>}
         </>
     );
 }
 
-const TargetElement = styled(Button)`
+const TargetElement = styled.div`
     width: 100%;
     height: 50px;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
 `;
 
 export default HomePost;
