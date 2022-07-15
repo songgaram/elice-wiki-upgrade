@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Loader from "components/Loader";
 import { useGetPostList } from "queries/postQuery";
 import Post from "./Post";
@@ -9,8 +9,6 @@ function HomePost() {
     const { data, status, fetchNextPage, isFetchingNextPage } = useGetPostList();
 
     const { ref, inView } = useInView();
-
-    console.log(data);
 
     useEffect(() => {
         if (inView) fetchNextPage();
@@ -25,7 +23,7 @@ function HomePost() {
                     return page.postListInfo;
                 })
                 .map((post, idx) => (
-                    <Post post={post} idx={idx} key={`post_${idx}`} />
+                    <Post post={post} idx={idx} key={post.post_id} />
                 ))}
 
             {isFetchingNextPage ? <Loader /> : <TargetElement ref={ref}></TargetElement>}
