@@ -6,46 +6,6 @@ import { useNavigate } from "react-router-dom";
 import logo_large from "assets/images/logo_large.png";
 import { useQueryClient } from "react-query";
 
-const Search = styled("div")(({ theme }) => ({
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(3),
-        width: "auto",
-    },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "inherit",
-    "& .MuiInputBase-input": {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create("width"),
-        width: "100%",
-        [theme.breakpoints.up("md")]: {
-            width: "20ch",
-        },
-    },
-}));
-
 function Header() {
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
@@ -79,7 +39,7 @@ function Header() {
     return (
         <>
             <Box sx={{ flexGrow: 1 }} style={{ width: "100%", height: "60px" }}>
-                <AppBar position="static" style={{ backgroundColor: "#C4C4C4" }}>
+                <AppBar position="static" style={{ backgroundColor: "white", boxShadow: "none" }}>
                     <Toolbar>
                         <img
                             alt="elice_logo"
@@ -90,17 +50,17 @@ function Header() {
                         <Box sx={{ flexGrow: 1 }} />
                         <Search>
                             <SearchIconWrapper>
-                                <SearchIcon />
+                                <SearchIcon color="primary" />
                             </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Search…"
                                 inputProps={{ "aria-label": "search" }}
                             />
                         </Search>
-                        <Button color="inherit" onClick={() => navigate("/board")}>
+                        <Button color="black" onClick={() => navigate("/board")}>
                             Board
                         </Button>
-                        <Button color="inherit" onClick={() => navigate("/addPost")}>
+                        <Button color="black" onClick={() => navigate("/addPost")}>
                             새 글 쓰기
                         </Button>
 
@@ -137,5 +97,45 @@ function Header() {
         </>
     );
 }
+
+const Search = styled("div")(({ theme }) => ({
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha("#c4c4c4", 0.15),
+    "&:hover": {
+        backgroundColor: alpha("#c4c4c4", 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+        marginLeft: theme.spacing(3),
+        width: "auto",
+    },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: theme.palette.primary,
+    "& .MuiInputBase-input": {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create("width"),
+        width: "100%",
+        [theme.breakpoints.up("md")]: {
+            width: "20ch",
+        },
+    },
+}));
 
 export default Header;

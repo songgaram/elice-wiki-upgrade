@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Goal from "./goal/Goal";
 import TagBtn from "./tag/TagBtn";
 import WeekNav from "./week/WeekNav";
-import Header from "../Header";
 // import RecentList from "./RecentList";
 import Loader from "components/Loader";
 import { useGetTagData } from "queries/tagQuery";
@@ -25,7 +24,6 @@ function UserHome() {
     return (
         <>
             <div style={{ minHeight: "100vh", height: "auto" }}>
-                <Header />
                 <WeekNav />
                 <Container>
                     <ContentsSide>

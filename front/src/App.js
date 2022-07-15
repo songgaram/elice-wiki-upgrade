@@ -20,6 +20,7 @@ import Spinner from "components/Spinner";
 import Mdfile from "view/note/Markdown";
 import PostEditForm from "view/note/PostEditForm";
 import Intro from "view/Intro/Intro";
+import Layout from "components/Layout";
 
 import { useGetCurrentUser } from "queries/userQuery";
 
@@ -35,20 +36,21 @@ function App() {
                 <Route path="/" exact element={<Intro />} />
                 {userState && <Route path="/auth" exact element={<EliceUserAuth />} />}
                 {userState?.authorized && (
-                    <>
+                    <Route element={<Layout />}>
                         <Route path="/home" exact element={<UserHome />}>
                             <Route index element={<HomePost />} />
                             <Route path="post" element={<HomePost />} />
-                            <Route path="post/:postId" element={<Mdfile />} />
                             <Route path="week/:week" element={<WeekPost />} />
                             <Route path="tag/:tag" element={<TagPost />} />
                         </Route>
+                        <Route path="post/:postId" element={<Mdfile />} />
                         <Route path="/addPost" element={<Note />} />
                         <Route path="/editPost" element={<PostEditForm />} />
                         <Route path="/board" exact element={<Board />} />
                         <Route path="/board/:id" exact element={<BoardDetail />} />
                         <Route path="/board/create" exact element={<BoardAddForm />} />
-                    </>
+                        <Route path="mypage" element={<MyPage />} />
+                    </Route>
                 )}
                 <Route path="/test" exact element={<GoogleLoading />} />
                 {/* <Route path="*" element={<Home />} /> */}
@@ -63,7 +65,6 @@ function App() {
                 {userState?.admin === 0 && (
                     <Route path="editquestion/:id" element={<QuestionEditor />} />
                 )}
-                <Route path="mypage" element={<MyPage />} />
             </Routes>
         </Router>
     );

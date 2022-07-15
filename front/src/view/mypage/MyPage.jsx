@@ -2,7 +2,6 @@ import React from "react";
 import MyInfo from "./MyInfo";
 import MyPostList from "./MyPostList";
 import styled from "styled-components";
-import Header from "view/Header";
 import Loader from "components/Loader";
 import { useGetCurrentUser } from "queries/userQuery";
 import { useDeleteUserHandler } from "queries/userQuery";
@@ -23,7 +22,6 @@ const MyPage = () => {
 
     return (
         <Wrapper>
-            <Header />
             <Logo>MyPage</Logo>
             <MyInfo user={user} />
             <MyPostList user={user} />

@@ -9,7 +9,7 @@ function Post({ post, idx }) {
         <PostContainer
             idx={idx}
             onClick={() => {
-                navigate(`post/${post_id}`);
+                navigate(`/post/${post_id}`);
             }}
         >
             <TagBtn tags={tag} />
