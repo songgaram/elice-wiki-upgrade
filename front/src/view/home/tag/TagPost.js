@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useGetTagPosts } from "queries/postQuery";
-import Post from "./Post";
+import Post from "../Post";
 import Loader from "components/Loader";
 import { useInView } from "react-intersection-observer";
 import styled from "styled-components";

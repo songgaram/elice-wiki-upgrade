@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Button, Divider } from "@mui/material";
-import { getGoal } from "./HomeData";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +12,6 @@ const WeekNav = ({ setGoal }) => {
         const week = parseInt(e.target.value) + 1;
         newArr[e.target.value] = !newArr[e.target.value];
         setIsClicked(newArr);
-        getGoal(setGoal, week);
         navigate(`week/${week}`);
     };
 
@@ -41,7 +39,12 @@ const WeekNav = ({ setGoal }) => {
                         >
                             {String(idx + 1).padStart(2, "0")}
                         </Button>
-                        <Divider orientation="vertical" variant="middle" flexItem />
+                        <Divider
+                            key={`divider_${idx}`}
+                            orientation="vertical"
+                            variant="middle"
+                            flexItem
+                        />
                     </>
                 ))}
 

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import TagBtn from "./TagBtn";
+import TagBtn from "./tag/TagBtn";
 
 function Post({ post, idx }) {
     const { title, tag, post_id } = post;
@@ -9,7 +9,7 @@ function Post({ post, idx }) {
         <PostContainer
             idx={idx}
             onClick={() => {
-                navigate(`post/${post_id}`);
+                navigate(`/post/${post_id}`);
             }}
         >
             <TagBtn tags={tag} />

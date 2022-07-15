@@ -17,7 +17,6 @@ import {
 } from "@mui/material";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Spinner from "components/Spinner";
-import Header from "../Header";
 import styled from "styled-components";
 import Api from "libs/api";
 
@@ -53,7 +52,6 @@ function Board() {
 
     return (
         <>
-            <Header />
             <Container>
                 <Box
                     sx={{

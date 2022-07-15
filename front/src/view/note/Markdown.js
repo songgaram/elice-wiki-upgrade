@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Markdown from "markdown-to-jsx";
-
 import Api from "libs/api";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -9,6 +8,56 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { infoAtom, postAtom } from "atoms";
+
+const Mdfile = () => {
+    let { postId } = useParams();
+    const navigate = useNavigate();
+    const [post, setPost] = useRecoilState(postAtom);
+    const [info, setInfo] = useRecoilState(infoAtom);
+
+    const fetchboardsInfo = async () => {
+        try {
+            const { data } = await Api.get(`post/id/${postId}`);
+            setInfo(data.payload);
+            // console.log(data.payload);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        fetchboardsInfo();
+        import(`_post/${postId}.md`)
+            .then((res) => {
+                fetch(res.default)
+                    .then((res) => res.text())
+                    .then((res) => setPost(res))
+                    .catch((err) => console.log(err));
+            })
+            .catch((err) => console.log(err));
+    }, []);
+    return (
+        <TopContainer>
+            <HeadWrapper>
+                <Title>{info.title}</Title>
+                <InfoWrapper>
+                    <Information>
+                        <EditedBy>
+                            last edited by <span>{info.lastmod_user}</span>
+                        </EditedBy>
+                        <Separator>·</Separator>
+                        <EditedAt>{moment(info.updatedAt).format("YYYY-MM-DD HH:mm:ss")}</EditedAt>
+                    </Information>
+                    <Button variant="contained" onClick={() => navigate("/editPost")}>
+                        편집하기
+                    </Button>
+                </InfoWrapper>
+                <Content>
+                    <Markdown>{post}</Markdown>
+                </Content>
+            </HeadWrapper>
+        </TopContainer>
+    );
+};
 
 const TopContainer = styled.div`
     margin-top: 3rem;
@@ -72,55 +121,5 @@ const EditedAt = styled.span`
     font-size: 1rem;
     color: #868e96;
 `;
-
-const Mdfile = () => {
-    let { postId } = useParams();
-    const navigate = useNavigate();
-    const [post, setPost] = useRecoilState(postAtom);
-    const [info, setInfo] = useRecoilState(infoAtom);
-
-    const fetchboardsInfo = async () => {
-        try {
-            const { data } = await Api.get(`post/id/${postId}`);
-            setInfo(data.payload);
-            // console.log(data.payload);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    useEffect(() => {
-        fetchboardsInfo();
-        import(`_post/${postId}.md`)
-            .then((res) => {
-                fetch(res.default)
-                    .then((res) => res.text())
-                    .then((res) => setPost(res))
-                    .catch((err) => console.log(err));
-            })
-            .catch((err) => console.log(err));
-    }, []);
-    return (
-        <TopContainer>
-            <HeadWrapper>
-                <Title>{info.title}</Title>
-                <InfoWrapper>
-                    <Information>
-                        <EditedBy>
-                            last edited by <span>{info.lastmod_user}</span>
-                        </EditedBy>
-                        <Separator>·</Separator>
-                        <EditedAt>{moment(info.updatedAt).format("YYYY-MM-DD HH:mm:ss")}</EditedAt>
-                    </Information>
-                    <Button variant="contained" onClick={() => navigate("/editPost")}>
-                        편집하기
-                    </Button>
-                </InfoWrapper>
-                <Content>
-                    <Markdown>{post}</Markdown>
-                </Content>
-            </HeadWrapper>
-        </TopContainer>
-    );
-};
 
 export default Mdfile;

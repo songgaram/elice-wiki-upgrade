@@ -1,32 +1,30 @@
-import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import Goal from "./Goal";
-import TagBtn from "./TagBtn";
-import { getTags } from "./HomeData";
-import WeekNav from "./WeekNav";
 import styled from "styled-components";
-import Header from "../Header";
-import RecentList from "./RecentList";
+import Goal from "./goal/Goal";
+import TagBtn from "./tag/TagBtn";
+import WeekNav from "./week/WeekNav";
+// import RecentList from "./RecentList";
+import Loader from "components/Loader";
+import { useGetTagData } from "queries/tagQuery";
+import { useGetGoalData } from "queries/goalQuery";
 
 function UserHome() {
-    const [tags, setTags] = useState(undefined);
-    const [goal, setGoal] = useState(undefined);
-    const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+    const params = useParams();
+    const week = params.week;
 
-    useEffect(() => {
-        getTags(setTags);
-        setIsFetchCompleted(true);
-    }, []);
+    const { data, status } = useGetTagData();
+    const tags = data?.tagData?.payload || {};
 
-    if (!isFetchCompleted) {
-        return <div>로딩중</div>;
-    }
+    const res = useGetGoalData(week);
+    const goal = res.data?.goalData?.payload;
+
+    if (status === "loading") return <Loader />;
 
     return (
         <>
             <div style={{ minHeight: "100vh", height: "auto" }}>
-                <Header />
-                <WeekNav setGoal={setGoal} />
+                <WeekNav />
                 <Container>
                     <ContentsSide>
                         <div style={{ padding: "0 3%" }}>
@@ -37,7 +35,8 @@ function UserHome() {
                         <Outlet />
                     </Contents>
                     <ContentsSide>
-                        {goal && <Goal goal={goal} />} <RecentList />
+                        {goal && <Goal goal={goal} />}
+                        {/* <RecentList /> */}
                     </ContentsSide>
                 </Container>
             </div>
@@ -59,6 +58,7 @@ const ContentsSide = styled.div`
     background-color: white;
     display: flex;
     padding: 2% 1%;
+    text-align: center;
     flex-direction: column;
     align-items: center;
 `;
