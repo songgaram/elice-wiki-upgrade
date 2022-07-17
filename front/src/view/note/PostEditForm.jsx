@@ -1,4 +1,3 @@
-import Writer from "./Editor";
 import styled from "styled-components";
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
@@ -12,11 +11,10 @@ import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
-import { Alert, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState, useRecoilValue } from "recoil";
-import { hashtagAtom, infoAtom, postAtom, tagAtom, titleAtom, weekAtom } from "atoms";
+import { infoAtom, postAtom, tagAtom, titleAtom, weekAtom } from "state/atoms";
 
 const Wrapper = styled.div`
     padding-top: 2rem;

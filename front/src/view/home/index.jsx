@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
-import Goal from "./goal/Goal";
+import Goal from "./goal";
 import TagBtn from "./tag/TagBtn";
 import WeekNav from "./week/WeekNav";
 // import RecentList from "./RecentList";
