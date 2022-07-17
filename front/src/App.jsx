@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Note from "view/note/Note";
-import UserHome from "view/home/UserHome";
+import UserHome from "view/home";
 import EliceUserAuth from "view/auth/EliceUserAuth";
 import GoogleLoading from "view/auth/GoogleLoading";
 import Admin from "view/admin/Admin";
@@ -13,7 +13,7 @@ import MyPage from "view/mypage/MyPage";
 import WeekPost from "view/home/week/WeekPost";
 import HomePost from "view/home/HomePost";
 import TagPost from "view/home/tag/TagPost";
-import Board from "view/board/Board";
+import Board from "view/board";
 import BoardDetail from "view/board/BoardDetail";
 import BoardAddForm from "view/board/BoardAddForm";
 import Spinner from "components/Spinner";

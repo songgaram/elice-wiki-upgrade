@@ -4,7 +4,7 @@ import { Box, Container } from "@mui/material/";
 import BoardEditForm from "./BoardEditForm";
 import BoardContents from "./BoardContents";
 import Spinner from "components/Spinner";
-import Comment from "../comment/Comment";
+import Comment from "../comment";
 import Api from "libs/api";
 import { useQueryClient } from "react-query";
 

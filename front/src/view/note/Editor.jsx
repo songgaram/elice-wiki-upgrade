@@ -8,30 +8,8 @@ import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { Alert, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { tagAtom, titleAtom, weekAtom } from "atoms";
-
-const SubmitBtn = styled.button`
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    float: right;
-    font-weight: bold;
-    cursor: pointer;
-    outline: none;
-    border: none;
-    background-color: #7353ea;
-    color: white;
-    border-radius: 4px;
-    padding: 0px 1.25rem;
-    margin: 15px 0 15px 0;
-    height: 2rem;
-    font-size: 1rem;
-`;
 
 const Writer = ({ title, week, tag }) => {
     const editorRef = useRef();
@@ -63,7 +41,6 @@ const Writer = ({ title, week, tag }) => {
             <Editor
                 plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
                 placeholder="공유하고 싶은 학습 내용을 적어보세요!"
-                // initialValue="내용을 입력하세요..."
                 previewStyle="vertical"
                 height="500px"
                 initialEditType="markdown"

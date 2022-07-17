@@ -1,10 +1,7 @@
-import { Link } from "react-router-dom";
 import Writer from "./Editor";
 import styled from "styled-components";
 import { useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
 import TextField from "@mui/material/TextField";
-import { hashtagAtom, tagAtom, titleAtom, weekAtom } from "atoms";
 
 const Wrapper = styled.div`
     padding-top: 2rem;
