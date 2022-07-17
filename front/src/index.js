@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import GlobalStyle from "./GlobalStyle";
+import GlobalStyle from "./style";
 
 const theme = createTheme({
     palette: {
