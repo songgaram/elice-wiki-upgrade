@@ -7,7 +7,7 @@ import moment from "moment";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { infoAtom, postAtom } from "atoms";
+import { infoAtom, postAtom } from "state/atoms";
 
 const Mdfile = () => {
     let { postId } = useParams();
