@@ -21,6 +21,7 @@ import Mdfile from "view/note/Markdown";
 import PostEditForm from "view/note/PostEditForm";
 import Intro from "view/Intro/Intro";
 import Layout from "components/Layout";
+import Search from "view/search";
 
 import { useGetCurrentUser } from "queries/userQuery";
 
@@ -49,11 +50,12 @@ function App() {
                         <Route path="/board" exact element={<Board />} />
                         <Route path="/board/:id" exact element={<BoardDetail />} />
                         <Route path="/board/create" exact element={<BoardAddForm />} />
-                        <Route path="mypage" element={<MyPage />} />
+                        <Route path="/mypage" element={<MyPage />} />
+                        <Route path="/search" element={<Search />} />
                     </Route>
                 )}
                 <Route path="/test" exact element={<GoogleLoading />} />
-                {/* <Route path="*" element={<Home />} /> */}
+
                 {(userState?.admin === 0 || userState?.admin === 1) && (
                     <Route path="/admin" element={<Admin />}>
                         <Route path="board" element={<ManageBoard />} />
