@@ -7,9 +7,11 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import theme from "style/Theme";
 import GlobalStyle from "./style";
 
-const theme = createTheme({
+const muiTheme = createTheme({
     palette: {
         primary: {
             main: "#7353EA",
@@ -33,11 +35,12 @@ root.render(
     <RecoilRoot>
         <QueryClientProvider client={queryClient}>
             <ReactQueryDevtools initialIsOpen={true} />
-
-            <ThemeProvider theme={theme}>
-                <GlobalStyle />
-                <App />
-            </ThemeProvider>
+            <StyledThemeProvider theme={theme}>
+                <ThemeProvider theme={muiTheme}>
+                    <GlobalStyle />
+                    <App />
+                </ThemeProvider>
+            </StyledThemeProvider>
         </QueryClientProvider>
     </RecoilRoot>,
 );
