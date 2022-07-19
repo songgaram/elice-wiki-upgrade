@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { styled, alpha } from "@mui/material/styles";
-import { AppBar, Box, Button, IconButton, InputBase, Menu, MenuItem, Toolbar } from "@mui/material";
+import { AppBar, Box, Button, IconButton, Menu, MenuItem, Toolbar } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import logo_large from "assets/images/logo_large.png";
@@ -21,6 +20,10 @@ function Header() {
     };
     const handleMenuClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleSearchNavigate = () => {
+        navigate("/search");
     };
 
     const handleLogout = () => {
@@ -48,17 +51,18 @@ function Header() {
                             onClick={() => navigate("/home")}
                         />
                         <Box sx={{ flexGrow: 1 }} />
-                        <Search>
-                            <SearchIconWrapper>
-                                <SearchIcon color="primary" />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ "aria-label": "search" }}
-                            />
-                        </Search>
+
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            onClick={handleSearchNavigate}
+                            color="inherit"
+                        >
+                            <SearchIcon color="black" />
+                        </IconButton>
+
                         <Button color="black" onClick={() => navigate("/board")}>
-                            Board
+                            게시판
                         </Button>
                         <Button color="black" onClick={() => navigate("/addPost")}>
                             새 글 쓰기
@@ -97,45 +101,5 @@ function Header() {
         </>
     );
 }
-
-const Search = styled("div")(({ theme }) => ({
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha("#c4c4c4", 0.15),
-    "&:hover": {
-        backgroundColor: alpha("#c4c4c4", 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(3),
-        width: "auto",
-    },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: theme.palette.primary,
-    "& .MuiInputBase-input": {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create("width"),
-        width: "100%",
-        [theme.breakpoints.up("md")]: {
-            width: "20ch",
-        },
-    },
-}));
 
 export default Header;

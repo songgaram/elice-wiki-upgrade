@@ -1,5 +1,12 @@
-import { useInfiniteQuery } from "react-query";
+import { useQuery, useInfiniteQuery } from "react-query";
 import Api from "libs/api";
+
+export const useGetWholePostList = () => {
+    return useQuery("posts", async () => {
+        const res = await Api.get("posts");
+        return res.data;
+    });
+};
 
 export const useGetPostList = () => {
     const fetchPostList = async ({ pageParam = 1 }) => {
