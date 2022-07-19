@@ -16,7 +16,6 @@ function Search() {
 
     const filteredList = useRecoilValue(filteredSearchList);
 
-    console.log(filteredList);
     useEffect(() => {
         setPostList(POST_DATA);
     }, [POST_DATA, setPostList]);
@@ -29,49 +28,29 @@ function Search() {
     useDebounce(searchWord, 500);
 
     return (
-        <Container>
-            <ContentsSide />
-            <Contents>
-                <SearchContainer>
-                    <InputBox>
-                        <StyledInput
-                            type="text"
-                            name="search"
-                            placeholder="검색어를 입력해주세요."
-                            value={searchWord}
-                            onChange={onChangeHandle}
-                            autoComplete="off"
-                        />
-                        <span type="submit">
-                            <SearchIcon fontSize="large" />
-                        </span>
-                    </InputBox>
+        <SearchContainer>
+            <InputBox>
+                <StyledInput
+                    type="text"
+                    name="search"
+                    placeholder="검색어를 입력해주세요."
+                    value={searchWord}
+                    onChange={onChangeHandle}
+                    autoComplete="off"
+                />
+                <span type="submit">
+                    <SearchIcon fontSize="large" />
+                </span>
+            </InputBox>
 
-                    {filteredList.length === 0 ? (
-                        <span>검색 결과가 없습니다</span>
-                    ) : (
-                        <SearchResult filteredList={filteredList} />
-                    )}
-                </SearchContainer>
-            </Contents>
-            <ContentsSide />
-        </Container>
+            {filteredList.length === 0 ? (
+                <span>검색 결과가 없습니다</span>
+            ) : (
+                <SearchResult filteredList={filteredList} />
+            )}
+        </SearchContainer>
     );
 }
-
-const Container = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-`;
-
-const ContentsSide = styled.div`
-    width: 17.5%;
-`;
-
-const Contents = styled.div`
-    width: 65%;
-`;
 
 const SearchContainer = styled.div`
     width: 100%;
