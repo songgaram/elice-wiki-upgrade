@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { Container, Box, Grid, Button } from "@mui/material";
 import WriteForm from "./WriteForm";
-import Api from "libs/api";
+import { usePostBoard } from "queries/boardQuery";
 
 function BoardAddForm() {
     const navigate = useNavigate();
@@ -10,19 +10,20 @@ function BoardAddForm() {
     const [body, setBody] = useState("");
     const [header, setHeader] = useState("");
 
+    const postBoard = usePostBoard();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            await Api.post("boards/board", {
-                header,
-                title,
-                body,
-            });
-            alert("게시글 등록을 성공하였습니다.");
-            navigate(`/board`);
-        } catch (error) {
-            alert("게시글 등록에 실패하였습니다.", error);
-        }
+
+        const boardData = {
+            header,
+            title,
+            body,
+        };
+
+        postBoard.mutate(boardData);
+        alert("게시글 등록을 성공하였습니다.");
+        navigate(`/board`);
     };
 
     return (
