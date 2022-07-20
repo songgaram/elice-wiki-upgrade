@@ -6,7 +6,7 @@ import ReplyComment from "./ReplyComment";
 function Comments({ boardId, commentList }) {
     return (
         <>
-            <Card sx={{ width: "100%" }}>
+            <Card sx={{ width: "100%", padding: "0 0 2% 1%" }}>
                 <CardHeader title="댓글" />
                 <CommentAddForm boardId={boardId} />
                 {commentList?.map(

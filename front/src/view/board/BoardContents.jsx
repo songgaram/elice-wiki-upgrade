@@ -37,7 +37,7 @@ function BoardContents({ setIsEditing, isEditable, boardData }) {
                     subheader={`${userName} | ${createdAt.slice(0, 10)}`}
                 />
                 <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    <Typography sx={{ fontSize: 14 }} color="black" gutterBottom>
                         {body}
                     </Typography>
                 </CardContent>

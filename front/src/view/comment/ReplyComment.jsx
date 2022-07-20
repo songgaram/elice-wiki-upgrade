@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SingleComment from "./SingleComment";
+import styled from "styled-components";
 
 function ReplyComment({ commentData, commentList }) {
     const [childCommentNumber, setchildCommentNumber] = useState(0);
@@ -51,16 +52,22 @@ function ReplyComment({ commentData, commentList }) {
     return (
         <>
             {childCommentNumber > 0 && (
-                <div
-                    onClick={onClickViewMore}
-                    style={{ margin: "0 0 20px 15px", width: "auto", cursor: "pointer" }}
-                >
+                <ShowRecomment onClick={onClickViewMore}>
                     {openReply ? "▼" : "▶"} {childCommentNumber}개의 답글
-                </div>
+                </ShowRecomment>
             )}
             {openReply && RenderReply(commentData.id)}
         </>
     );
 }
+
+const ShowRecomment = styled.div`
+    width: 100%;
+    padding-left: 2%;
+    margin-left: 35px;
+    font-size: 14px;
+    color: ${({ theme }) => theme.colors.primary};
+    cursor: pointer;
+`;
 
 export default ReplyComment;
