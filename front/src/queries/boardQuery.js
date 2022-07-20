@@ -45,3 +45,13 @@ export const usePostBoard = () => {
         onError: (err) => console.log("게시글 생성 실패ㅠㅠ", err),
     });
 };
+
+export const useDeleteBoard = (id) => {
+    const queryClient = useQueryClient();
+    return useMutation(async () => await Api.delete(`boards/${id}`), {
+        onSuccess: () => {
+            queryClient.invalidateQueries("boards");
+        },
+        onError: (err) => console.log("게시글 삭제 실패ㅠㅠ", err),
+    });
+};

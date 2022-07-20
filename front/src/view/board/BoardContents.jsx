@@ -10,20 +10,18 @@ import {
 } from "@mui/material/";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Api from "libs/api";
+import { useDeleteBoard } from "queries/boardQuery";
 
 function BoardContents({ setIsEditing, isEditable, boardData }) {
     const navigate = useNavigate();
     const { title, body, createdAt, userName, header, boardId } = boardData;
 
+    const deleteBoard = useDeleteBoard(boardId);
+
     const handleDelete = async () => {
-        try {
-            if (window.confirm("게시글을 삭제하실 건가요?")) {
-                await Api.delete("boards", boardId);
-                navigate("/board");
-            }
-        } catch (error) {
-            console.log(error);
+        if (window.confirm("게시글을 삭제하실 건가요?")) {
+            deleteBoard.mutate();
+            navigate("/board");
         }
     };
     return (
@@ -35,7 +33,7 @@ function BoardContents({ setIsEditing, isEditable, boardData }) {
                             목록
                         </Button>
                     }
-                    title={`[${header}]${title}`}
+                    title={`[${header}] ${title}`}
                     subheader={`${userName} | ${createdAt.slice(0, 10)}`}
                 />
                 <CardContent>
@@ -56,12 +54,6 @@ function BoardContents({ setIsEditing, isEditable, boardData }) {
                             <IconButton onClick={() => handleDelete()}>
                                 <DeleteIcon />
                             </IconButton>
-                            {/* <Confirm
-                                open={open}
-                                handleClose={handleClose}
-                                handleDelete={handleDelete}
-                                title={confirmTitle}
-                            /> */}
                         </>
                     )}
                 </CardActions>
