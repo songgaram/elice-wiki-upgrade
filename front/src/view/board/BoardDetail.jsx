@@ -7,52 +7,33 @@ import Spinner from "components/Spinner";
 import Comment from "../comment";
 import Api from "libs/api";
 import { useQueryClient } from "react-query";
+import { useGetCommentList, useGetBoardData } from "queries/boardQuery";
 
 function BoardDetail() {
     const params = useParams();
     const boardId = params.id;
-    const [boardData, setBoardData] = useState(undefined);
-    const [commentList, setCommentList] = useState(undefined);
     const [isEditable, setIsEditable] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
     const queryClient = useQueryClient();
     const { userState } = queryClient.getQueryData("userState");
     const userId = userState?.payload?.__id;
 
-    const fetchCommentList = async () => {
-        try {
-            const { data } = await Api.get("commentlist/board", boardId);
-            setCommentList(data.payload);
-        } catch (e) {
-            console.log("댓글을 불러오는데 실패했습니다.", e);
-        }
-    };
+    const res = useGetCommentList(boardId);
+    const commentList = res?.data?.payload;
 
-    const fetchDetailInfo = async () => {
-        try {
-            const { data } = await Api.get("boards", boardId);
-            if (data.payload?.userId === userId) {
-                setIsEditable(true);
-            } else {
-                setIsEditable(false);
-            }
-            setBoardData(data.payload);
-            setIsFetchCompleted(true);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    const { data, status } = useGetBoardData(boardId);
+    const boardData = data?.boardData?.payload;
 
     useEffect(() => {
-        fetchDetailInfo();
-        fetchCommentList();
-    }, [params]);
+        if (boardData?.userId === userId) {
+            setIsEditable(true);
+        } else {
+            setIsEditable(false);
+        }
+    }, [boardData?.userId, userId]);
 
-    if (!isFetchCompleted) {
-        return <Spinner />;
-    }
+    if (status === "loading") return <Spinner />;
 
     return (
         <React.Fragment>
@@ -69,7 +50,6 @@ function BoardDetail() {
                             setIsEditing={setIsEditing}
                             boardId={boardId}
                             boardData={boardData}
-                            setBoardData={setBoardData}
                         />
                     ) : (
                         <>

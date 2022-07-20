@@ -19,9 +19,9 @@ function SearchPost({ post, idx }) {
 }
 
 const PostContainer = styled.div`
-    width: 65%;
+    width: 50%;
     min-height: 30%;
-    padding: 5% 10% 8% 5%;
+    padding: 5% 10% 8% 10%;
     border-top: ${(props) => (props.idx === 0 ? "none" : "1px solid #e1e1e1")};
     cursor: pointer;
 `;

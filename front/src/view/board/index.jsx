@@ -29,7 +29,7 @@ function Board() {
 
     const fetchboardsInfo = async () => {
         try {
-            const { data } = await Api.getQuery("boardlist/pageinfo", `page=${page}&perPage=8`);
+            const { data } = await Api.get(`boardlist/pageinfo?page=${page}&perPage=8`);
             setBoardList(data.payload?.boardList);
             setTotalPage(data.payload?.totalPage);
             setIsFetchCompleted(true);
