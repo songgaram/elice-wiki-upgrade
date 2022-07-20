@@ -6,7 +6,8 @@ import BoardContents from "./BoardContents";
 import Spinner from "components/Spinner";
 import Comment from "../comment";
 import { useQueryClient } from "react-query";
-import { useGetCommentList, useGetBoardData } from "queries/boardQuery";
+import { useGetBoardData } from "queries/boardQuery";
+import { useGetCommentList } from "queries/commentQuery";
 
 function BoardDetail() {
     const params = useParams();

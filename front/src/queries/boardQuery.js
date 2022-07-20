@@ -19,13 +19,6 @@ export const useGetBoardData = (id) => {
     });
 };
 
-export const useGetCommentList = (id) => {
-    return useQuery(["comments", id], async () => {
-        const res = await Api.get(`commentlist/board/${id}`);
-        return res.data;
-    });
-};
-
 export const useUpdateBoard = (id) => {
     const queryClient = useQueryClient();
     return useMutation(async (board) => await Api.put(`boards/${id}`, board), {
