@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CardContent, CardHeader, Typography, IconButton, Button } from "@mui/material";
 import { useNavigate } from "react-router";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Api from "libs/api";
+import { useDeleteComment } from "queries/commentQuery";
 import { useQueryClient } from "react-query";
 
 function CommentCard({ commentData, onReplyClick, setshowReplyInput }) {
@@ -14,22 +14,20 @@ function CommentCard({ commentData, onReplyClick, setshowReplyInput }) {
     const { userState } = queryClient.getQueryData("userState");
     const curUserId = userState?.payload?.__id;
 
+    const deleteComment = useDeleteComment(commentId);
+
     useEffect(() => {
         if (userId === curUserId) {
             setIsEditable(true);
         } else {
             setIsEditable(false);
         }
-    }, []);
+    }, [userId, curUserId]);
 
     const handleDelete = async () => {
-        try {
-            if (window.confirm("댓글을 삭제할 건가요?")) {
-                await Api.delete(`comments/${commentId}`);
-                navigate(`/board/${boardId}`);
-            }
-        } catch (error) {
-            console.log(error);
+        if (window.confirm("댓글을 삭제할 건가요?")) {
+            deleteComment.mutate();
+            navigate(`/board/${boardId}`);
         }
     };
 

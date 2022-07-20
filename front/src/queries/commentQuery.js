@@ -28,12 +28,22 @@ export const usePostComment = () => {
     });
 };
 
-export const useDeletecomment = (id) => {
+export const useDeleteComment = (id) => {
     const queryClient = useQueryClient();
     return useMutation(async () => await Api.delete(`comments/${id}`), {
         onSuccess: () => {
             queryClient.invalidateQueries("comments");
         },
         onError: (err) => console.log("댓글 삭제 실패ㅠㅠ", err),
+    });
+};
+
+export const usePostRecomment = () => {
+    const queryClient = useQueryClient();
+    return useMutation(async (comment) => await Api.post("comments/recomment", comment), {
+        onSuccess: () => {
+            queryClient.invalidateQueries("comments");
+        },
+        onError: (err) => console.log("대댓글 생성 실패ㅠㅠ", err),
     });
 };

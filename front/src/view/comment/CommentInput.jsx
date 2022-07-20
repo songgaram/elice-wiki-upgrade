@@ -5,7 +5,8 @@ export default function CommentInput({ comment, setComment }) {
         <>
             <TextField
                 sx={{ m: "1% 0 1% 1%", width: "100%" }}
-                label="Comment"
+                placeholder="댓글을 입력하세요"
+                autoComplete="off"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
             />
