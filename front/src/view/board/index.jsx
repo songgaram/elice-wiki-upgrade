@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import {
     List,
@@ -18,37 +18,23 @@ import {
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Spinner from "components/Spinner";
 import styled from "styled-components";
-import Api from "libs/api";
+
+import { useGetBoardList } from "queries/boardQuery";
 
 function Board() {
     const navigate = useNavigate();
-    const [boardList, setBoardList] = useState(undefined);
-    const [isFetchCompleted, setIsFetchCompleted] = useState(false);
-    const [page, setPage] = useState(1);
-    const [totalPage, setTotalPage] = useState(undefined);
 
-    const fetchboardsInfo = async () => {
-        try {
-            const { data } = await Api.getQuery("boardlist/pageinfo", `page=${page}&perPage=8`);
-            setBoardList(data.payload?.boardList);
-            setTotalPage(data.payload?.totalPage);
-            setIsFetchCompleted(true);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    const [page, setPage] = useState(1);
+
+    const { data, status } = useGetBoardList(page);
+    const boardList = data?.payload?.boardList;
+    const totalPage = data?.payload?.totalPage;
 
     const handlePage = (e, value) => {
         setPage(value);
     };
 
-    useEffect(() => {
-        fetchboardsInfo();
-    }, [page]);
-
-    if (!isFetchCompleted) {
-        return <Spinner />;
-    }
+    if (status === "loading") return <Spinner />;
 
     return (
         <>

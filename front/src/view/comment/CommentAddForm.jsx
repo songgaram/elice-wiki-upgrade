@@ -1,26 +1,27 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CommentInput from "./CommentInput";
-import Api from "libs/api";
+import { usePostComment } from "queries/commentQuery";
 
 function CommentAddForm({ boardId }) {
     const navigate = useNavigate();
     const [comment, setComment] = useState("");
 
+    const postComment = usePostComment();
+
     const handlePost = async (e) => {
         e.preventDefault();
-        try {
-            await Api.post(`comments/comment`, {
-                boardId,
-                content: comment,
-            });
-            navigate(`/board/${boardId}`);
-            setComment("");
-        } catch (error) {
-            alert("댓글 생성에 실패하였습니다.");
-            console.log(error);
-        }
+
+        const commentData = {
+            boardId,
+            content: comment,
+        };
+
+        postComment.mutate(commentData);
+        navigate(`/board/${boardId}`);
+        setComment("");
     };
+
     return (
         <form onSubmit={handlePost}>
             <div style={{ display: "flex", flexDirection: "row" }}>

@@ -1,11 +1,13 @@
 import { useState } from "react";
 import CommentInput from "./CommentInput";
 import CommentCard from "./CommentCard";
-import Api from "libs/api";
+import { usePostRecomment } from "queries/commentQuery";
 
 function SingleComment({ commentData }) {
     const [comment, setComment] = useState("");
     const [showReplyInput, setshowReplyInput] = useState(false);
+
+    const postRecomment = usePostRecomment();
 
     const onReplyClick = () => {
         setshowReplyInput(!showReplyInput);
@@ -13,18 +15,15 @@ function SingleComment({ commentData }) {
 
     const handlePost = async (e) => {
         e.preventDefault();
-        try {
-            await Api.post(`comments/recomment`, {
-                target: commentData,
-                content: comment,
-            });
-            // navigate(`/board/${boardId}`);
-            setshowReplyInput(false);
-            setComment("");
-        } catch (error) {
-            alert("댓글 생성에 실패하였습니다.");
-            console.log(error);
-        }
+
+        const recommentData = {
+            target: commentData,
+            content: comment,
+        };
+
+        postRecomment.mutate(recommentData);
+        setshowReplyInput(false);
+        setComment("");
     };
 
     return (
