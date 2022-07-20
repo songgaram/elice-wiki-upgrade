@@ -5,7 +5,6 @@ import BoardEditForm from "./BoardEditForm";
 import BoardContents from "./BoardContents";
 import Spinner from "components/Spinner";
 import Comment from "../comment";
-import Api from "libs/api";
 import { useQueryClient } from "react-query";
 import { useGetCommentList, useGetBoardData } from "queries/boardQuery";
 

@@ -1,28 +1,27 @@
 import React, { useState } from "react";
 import { Box, Button, Grid } from "@mui/material";
 import WriteForm from "./WriteForm";
-import Api from "libs/api";
+import { useUpdateBoard } from "queries/boardQuery";
 
-function ContentEditForm({ boardData, setBoardData, setIsEditing, boardId }) {
+function ContentEditForm({ boardData, setIsEditing, boardId }) {
     const [title, setTitle] = useState(boardData.title);
     const [body, setBody] = useState(boardData.body);
+    const [header, setHeader] = useState(boardData.header);
 
-    const handleEdit = async (e) => {
+    const updataBoard = useUpdateBoard(boardId);
+
+    const handleEdit = (e) => {
         e.preventDefault();
-        try {
-            await Api.put(`boards/${boardId}`, {
-                title,
-                body,
-            });
-            alert("게시글을 수정하였습니다.");
-            setBoardData((prevState) => {
-                return { ...prevState, title, body };
-            });
-            setIsEditing(false);
-        } catch (error) {
-            alert("게시글 수정을 실패하였습니다.");
-            console.log(error);
-        }
+
+        const boardData = {
+            header,
+            title,
+            body,
+        };
+
+        updataBoard.mutate(boardData);
+        alert("게시글을 수정하였습니다.");
+        setIsEditing(false);
     };
 
     return (
@@ -33,7 +32,14 @@ function ContentEditForm({ boardData, setBoardData, setIsEditing, boardId }) {
             }}
         >
             <form onSubmit={handleEdit}>
-                <WriteForm title={title} setTitle={setTitle} body={body} setBody={setBody} />
+                <WriteForm
+                    title={title}
+                    setTitle={setTitle}
+                    body={body}
+                    setBody={setBody}
+                    header={header}
+                    setHeader={setHeader}
+                />
                 <Grid
                     sx={{
                         textAlign: "center",
