@@ -21,7 +21,7 @@ function Post({ post, idx }) {
 const PostContainer = styled.div`
     width: 100%;
     min-height: 30%;
-    padding: 5% 10%;
+    padding: 40px 10% 10% 10%;
     border-top: ${(props) => (props.idx === 0 ? "none" : "1px solid #e1e1e1")};
     cursor: pointer;
 `;

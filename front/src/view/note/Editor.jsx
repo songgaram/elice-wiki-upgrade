@@ -1,4 +1,3 @@
-import Api from "libs/api";
 import Prism from "prismjs";
 // 여기 css를 수정해서 코드 하이라이팅 커스텀 가능
 import "prismjs/themes/prism.css";
@@ -11,29 +10,33 @@ import { useRef } from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
+import { useCreateNewPost } from "queries/postQuery";
+
 const Writer = ({ title, week, tag }) => {
     const editorRef = useRef();
     const navigate = useNavigate();
-    const btnClickListener = async () => {
+
+    const createNewPost = useCreateNewPost();
+
+    const btnClickListener = () => {
         const editorInstance = editorRef.current.getInstance();
         const body = editorInstance.getMarkdown();
-        try {
-            await Api.post("newpost", {
-                week,
-                tag,
-                title,
-                body,
-            });
-            alert("게시글을 작성했습니다.");
-            navigate("/home");
-        } catch {
-            alert("게시글 작성을 실패하였습니다.");
-        }
+
+        const POST_DATA = {
+            week,
+            tag,
+            title,
+            body,
+        };
+
+        createNewPost.mutate(POST_DATA);
+        alert("게시글을 작성했습니다.");
+        navigate("/home");
     };
 
     const checkTitle = title !== "";
-    const checkTag = tag !== "";
-    const checkWeek = week !== "";
+    const checkTag = tag.length > 0;
+    const checkWeek = Number(week) > 0 && Number(week) < 25;
     const validation = checkTitle && checkTag && checkWeek;
 
     return (

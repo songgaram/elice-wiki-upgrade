@@ -1,4 +1,4 @@
-import { useQuery, useInfiniteQuery } from "react-query";
+import { useQuery, useInfiniteQuery, useQueryClient, useMutation } from "react-query";
 import Api from "libs/api";
 
 export const useGetWholePostList = () => {
@@ -50,5 +50,15 @@ export const useGetTagPosts = (tag) => {
         cacheTime: 120000,
         getNextPageParam: (lastPage) =>
             lastPage.totalPage === lastPage.pageParam ? undefined : lastPage.nextPage,
+    });
+};
+
+export const useCreateNewPost = () => {
+    const queryClient = useQueryClient();
+    return useMutation(async (post) => await Api.post("newpost", post), {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+        },
+        onError: (err) => console.log("포스트 생성 실패ㅠㅠ", err),
     });
 };

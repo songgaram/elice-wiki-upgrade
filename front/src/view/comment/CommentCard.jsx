@@ -7,14 +7,13 @@ import { useQueryClient } from "react-query";
 import styled from "styled-components";
 
 function CommentCard({ commentData, onReplyClick, setshowReplyInput }) {
-    const { userName, content, userId, commentId, boardId, isDeleted } = commentData;
+    const { userName, content, userId, commentId, boardId, isDeleted, profileImg } = commentData;
     const navigate = useNavigate();
     const [isEditable, setIsEditable] = useState(false);
 
     const queryClient = useQueryClient();
     const { userState } = queryClient.getQueryData("userState");
     const curUserId = userState?.payload?.__id;
-    const profileImg = userState?.payload?.profile_img;
 
     const deleteComment = useDeleteComment(commentId);
 
@@ -70,6 +69,7 @@ const CardContainer = styled.div`
 
 const CardHeader = styled.div`
     width: 100%;
+    height: 40px;
     display: flex;
     flex-direction: row;
     align-items: center;
