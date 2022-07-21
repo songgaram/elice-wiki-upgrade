@@ -13,13 +13,13 @@ function ContentEditForm({ boardData, setIsEditing, boardId }) {
     const handleEdit = (e) => {
         e.preventDefault();
 
-        const boardData = {
+        const BOARD_DATA = {
             header,
             title,
             body,
         };
 
-        updataBoard.mutate(boardData);
+        updataBoard.mutate(BOARD_DATA);
         alert("게시글을 수정하였습니다.");
         setIsEditing(false);
     };

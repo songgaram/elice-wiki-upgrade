@@ -31,9 +31,9 @@ const EliceUserAuth = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const answer = { answer: curAnswer };
+        const ANSWER = { answer: curAnswer };
 
-        postAuthAnswer.mutate(answer);
+        postAuthAnswer.mutate(ANSWER);
     };
 
     if (status === "loading") return <Spinner />;

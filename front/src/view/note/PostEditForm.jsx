@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
-import Api from "libs/api";
 import Prism from "prismjs";
 // 여기 css를 수정해서 코드 하이라이팅 커스텀 가능
 import "prismjs/themes/prism.css";
@@ -16,73 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { infoAtom, postAtom, tagAtom, titleAtom, weekAtom } from "state/atoms";
 
-const Wrapper = styled.div`
-    padding-top: 2rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
-`;
-
-const Title = styled.input`
-    background: transparent;
-    display: block;
-    padding: 0px;
-    font-size: 2.75rem;
-    resize: none;
-    line-height: 1.5;
-    outline: none;
-    border: none;
-    font-weight: bold;
-    color: black;
-`;
-
-const Line = styled.div`
-    background: rgb(73, 80, 87);
-    height: 5px;
-    width: 4rem;
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
-    border-radius: 1px;
-`;
-
-const TagInput = styled.input`
-    background: transparent;
-    display: inline-flex;
-    outline: none;
-    cursor: text;
-    font-size: 1.125rem;
-    line-height: 2rem;
-    margin-bottom: 0.75rem;
-    min-width: 8rem;
-    border: none;
-    color: black;
-`;
-
-const HashOuter = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    .HashWrapInner {
-        font-size: 1rem;
-        display: inline-flex;
-        align-items: center;
-        height: 2rem;
-        border-radius: 1rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
-        background-color: #f8f9fa;
-        color: #7353ea;
-        margin-right: 0.75rem;
-        margin-bottom: 0.75rem;
-        cursor: pointer;
-    }
-`;
-
-const TextOuter = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    display: inline-flex;
-    align-items: center;
-    margin-left: 25px;
-`;
+import { useUpdatePost } from "queries/postQuery";
 
 function PostEditForm() {
     const info = useRecoilValue(infoAtom);
@@ -103,15 +36,21 @@ function PostEditForm() {
 
     const editorRef = useRef();
     const navigate = useNavigate();
+
+    const updatePost = useUpdatePost(info.post_id);
+
     const btnClickListener = async () => {
         const editorInstance = editorRef.current.getInstance();
         const body = editorInstance.getMarkdown();
-        await Api.put(`post/update/${info.post_id}`, {
+
+        const POST_DATA = {
             week: curWeek,
             tag: curTag,
             title: curtitle,
             body,
-        });
+        };
+
+        updatePost.mutate(POST_DATA);
         setTitle(curtitle);
         setTag(curTag);
         setWeek(curWeek);
@@ -201,5 +140,73 @@ function PostEditForm() {
         </>
     );
 }
+
+const Wrapper = styled.div`
+    padding-top: 2rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+`;
+
+const Title = styled.input`
+    background: transparent;
+    display: block;
+    padding: 0px;
+    font-size: 2.75rem;
+    resize: none;
+    line-height: 1.5;
+    outline: none;
+    border: none;
+    font-weight: bold;
+    color: black;
+`;
+
+const Line = styled.div`
+    background: rgb(73, 80, 87);
+    height: 5px;
+    width: 4rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 1px;
+`;
+
+const TagInput = styled.input`
+    background: transparent;
+    display: inline-flex;
+    outline: none;
+    cursor: text;
+    font-size: 1.125rem;
+    line-height: 2rem;
+    margin-bottom: 0.75rem;
+    min-width: 8rem;
+    border: none;
+    color: black;
+`;
+
+const HashOuter = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    .HashWrapInner {
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        height: 2rem;
+        border-radius: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        background-color: #f8f9fa;
+        color: #7353ea;
+        margin-right: 0.75rem;
+        margin-bottom: 0.75rem;
+        cursor: pointer;
+    }
+`;
+
+const TextOuter = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 25px;
+`;
 
 export default PostEditForm;

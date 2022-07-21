@@ -21,6 +21,7 @@ const ContentWrapper = styled.div`
     flex-direction: column;
     margin-bottom: 100px;
     padding-left: 0;
+    text-align: center;
 `;
 
 const Title = styled.span`
@@ -29,6 +30,10 @@ const Title = styled.span`
     margin-top: 16px;
     margin-bottom: 23px;
     font-size: 37px;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        font-size: 25px;
+    }
 `;
 
 const Title1 = styled(Title)`
@@ -75,7 +80,7 @@ export const DescSection = () => {
         <DescWrapper>
             <InnerWrapper {...animatedItem[0]}>
                 <ContentWrapper>
-                    <Title1>커리큘럼에 따른 학습 기록</Title1>
+                    <Title1>커리큘럼 학습 기록</Title1>
                     <Description>
                         본인의 말로 학습한 내용을 기록해 보세요. 구글링으로 추가 학습한 내용이어도
                         좋아요. 더 오래, 더 잘 기억날거에요. 또, 기록으로 이전에 배운 내용을

@@ -16,12 +16,12 @@ function SingleComment({ commentData }) {
     const handlePost = async (e) => {
         e.preventDefault();
 
-        const recommentData = {
+        const RECOMMENT_DATA = {
             target: commentData,
             content: comment,
         };
 
-        postRecomment.mutate(recommentData);
+        postRecomment.mutate(RECOMMENT_DATA);
         setshowReplyInput(false);
         setComment("");
     };

@@ -62,3 +62,13 @@ export const useCreateNewPost = () => {
         onError: (err) => console.log("포스트 생성 실패ㅠㅠ", err),
     });
 };
+
+export const useUpdatePost = (id) => {
+    const queryClient = useQueryClient();
+    return useMutation(async (post) => await Api.put(`post/update/${id}`, post), {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+        },
+        onError: (err) => console.log("포스트 수정 실패ㅠㅠ", err),
+    });
+};
