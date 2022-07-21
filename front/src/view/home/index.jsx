@@ -54,7 +54,7 @@ const Container = styled.div`
 `;
 
 const ContentsSide = styled.div`
-    width: 17.5%;
+    width: 20%;
     background-color: white;
     display: flex;
     padding: 2% 1%;
@@ -64,5 +64,5 @@ const ContentsSide = styled.div`
 `;
 
 const Contents = styled.div`
-    width: 65%;
+    width: 60%;
 `;
