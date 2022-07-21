@@ -12,12 +12,12 @@ function CommentAddForm({ boardId }) {
     const handlePost = async (e) => {
         e.preventDefault();
 
-        const commentData = {
+        const COMMENT_DATA = {
             boardId,
             content: comment,
         };
 
-        postComment.mutate(commentData);
+        postComment.mutate(COMMENT_DATA);
         navigate(`/board/${boardId}`);
         setComment("");
     };

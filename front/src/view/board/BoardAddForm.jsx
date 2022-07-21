@@ -15,13 +15,13 @@ function BoardAddForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const boardData = {
+        const BOARD_DATA = {
             header,
             title,
             body,
         };
 
-        postBoard.mutate(boardData);
+        postBoard.mutate(BOARD_DATA);
         alert("게시글 등록을 성공하였습니다.");
         navigate(`/board`);
     };
