@@ -8,8 +8,6 @@ const TopContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100vw;
-    max-width: 100%;
     padding: 175px 0;
     background-color: #ffffff;
 `;
@@ -17,11 +15,12 @@ const TopContainer = styled.div`
 const TextWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     width: 100%;
-    max-width: 960px;
     float: left;
     margin: auto auto;
-    box-sizing: border-box;
+    padding: 0 3%;
 `;
 
 const Title = styled.span`
@@ -49,10 +48,16 @@ const CardWrapper = styled.div`
     z-index: 1;
     display: flex;
     margin: 0 auto;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        padding: 0 5%;
+        flex-direction: column;
+        align-items: center;
+    }
 `;
 
 const InnerWrapper = styled.div`
-    width: 458px;
+    width: 100%;
     height: 523px;
     margin: 14px 22px;
 `;

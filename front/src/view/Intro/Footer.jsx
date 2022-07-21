@@ -22,7 +22,8 @@ const FooterWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 126px;
+    justify-content: center;
+    padding: 0 3%;
     height: 500px;
 `;
 
@@ -40,12 +41,16 @@ const FooterText = styled.p`
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        font-size: 25px;
+    }
 `;
 
 const FooterLink = styled.div`
     display: flex;
     align-items: center;
-    font-size: 20px;
+    font-size: 16px;
     padding: 20px 30px;
     font-weight: bold;
     background: linear-gradient(90deg, #5438d1, #8938d1 60%);

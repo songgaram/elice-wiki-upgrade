@@ -1,5 +1,5 @@
 import GoogleIcon from "@mui/icons-material/Google";
-import styles from "view/Intro/Intro.module.css";
+import { PrimaryBtn } from "view/Intro/Intro.style";
 
 export const handleGoogleLogin = () => {
     const protocol = window.location.protocol;
@@ -15,9 +15,9 @@ export const handleGoogleLogin = () => {
 function OAuthButton() {
     return (
         <>
-            <div className={styles["primaryBtn"]} onClick={handleGoogleLogin}>
+            <PrimaryBtn onClick={handleGoogleLogin}>
                 <GoogleIcon sx={{ marginRight: "5px" }} /> 구글로 로그인하기
-            </div>
+            </PrimaryBtn>
         </>
     );
 }
