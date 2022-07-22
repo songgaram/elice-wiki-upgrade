@@ -30,6 +30,10 @@ const PostTitle = styled.div`
     font-size: 2rem;
     font-weight: 600;
     margin-top: 1%;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        font-size: 25px;
+    }
 `;
 
 export default Post;
