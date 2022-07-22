@@ -22,35 +22,37 @@ function UserHome() {
     if (status === "loading") return <Loader />;
 
     return (
-        <>
-            <div style={{ minHeight: "100vh", height: "auto" }}>
-                <WeekNav />
-                <Container>
-                    <ContentsSide>
-                        <div style={{ padding: "0 3%" }}>
-                            <TagBtn tags={tags} />
-                        </div>
-                    </ContentsSide>
-                    <Contents>
-                        <Outlet />
-                    </Contents>
-                    <ContentsSide>
-                        {goal && <Goal goal={goal} />}
-                        {/* <RecentList /> */}
-                    </ContentsSide>
-                </Container>
-            </div>
-        </>
+        <Container>
+            <WeekNav />
+            <PostContainer>
+                <ContentsSide>
+                    <div style={{ padding: "0 3%" }}>
+                        <TagBtn tags={tags} />
+                    </div>
+                </ContentsSide>
+                <Contents>
+                    <Outlet />
+                </Contents>
+                <ContentsSide>
+                    {goal && <Goal goal={goal} />}
+                    {/* <RecentList /> */}
+                </ContentsSide>
+            </PostContainer>
+        </Container>
     );
 }
 
 export default UserHome;
 
 const Container = styled.div`
+    width: 100%;
+    overflow-x: hidden;
+`;
+
+const PostContainer = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: calc(100vh - 100px);
 `;
 
 const ContentsSide = styled.div`
@@ -61,8 +63,20 @@ const ContentsSide = styled.div`
     text-align: center;
     flex-direction: column;
     align-items: center;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        display: none;
+    }
 `;
 
 const Contents = styled.div`
     width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        width: 100%;
+        padding: 0 3%;
+    }
 `;

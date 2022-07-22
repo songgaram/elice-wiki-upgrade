@@ -46,7 +46,9 @@ function Search() {
             {filteredList.length === 0 ? (
                 <span>검색 결과가 없습니다</span>
             ) : (
-                <SearchResult filteredList={filteredList} />
+                <ResultContainer>
+                    <SearchResult filteredList={filteredList} />
+                </ResultContainer>
             )}
         </SearchContainer>
     );
@@ -88,6 +90,22 @@ const StyledInput = styled.input`
 
     &:focus {
         border: 1.5px solid ${({ theme }) => theme.colors.primary};
+    }
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        width: 280px;
+    }
+`;
+
+const ResultContainer = styled.div`
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        width: 100%;
+        padding: 0 3%;
     }
 `;
 

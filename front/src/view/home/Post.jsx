@@ -20,7 +20,7 @@ function Post({ post, idx }) {
 
 const PostContainer = styled.div`
     width: 100%;
-    min-height: 30%;
+    height: 250px;
     padding: 40px 10% 10% 10%;
     border-top: ${(props) => (props.idx === 0 ? "none" : "1px solid #e1e1e1")};
     cursor: pointer;
@@ -30,6 +30,10 @@ const PostTitle = styled.div`
     font-size: 2rem;
     font-weight: 600;
     margin-top: 1%;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        font-size: 25px;
+    }
 `;
 
 export default Post;
