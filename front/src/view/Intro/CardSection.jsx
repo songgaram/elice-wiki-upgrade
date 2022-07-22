@@ -34,6 +34,10 @@ const Title = styled.span`
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        font-size: 35px;
+    }
 `;
 
 const Description = styled.span`
@@ -42,6 +46,10 @@ const Description = styled.span`
     line-height: 29px;
     color: rgb(107, 118, 132);
     white-space: pre-line;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        font-size: 12px;
+    }
 `;
 
 const CardWrapper = styled.div`
