@@ -30,8 +30,8 @@ const WeekNav = ({ setGoal }) => {
                             size="small"
                             variant={isClicked[idx] ? "contained" : "text"}
                             sx={{
-                                minWidth: "2.5%",
-                                maxHeight: "60%",
+                                minWidth: "35px",
+                                height: "20px",
                                 borderRadius: "30px",
                                 margin: "0 3px",
                             }}
@@ -44,24 +44,10 @@ const WeekNav = ({ setGoal }) => {
                             orientation="vertical"
                             variant="middle"
                             flexItem
+                            style={idx === 23 ? { display: "none" } : { display: "inline" }}
                         />
                     </>
                 ))}
-
-                {/* <Button
-                    value={24}
-                    variant={isClicked[24] ? "contained" : "text"}
-                    size="small"
-                    sx={{
-                        minWidth: "3%",
-                        maxHeight: "60%",
-                        borderRadius: "30px",
-                        margin: "0 3px",
-                    }}
-                    onClick={handleClick}
-                >
-                    기타
-                </Button> */}
             </NavContainer>
         </>
     );
@@ -69,13 +55,24 @@ const WeekNav = ({ setGoal }) => {
 
 const NavContainer = styled.div`
     width: 100%;
+    height: 40px;
+    padding: 0 30px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 40px;
     background-color: #f1f1f1;
     border-top: 5px solid #7353ea;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        justify-content: unset;
+        overflow: auto;
+        white-space: nowrap;
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    }
 `;
 
 export default WeekNav;
