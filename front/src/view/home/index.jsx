@@ -61,6 +61,10 @@ const ContentsSide = styled.div`
     text-align: center;
     flex-direction: column;
     align-items: center;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        display: none;
+    }
 `;
 
 const Contents = styled.div`
