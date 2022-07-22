@@ -25,12 +25,16 @@ const FooterWrapper = styled.div`
     justify-content: center;
     padding: 0 3%;
     height: 500px;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        height: 250px;
+    }
 `;
 
 const FooterText = styled.p`
     font-size: 48px;
-    margin-top: 75px;
-    margin-bottom: 40px;
+    margin-top: 50px;
+    margin-bottom: 10px;
     font-weight: 800;
     line-height: 1.3;
     text-align: center;
@@ -43,7 +47,7 @@ const FooterText = styled.p`
     }
 
     @media screen and ${({ theme }) => theme.breakPoint} {
-        font-size: 25px;
+        font-size: 18px;
     }
 `;
 
@@ -57,6 +61,10 @@ const FooterLink = styled.div`
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     cursor: pointer;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        font-size: 12px;
+    }
 `;
 
 export const Footer = () => {

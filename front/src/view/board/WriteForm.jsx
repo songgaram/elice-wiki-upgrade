@@ -29,35 +29,30 @@ function WriteForm({ title, setTitle, body, setBody, header, setHeader }) {
 
     return (
         <>
-            <FormControl sx={{ width: "20%", mt: 3 }}>
-                <Select
-                    displayEmpty
-                    value={header}
-                    onChange={handleChange}
-                    input={<OutlinedInput />}
-                    renderValue={(selected) => {
-                        if (selected?.length === 0) {
-                            return <em>머리말 선택</em>;
-                        }
+            <Select
+                style={{ minWidth: "150px", marginTop: "25px" }}
+                displayEmpty
+                value={header}
+                onChange={handleChange}
+                input={<OutlinedInput />}
+                renderValue={(selected) => {
+                    if (selected?.length === 0) {
+                        return <em>머리말 선택</em>;
+                    }
 
-                        return selected;
-                    }}
-                    inputProps={{ "aria-label": "Without label" }}
-                >
-                    <MenuItem disabled value="">
-                        <em>머리말을 선택하세요</em>
+                    return selected;
+                }}
+                inputProps={{ "aria-label": "Without label" }}
+            >
+                <MenuItem disabled value="">
+                    <em>머리말을 선택하세요</em>
+                </MenuItem>
+                {headers.map((header) => (
+                    <MenuItem key={header} value={header} style={getStyles(header, header, theme)}>
+                        {header}
                     </MenuItem>
-                    {headers.map((header) => (
-                        <MenuItem
-                            key={header}
-                            value={header}
-                            style={getStyles(header, header, theme)}
-                        >
-                            {header}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+                ))}
+            </Select>
 
             <Grid
                 sx={{
@@ -76,6 +71,7 @@ function WriteForm({ title, setTitle, body, setBody, header, setHeader }) {
             <Grid
                 sx={{
                     width: "100%",
+
                     marginBottom: "20px",
                 }}
             >
@@ -101,7 +97,9 @@ const TitleWrite = styled(TextareaAutosize)`
     font-size: 20px;
     width: 99%;
     resize: none;
-    padding: 3%;
+    padding: 12px;
+    box-sizing: border-box;
+
     &:hover {
         background-color: #f7f7f7;
     }
@@ -118,7 +116,9 @@ const Write = styled(TextareaAutosize)`
     border-radius: 10px;
     width: 99%;
     resize: none;
-    padding: 3%;
+    padding: 12px;
+    box-sizing: border-box;
+    max-height: 400px;
 
     &:hover {
         background-color: #f7f7f7;

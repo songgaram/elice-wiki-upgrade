@@ -44,7 +44,7 @@ const InnerWrapper = styled.div`
         color: rgb(0, 0, 0);
 
         @media screen and ${({ theme }) => theme.breakPoint} {
-            font-size: 55px;
+            font-size: 35px;
         }
     }
 `;
@@ -64,6 +64,10 @@ const Description = styled.div`
     text-align: center;
     margin-bottom: 3rem;
     color: #4a5056;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        font-size: 12px;
+    }
 `;
 
 const PrimaryBtn = styled.div`
@@ -96,6 +100,24 @@ const SubSection = styled.div`
 
 const SubDescription = styled.p`
     font-size: 32px;
+    font-weight: 700;
+    line-height: 1.6;
+    color: #000;
+    text-align: center;
+
+    span {
+        background: linear-gradient(90deg, #5438d1, #8938d1 60%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        font-size: 18px;
+    }
+`;
+
+const MediaSubDescription = styled.p`
+    font-size: 25px;
     font-weight: 700;
     line-height: 1.6;
     color: #000;
@@ -178,4 +200,5 @@ export {
     SubSection,
     SubDescription,
     ScrollDownArrow,
+    MediaSubDescription,
 };

@@ -20,6 +20,7 @@ const Intro = () => {
         0: useScrollFadeIn("up", 0.9, 0),
         1: useScrollFadeIn("up", 0.9, 0.1),
     };
+
     return (
         <MainContainer>
             <SectionOne>
@@ -52,9 +53,9 @@ const Intro = () => {
             </SectionOne>
             <SubSection>
                 <SubDescription {...animatedItem[1]}>
-                    자신의 학습을 기록하고, 다른 레이서들의 기록으로 함께 학습해보세요.
+                    자신의 학습을 기록하고, <br /> 다른 레이서들의 기록으로 함께 학습해보세요.
                     <br />
-                    <span>#elice-wiki</span>는 엘리스 AI 트랙에 참여하는 레이서들의
+                    <span>#elice-wiki</span>는 엘리스 AI 트랙 레이서들의
                     <br />
                     <span>지식 공동체</span>입니다.
                 </SubDescription>
