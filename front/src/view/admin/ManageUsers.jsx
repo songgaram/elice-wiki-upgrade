@@ -1,9 +1,9 @@
 import React from "react";
-import * as Api from "libs/api";
+import Api from "libs/api";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 import { Button, Pagination, Stack, Checkbox } from "@mui/material";
+import { useQueryClient } from "react-query";
 
 const ManageUsers = () => {
     const [data, setData] = React.useState();
@@ -12,7 +12,10 @@ const ManageUsers = () => {
     const [totalPage, setTotalPage] = React.useState();
     const height = useOutletContext();
     const perPage = Math.floor(height / 64.2) - 1 || 8;
-    const user = useSelector((state) => (state ? state.userReducer.user : undefined));
+
+    const queryClient = useQueryClient();
+    const { userState } = queryClient.getQueryData("userState");
+    const admin = userState?.payload?.admin;
 
     const getData = React.useCallback(async () => {
         const { data } = await Api.getQuery("users", `page=${page}&perPage=${perPage}`);
@@ -94,7 +97,7 @@ const ManageUsers = () => {
                         variant="outlined"
                         onClick={controller}
                         name="giveAdmin"
-                        disabled={user?.admin === 0 ? false : true}
+                        disabled={admin === 0 ? false : true}
                     >
                         어드민 권한부여
                     </Button>
@@ -102,7 +105,7 @@ const ManageUsers = () => {
                         variant="outlined"
                         onClick={controller}
                         name="takeAdmin"
-                        disabled={user?.admin === 0 ? false : true}
+                        disabled={admin === 0 ? false : true}
                     >
                         어드민 권한박탈
                     </Button>

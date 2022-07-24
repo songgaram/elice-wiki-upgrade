@@ -1,5 +1,5 @@
 import React from "react";
-import * as Api from "libs/api";
+import Api from "libs/api";
 import styled from "styled-components";
 import moment from "moment";
 import "moment/locale/ko";

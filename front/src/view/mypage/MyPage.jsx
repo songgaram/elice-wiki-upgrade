@@ -2,28 +2,26 @@ import React from "react";
 import MyInfo from "./MyInfo";
 import MyPostList from "./MyPostList";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import * as Api from "libs/api";
-import { useNavigate } from "react-router-dom";
-import Header from "view/Header";
-import { logoutUser } from "../../store/actions/userAction";
+import Loader from "components/Loader";
+import { useGetCurrentUser } from "queries/userQuery";
+import { useDeleteUserHandler } from "queries/userQuery";
 
 const MyPage = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const user = useSelector((state) => (state ? state.userReducer.user : undefined));
+    const deleteUserHandler = useDeleteUserHandler();
+
+    const { data, status } = useGetCurrentUser();
+    const user = data?.userState?.payload;
+
     const deleteAccount = async () => {
         if (window.confirm("정말 탈퇴하시겠습니까?")) {
-            await Api.delete("user/current");
-            alert("탈퇴가 완료되었습니다.");
-            dispatch(logoutUser(user));
-            navigate("/");
+            deleteUserHandler.mutate();
         }
     };
 
+    if (status === "loading") return <Loader />;
+
     return (
         <Wrapper>
-            <Header />
             <Logo>MyPage</Logo>
             <MyInfo user={user} />
             <MyPostList user={user} />
