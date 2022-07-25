@@ -3,15 +3,15 @@ import Api from "libs/api";
 import styled from "styled-components";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { Button, Pagination, Stack, Popover, Typography, Checkbox } from "@mui/material";
+import { useGetWholePostListPerPage, useDeletePost } from "queries/postQuery";
 
 const ManageUsers = () => {
-    const [data, setData] = React.useState(null);
     const [user, setUser] = React.useState(null);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [checkedList, setCheckedList] = React.useState([]);
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
-    const [totalPage, setTotalPage] = React.useState(null);
+
     const height = useOutletContext();
     const perPage = Math.floor(height / 64.2) - 1 || 8;
 
@@ -27,26 +27,18 @@ const ManageUsers = () => {
     const id = open ? "simple-popover" : undefined;
     const getUser = React.useCallback(async (userId) => {
         try {
-            const { data } = await Api.get("users", userId);
+            const { data } = await Api.get(`users/${userId}`);
             setUser(data.payload);
         } catch (e) {
             setUser(null);
             console.log(e);
         }
     });
-    const getData = React.useCallback(async () => {
-        try {
-            const { data } = await Api.getQuery("posts", `page=${page}&perPage=${perPage}`);
-            setData(data.payload?.postListInfo);
-            setTotalPage(data.payload?.totalPage);
-        } catch (e) {
-            console.log(e);
-        }
-    });
 
-    React.useEffect(() => {
-        getData();
-    }, [page]);
+    const deletePost = useDeletePost();
+    const res = useGetWholePostListPerPage(page, perPage);
+    const data = res?.data?.postListInfo;
+    const totalPage = res?.data?.totalPage;
 
     const checkAll = (e) => {
         if (e.target.checked) {
@@ -71,9 +63,8 @@ const ManageUsers = () => {
     const controller = async (e) => {
         const checkedIdString = checkedList.join(",");
         if (e.target.name === "deletePost") {
-            const { data } = await Api.delete("posts", checkedIdString);
-            alert(`${data.payload.success}개의 게시글이 삭제되었습니다.`);
-            getData();
+            deletePost.mutate(checkedIdString);
+            alert(`${checkedList.length}개의 게시글이 삭제되었습니다.`);
         }
         setCheckedList([]);
         document.getElementById("checkAll").checked = false;

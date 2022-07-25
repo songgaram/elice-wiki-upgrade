@@ -3,7 +3,12 @@ import { loginRequired } from "../middlewares/loginRequired";
 import { adminRequired } from "../middlewares/adminRequired";
 
 import { authController } from "../controller/authController.js";
+import imageUploader from "../middlewares/ImageUploader";
 const authRouter = Router();
+
+authRouter.post("/authimage", imageUploader.single('image'), (req, res) => {
+    res.send({ status: "success", payload: res.req.file.location })
+})
 
 //인증 질문을 새로 만듦
 authRouter.post("/auth", authController.newQuestion);

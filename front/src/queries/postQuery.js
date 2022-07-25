@@ -8,6 +8,14 @@ export const useGetWholePostList = () => {
     });
 };
 
+export const useGetWholePostListPerPage = (page, perPage) => {
+    return useQuery(["posts", page], async () => {
+        const res = await Api.get(`posts?page=${page}&perPage=${perPage}`);
+        const { postListInfo, totalPage } = res.data.payload;
+        return { postListInfo, totalPage }
+    });
+};
+
 export const useGetPostList = () => {
     const fetchPostList = async ({ pageParam = 1 }) => {
         const res = await Api.get(`posts?page=${pageParam}&perPage=4`);
@@ -70,5 +78,15 @@ export const useUpdatePost = (id) => {
             queryClient.invalidateQueries("posts");
         },
         onError: (err) => console.log("포스트 수정 실패ㅠㅠ", err),
+    });
+};
+
+export const useDeletePost = () => {
+    const queryClient = useQueryClient();
+    return useMutation(async (id) => await Api.delete(`posts/${id}`), {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+        },
+        onError: (err) => console.log("포스트 삭제 실패ㅠㅠ", err),
     });
 };
