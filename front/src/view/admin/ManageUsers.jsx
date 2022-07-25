@@ -5,11 +5,15 @@ import { useOutletContext } from "react-router-dom";
 import { Button, Pagination, Stack, Checkbox } from "@mui/material";
 import { useQueryClient } from "react-query";
 
+import { useGetUserList, useEditUsers, useDeleteUsers } from "queries/userQuery";
+
 const ManageUsers = () => {
-    const [data, setData] = React.useState();
+    const editUsers = useEditUsers();
+    const deleteUsers = useDeleteUsers();
+
     const [checkedList, setCheckedList] = React.useState([]);
     const [page, setPage] = React.useState(1);
-    const [totalPage, setTotalPage] = React.useState();
+
     const height = useOutletContext();
     const perPage = Math.floor(height / 64.2) - 1 || 8;
 
@@ -17,14 +21,10 @@ const ManageUsers = () => {
     const { userState } = queryClient.getQueryData("userState");
     const admin = userState?.payload?.admin;
 
-    const getData = React.useCallback(async () => {
-        const { data } = await Api.getQuery("users", `page=${page}&perPage=${perPage}`);
-        setData(data.payload.rows);
-        setTotalPage(Math.ceil(data.payload?.count / perPage));
-    });
-    React.useEffect(() => {
-        getData();
-    }, [page]);
+    const res = useGetUserList(page, perPage);
+    const data = res?.data?.userListInfo;
+    const totalPage = res?.data?.totalPage;
+
     const checkAll = (e) => {
         if (e.target.checked) {
             const idList = data.map((datum) => datum.__id);
@@ -48,25 +48,24 @@ const ManageUsers = () => {
     const controller = async (e) => {
         const checkedIdString = checkedList.join(",");
         if (e.target.name === "deleteUser") {
-            const { data } = await Api.delete("users", checkedIdString);
-            alert(`${data.payload.success}명의 유저가 탈퇴되었습니다.`);
-            getData();
+            deleteUsers.mutate(checkedIdString);
+            alert(`${checkedList.length}명의 유저가 탈퇴되었습니다.`);
         } else if (e.target.name === "giveAdmin") {
-            const { data } = await Api.put(`users/${checkedIdString}`, { admin: 1 });
-            alert(`${data.payload.length}명의 유저에게 어드민 권한을 부여했습니다.`);
-            getData();
+            const PUT_DATA = { userId: checkedIdString, data: { admin: 1 } };
+            editUsers.mutate(PUT_DATA);
+            alert(`${checkedList.length}명의 유저에게 어드민 권한을 부여했습니다.`);
         } else if (e.target.name === "takeAdmin") {
-            const { data } = await Api.put(`users/${checkedIdString}`, { admin: 2 });
-            alert(`${data.payload.length}명의 유저의 어드민 권한을 박탈했습니다.`);
-            getData();
+            const PUT_DATA = { userId: checkedIdString, data: { admin: 2 } };
+            editUsers.mutate(PUT_DATA);
+            alert(`${checkedList.length}명의 유저의 어드민 권한을 박탈했습니다.`);
         } else if (e.target.name === "auth") {
-            const { data } = await Api.put(`users/${checkedIdString}`, { authorized: true });
-            alert(`${data.payload.length}명의 유저가 인증되었습니다.`);
-            getData();
+            const PUT_DATA = { userId: checkedIdString, data: { authorized: true } };
+            editUsers.mutate(PUT_DATA);
+            alert(`${checkedList.length}명의 유저가 인증되었습니다.`);
         } else if (e.target.name === "cancleAuth") {
-            const { data } = await Api.put(`users/${checkedIdString}`, { authorized: false });
-            alert(`${data.payload.length}명의 유저의 인증을 취소하였습니다.`);
-            getData();
+            const PUT_DATA = { userId: checkedIdString, data: { authorized: false } };
+            editUsers.mutate(PUT_DATA);
+            alert(`${checkedList.length}명의 유저의 인증을 취소하였습니다.`);
         }
         setCheckedList([]);
         document.getElementById("checkAll").checked = false;

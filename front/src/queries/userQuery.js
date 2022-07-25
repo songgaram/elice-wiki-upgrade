@@ -2,8 +2,17 @@ import { useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import Api from "libs/api";
 
+export const useGetUserList = (page, perPage) => {
+    return useQuery(["users", page], async () => {
+        const res = await Api.get(`users?page=${page}&perPage=${perPage}`);
+        const userListInfo = res.data.payload.rows
+        const totalPage = res.data.payload.count
+        return { userListInfo, totalPage }
+    });
+};
+
 // userToken으로 현재 유저상태를 받아옴
-export function useGetCurrentUser() {
+export const useGetCurrentUser = () => {
     return useQuery(
         "userState",
         async () => {
@@ -60,7 +69,7 @@ export const useUserLoginHandler = () => {
 export const useDeleteUserHandler = () => {
     const navigate = useNavigate();
 
-    return useMutation(() => Api.delete("user/current"), {
+    return useMutation(async () => await Api.delete("user/current"), {
         onSuccess: () => {
             sessionStorage.removeItem("userToken");
             alert("탈퇴가 완료되었습니다.");
@@ -70,14 +79,40 @@ export const useDeleteUserHandler = () => {
     });
 };
 
-// 유저 정보 수정
+// 유저 이름 수정
 export const useEditUserInfo = () => {
     const queryClient = useQueryClient();
 
-    return useMutation((name) => Api.put("user/current", { name }), {
+    return useMutation(async (name) => await Api.put("user/current", { name }), {
         onSuccess: () => {
             queryClient.invalidateQueries("userState");
         },
         onError: (err) => console.log("수정 실패ㅠㅠ", err),
     });
 };
+
+// 유저 정보 수정
+export const useEditUsers = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation(async ({ userId, data }) => {
+        await Api.put(`users/${userId}`, data)
+    }, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("users");
+        },
+        onError: (err) => console.log("수정 실패ㅠㅠ", err),
+    });
+};
+
+// 유저 관리
+export const useDeleteUsers = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation(async (userId) => await Api.delete(`users/${userId}`), {
+        onSuccess: () => {
+            queryClient.invalidateQueries("users");
+        },
+        onError: (err) => console.log("삭제 실패", err),
+    })
+}
