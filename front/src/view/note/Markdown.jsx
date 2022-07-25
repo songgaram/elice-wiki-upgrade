@@ -47,9 +47,9 @@ const Mdfile = () => {
                         <Separator>·</Separator>
                         <EditedAt>{moment(info.updatedAt).format("YYYY-MM-DD HH:mm:ss")}</EditedAt>
                     </Information>
-                    <Button variant="contained" onClick={() => navigate("/editPost")}>
+                    <StyledBtn variant="contained" onClick={() => navigate("/editPost")}>
                         편집하기
-                    </Button>
+                    </StyledBtn>
                 </InfoWrapper>
                 <Content>
                     <Markdown>{post}</Markdown>
@@ -65,6 +65,12 @@ const TopContainer = styled.div`
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 4rem;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        width: 100%;
+        padding: 15px;
+        margin-top: 0;
+    }
 `;
 
 const HeadWrapper = styled.div`
@@ -79,6 +85,11 @@ const Title = styled.h1`
     font-weight: 700;
     margin-bottom: 2rem;
     word-break: keep-all;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        margin-bottom: 0;
+        font-size: 2rem;
+    }
 `;
 
 const Content = styled.div`
@@ -90,18 +101,33 @@ const Content = styled.div`
 `;
 
 const InfoWrapper = styled.div`
+    display: flex;
     align-items: center;
+    justify-content: space-between;
     font-size: 1rem;
     color: #495057;
-    display: flex;
-    justify-content: space-between;
     margin: 50px 0px 50px 0px;
+
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        font-size: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0 0 20px 0;
+
+        span {
+            font-size: 12px;
+        }
+    }
+`;
+
+const StyledBtn = styled(Button)`
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        font-size: 10px;
+    }
 `;
 
 const Information = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: -1.25rem;
+    margin: 10px 0;
 `;
 
 const EditedBy = styled.span`
