@@ -1,5 +1,4 @@
 import React from "react";
-import Api from "libs/api";
 import styled from "styled-components";
 import { useOutletContext } from "react-router-dom";
 import { Button, Pagination, Stack, Checkbox } from "@mui/material";
@@ -146,6 +145,7 @@ const ManageUsers = () => {
                                         <Td style={{ width: "34%" }}>{datum.__id}</Td>
                                         <Td style={{ width: "5%" }}>
                                             <img
+                                                alt="user profile"
                                                 src={datum.profile_img}
                                                 style={{ height: "100%" }}
                                                 onDoubleClick={() => {
