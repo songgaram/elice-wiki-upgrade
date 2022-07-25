@@ -53,6 +53,9 @@ const Logo = styled.div`
     margin-top: 70px;
     margin-left: 120px;
     user-select: none;
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        margin-left: 50px;
+    }
 `;
 
 export default MyPage;
