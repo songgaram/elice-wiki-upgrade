@@ -42,7 +42,6 @@ const MyInfo = ({ user }) => {
             <Image src={eliceprofile} alt="엘리스프로필" draggable="false" />
             <div
                 style={{
-                    width: "fit-content",
                     width: "308px",
                     height: "350px",
                     display: "flex",
