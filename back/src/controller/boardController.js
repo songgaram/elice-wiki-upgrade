@@ -101,5 +101,31 @@ class boardController {
       next(error);
     }
   }
+
+  static async deleteBoards(req, res, next) {
+    const boardIdList = req.params.boardId.split(",");
+    const deleteResult = { success: 0, failed: 0 };
+    Promise.all(
+      boardIdList.map(async (id) => {
+        try {
+          const result = await boardService.deleteBoard({ boardId: id });
+          if (result === 0) {
+            deleteResult.failed += 1;
+          } else {
+            deleteResult.success += 1;
+          }
+        } catch (error) {
+          next(error);
+        }
+      })
+    ).then(() => {
+      const body = {
+        status: "success",
+        payload: { ...deleteResult },
+      };
+      res.status(200).json(body);
+    });
+  }
 }
+
 export { boardController };

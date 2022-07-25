@@ -15,7 +15,9 @@ Api.interceptors.request.use(
     async (config) => {
         const userToken = sessionStorage.getItem("userToken");
 
-        if (config.url === "authimage") {
+        if (
+            config.url === "authimage"
+        ) {
             config.headers["Content-Type"] = "multipart/form-data";
             userToken && (config.headers["Authorization"] = `Bearer ${userToken}`);
 

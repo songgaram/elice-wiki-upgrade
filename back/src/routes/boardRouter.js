@@ -265,4 +265,10 @@ boardRouter.delete(
   boardController.deleteBoard
 );
 
+boardRouter.delete(
+  "/boardlist/:boardId",
+  loginRequired,
+  boardController.deleteBoards
+);
+
 export { boardRouter };

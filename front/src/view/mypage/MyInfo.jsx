@@ -2,6 +2,7 @@ import React from "react";
 import { Typography, Input, Button } from "@mui/material";
 import eliceprofile from "assets/images/eliceprofile.png";
 import { useEditUserInfo } from "queries/userQuery";
+import styled from "styled-components";
 
 const MyInfo = ({ user }) => {
     const [stashName, setStashName] = React.useState(null);
@@ -38,15 +39,9 @@ const MyInfo = ({ user }) => {
                 overflow: "hidden",
             }}
         >
-            <img
-                src={eliceprofile}
-                alt="엘리스프로필"
-                draggable="false"
-                style={{ height: "350px" }}
-            />
+            <Image src={eliceprofile} alt="엘리스프로필" draggable="false" />
             <div
                 style={{
-                    width: "fit-content",
                     width: "308px",
                     height: "350px",
                     display: "flex",
@@ -128,4 +123,12 @@ const MyInfo = ({ user }) => {
         </div>
     );
 };
+
+const Image = styled.img`
+    height: 350px;
+    @media screen and ${({ theme }) => theme.breakPoint} {
+        display: none;
+    }
+`;
+
 export default MyInfo;
