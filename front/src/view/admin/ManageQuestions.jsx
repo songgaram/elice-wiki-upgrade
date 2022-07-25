@@ -4,30 +4,29 @@ import styled from "styled-components";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { Button, Pagination, Stack, Checkbox } from "@mui/material";
 
+import { useGetAuthData, useDelAuthQuestion, usePutAuthQuestion } from "queries/authQuery";
+
 const ManageUsers = () => {
-    const [data, setData] = React.useState();
     const [checkedList, setCheckedList] = React.useState([]);
-    const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
-    const [totalPage, setTotalPage] = React.useState();
+    const navigate = useNavigate();
     const height = useOutletContext();
     const perPage = Math.floor(height / 64.2) - 1 || 8;
 
-    const getData = React.useCallback(async () => {
-        const { data } = await Api.getQuery("auths", `perPage=${perPage}&page=${page}`);
-        setData(data.payload.rows);
-        setTotalPage(Math.ceil(data.payload?.count / perPage));
-    });
+    const delAuthQuestion = useDelAuthQuestion();
+    const putAuthQuestion = usePutAuthQuestion();
+
+    const { data } = useGetAuthData(page, perPage);
+    const authData = data?.payload?.rows;
+    const totalPage = Math.ceil(data?.payload?.count / perPage);
+
     const pageHandler = (event, value) => {
         setPage(value);
     };
 
-    React.useEffect(() => {
-        getData();
-    }, [page]);
     const checkAll = (e) => {
         if (e.target.checked) {
-            const idList = data.map((datum) => datum.id);
+            const idList = authData.map((datum) => datum.id);
             setCheckedList(idList);
         } else {
             setCheckedList([]);
@@ -45,16 +44,15 @@ const ManageUsers = () => {
     const controller = async (e) => {
         const checkedIdString = checkedList.join(",");
         if (e.target.name === "deleteQuestion") {
-            await Api.delete("auth", checkedIdString);
+            delAuthQuestion.mutate(checkedIdString);
             alert(`질문을 삭제하였습니다.`);
-            getData();
         } else if (e.target.name === "setCurrentQuestion") {
             if (checkedList.length > 1) {
                 alert("현재 질문은 1개만 설정할 수 있습니다.");
             } else {
-                const { data } = await Api.put(`auth/${checkedList[0]}`, { current: true });
-                alert(`Id: ${data.payload.id}를 현재 질문으로 설정하였습니다.`);
-                getData();
+                const CURRENT_DATA = { current: true };
+                putAuthQuestion.mutate(checkedList[0], CURRENT_DATA);
+                alert(`Id: ${checkedList[0]}를 현재 질문으로 설정하였습니다.`);
             }
         } else if (e.target.name === "createNewQuestion") {
             navigate("/editquestion/new");
@@ -103,8 +101,8 @@ const ManageUsers = () => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {data &&
-                            data.map((datum, index) => {
+                        {authData &&
+                            authData.map((datum, index) => {
                                 return (
                                     <Tr
                                         key={`users/${index}`}

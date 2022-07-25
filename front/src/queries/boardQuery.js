@@ -1,11 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import Api from "libs/api";
 
-export const useGetBoardList = (page) => {
+export const useGetBoardList = (page, perPage) => {
     return useQuery(
         ["boards", page],
         async () => {
-            const res = await Api.get(`boardlist/pageinfo?page=${page}&perPage=8`);
+            const res = await Api.get(`boardlist/pageinfo?page=${page}&perPage=${perPage}`);
             return res.data;
         },
         { keepPreviousData: true },
@@ -42,6 +42,16 @@ export const usePostBoard = () => {
 export const useDeleteBoard = (id) => {
     const queryClient = useQueryClient();
     return useMutation(async () => await Api.delete(`boards/${id}`), {
+        onSuccess: () => {
+            queryClient.invalidateQueries("boards");
+        },
+        onError: (err) => console.log("게시글 삭제 실패ㅠㅠ", err),
+    });
+};
+
+export const useDeleteAdminBoard = () => {
+    const queryClient = useQueryClient();
+    return useMutation(async (id) => await Api.delete(`boardlist/${id}`), {
         onSuccess: () => {
             queryClient.invalidateQueries("boards");
         },

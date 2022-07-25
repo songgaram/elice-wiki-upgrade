@@ -1,12 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "@mui/material";
 import Api from "libs/api";
 import DOMPurify from "dompurify";
 import questionMark from "assets/images/questionMark.png";
 import rightArrow from "assets/images/rightArrow.png";
 import Default from "assets/images/Default.png";
 import Answer_the_question from "assets/images/Answer_the_question.png";
+
+import {
+    usePostAuthImage,
+    usePostAuthQuestion,
+    usePutAuthQuestion,
+    useGetAuthQuestion,
+} from "queries/authQuery";
 
 const QuestionEditor = () => {
     const navigate = useNavigate();
@@ -22,47 +30,56 @@ const QuestionEditor = () => {
         codeTooltip: false,
     });
 
-    const getCurrentQuestion = React.useCallback(async () => {
-        let { data } = await Api.get("auth", id);
-        data = data.payload;
-        setTitle(data.question);
-        setAnswer(data.answer);
-        setUrl(data.url);
-        setSource(data.source);
-        setValue({
-            url: data.url,
-            source: data.source,
-        });
-    });
+    const postAuthImage = usePostAuthImage();
+    const postAuthQuestion = usePostAuthQuestion();
+    const putAuthQuestion = usePutAuthQuestion();
 
+    const { data } = useGetAuthQuestion(id);
+    const DATA = data?.payload;
     React.useEffect(() => {
-        if (id !== "new") {
-            getCurrentQuestion();
-        }
+        setTitle(DATA?.question);
+        setAnswer(DATA?.answer);
+        setUrl(DATA?.url);
+        setSource(DATA?.source);
+        setValue({
+            url: DATA?.url,
+            source: DATA?.source,
+        });
     }, []);
 
     const onChangeHandler = (e) => {
-        if (e.target.id === "imgurl") {
-            setUrl(e.target.value);
-        } else if (e.target.id === "sourcecode") {
+        if (e.target.id === "sourcecode") {
             setSource(e.target.value);
         } else if (e.target.id === "title") {
             setTitle(e.target.value);
         } else if (e.target.id === "answer") {
             setAnswer(e.target.value);
+        } else if (e.target.id === "hidden-upload") {
+            const formdata = new FormData();
+            formdata.append("image", e.target.files[0]);
+
+            postAuthImage.mutate(formdata, {
+                onSuccess: (res) => setUrl(res?.data?.payload),
+            });
         }
     };
+
+    const onClickUpload = () => {
+        document.getElementById("hidden-upload").click();
+    };
+
     const clickHandler = () => {
         setValue({
             url,
             source,
         });
     };
-    const saveData = async () => {
+    const saveData = () => {
+        const questionData = { question: title, answer: answer, ...value };
         if (id === "new") {
-            await Api.post("auth", { question: title, answer: answer, ...value });
+            postAuthQuestion.mutate(questionData);
         } else {
-            await Api.put(`auth/${id}`, { question: title, answer: answer, ...value });
+            putAuthQuestion.mutate(id, questionData);
         }
         navigate("/admin/questions");
     };
@@ -98,6 +115,16 @@ const QuestionEditor = () => {
                         onChange={onChangeHandler}
                     />
                     <label for="imgurl">Img URL</label>
+                    <Button variant="outlined" onClick={onClickUpload}>
+                        파일선택
+                    </Button>
+                    <input
+                        type="file"
+                        id="hidden-upload"
+                        style={{ visibility: "hidden" }}
+                        accept="image/*"
+                        onChange={onChangeHandler}
+                    />
                     <div style={{ display: "inline-block", marginLeft: "10px" }}>
                         <img
                             src={questionMark}
@@ -110,17 +137,12 @@ const QuestionEditor = () => {
                             draggable="false"
                         />
                         <Tooltip show={tooltipShow.imgTooltip}>
-                            1. <strong>Image url</strong> from web (
-                            https://images.unsplash.com/photo-164... )<br />
-                            2. <strong>Image path</strong> ( assets/images/filename )
+                            Google Cloud Storage URL
+                            <br />
+                            Save in database.
                         </Tooltip>
                     </div>
-                    <Input
-                        id="imgurl"
-                        placeholder="Img URL"
-                        value={url}
-                        onChange={onChangeHandler}
-                    />
+                    <Input id="imgurl" placeholder="Img URL" value={url} disabled="true" />
 
                     <label for="sourcecode">Source Code</label>
                     <div style={{ display: "inline-block", marginLeft: "10px" }}>
@@ -160,11 +182,13 @@ const QuestionEditor = () => {
                         alt="ArrowRight Png"
                         style={{ width: "100px", WebkitUserSelect: "none" }}
                     />
-                    <Button onClick={clickHandler}>미리보기</Button>
-                    <Button onClick={saveData} style={{ marginTop: "5%" }}>
+                    <Button variant="outlined" onClick={clickHandler}>
+                        미리보기
+                    </Button>
+                    <Button variant="outlined" onClick={saveData} style={{ marginTop: "5%" }}>
                         저장하기
                     </Button>
-                    <Button onClick={abortChange} style={{ marginTop: "5%" }}>
+                    <Button variant="outlined" onClick={abortChange} style={{ marginTop: "5%" }}>
                         취소하기
                     </Button>
                 </MiddleWrapper>
@@ -259,12 +283,7 @@ const MiddleWrapper = styled.div`
         flex-direction: row;
     }
 `;
-const Button = styled.button`
-    width: 100px;
-    @media only screen and (max-width: 1000px) {
-        margin: 0 !important;
-    }
-`;
+
 const Img = styled.img`
     @media only screen and (max-width: 1000px) {
         display: none;
