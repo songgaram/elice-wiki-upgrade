@@ -6,16 +6,18 @@ import "moment/locale/ko";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { Button, Pagination, Stack, Popover, Typography, Checkbox } from "@mui/material";
 
+import { useGetBoardList, useDeleteAdminBoard } from "queries/boardQuery";
+
 const ManageUsers = () => {
-    const [data, setData] = React.useState(null);
     const [user, setUser] = React.useState(null);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [checkedList, setCheckedList] = React.useState([]);
     const navigate = useNavigate();
     const [page, setPage] = React.useState(1);
-    const [totalPage, setTotalPage] = React.useState(null);
     const height = useOutletContext();
     const perPage = Math.floor(height / 64.2) - 1 || 8;
+
+    const deleteBoard = useDeleteAdminBoard();
 
     const handleClick = (event) => {
         const userId = event.currentTarget.innerText;
@@ -29,7 +31,7 @@ const ManageUsers = () => {
     const id = open ? "simple-popover" : undefined;
     const getUser = React.useCallback(async (userId) => {
         try {
-            const { data } = await Api.get("users", userId);
+            const { data } = await Api.get(`users/${userId}`);
             setUser(data.payload);
         } catch (e) {
             setUser(null);
@@ -37,22 +39,9 @@ const ManageUsers = () => {
         }
     });
 
-    const getData = React.useCallback(async () => {
-        try {
-            const { data } = await Api.getQuery(
-                "boardlist/pageinfo",
-                `page=${page}&perPage=${perPage}`,
-            );
-            setData(data.payload?.boardList);
-            setTotalPage(data.payload?.totalPage);
-        } catch (e) {
-            console.log(e);
-        }
-    });
-
-    React.useEffect(() => {
-        getData();
-    }, [page]);
+    const BOARD_DATA = useGetBoardList(page, perPage);
+    const data = BOARD_DATA?.data?.payload?.boardList;
+    const totalPage = BOARD_DATA?.data?.payload?.totalPage;
 
     const checkAll = (e) => {
         if (e.target.checked) {
@@ -77,9 +66,8 @@ const ManageUsers = () => {
     const controller = async (e) => {
         const checkedIdString = checkedList.join(",");
         if (e.target.name === "deletePost") {
-            const { data } = await Api.delete("posts", checkedIdString);
-            alert(`${data.payload.success}개의 게시글이 삭제되었습니다.`);
-            getData();
+            deleteBoard.mutate(checkedIdString);
+            alert(`${checkedList.length}개의 게시글이 삭제되었습니다.`);
         }
         setCheckedList([]);
         document.getElementById("checkAll").checked = false;
