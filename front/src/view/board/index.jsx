@@ -23,14 +23,13 @@ import { useMediaQuery } from "react-responsive";
 import { useTheme } from "styled-components";
 
 import { useGetBoardList } from "queries/boardQuery";
-import { TheatersOutlined } from "@mui/icons-material";
 
 function Board() {
     const navigate = useNavigate();
 
     const [page, setPage] = useState(1);
-
-    const { data, status } = useGetBoardList(page);
+    const perPage = 8;
+    const { data, status } = useGetBoardList(page, perPage);
     const boardList = data?.payload?.boardList;
     const totalPage = data?.payload?.totalPage;
 
