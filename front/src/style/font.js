@@ -1,11 +1,24 @@
 import { css } from "styled-components";
 
 const font = css`
-    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+    body,
+    button,
+    input,
+    textarea {
+        font-family: "Elice Digital Baeum", sans-serif;
+        font-feature-settings: "tnum";
+        color: #333;
+        letter-spacing: -0.05em;
+    }
 
-    * {
-        font-family: "Pretendard", sans-serif;
-        line-height: 1.5;
+    input {
+        font-feature-settings: "tnum";
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            margin: 0;
+            appearance: none;
+        }
     }
 `;
 

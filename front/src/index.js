@@ -25,6 +25,9 @@ const muiTheme = createTheme({
             main: "#333333",
         },
     },
+    typography: {
+        fontFamily: "'Elice Digital Baeum', sans-serif",
+    },
 });
 
 const container = document.getElementById("root");
