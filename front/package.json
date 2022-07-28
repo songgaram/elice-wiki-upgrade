@@ -1,62 +1,62 @@
 {
-  "name": "front",
-  "version": "0.1.0",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
-  "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
-    "@mui/icons-material": "^5.8.0",
-    "@mui/material": "^5.8.1",
-    "@mui/styles": "^5.8.0",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.2.0",
-    "@testing-library/user-event": "^14.2.0",
-    "@toast-ui/editor": "^3.1.7",
-    "@toast-ui/editor-plugin-code-syntax-highlight": "^3.0.0",
-    "@toast-ui/react-editor": "^3.1.7",
-    "axios": "^0.27.2",
-    "dompurify": "^2.3.8",
-    "markdown-to-jsx": "^7.1.7",
-    "moment": "^2.29.3",
-    "prismjs": "^1.28.0",
-    "react": "^18.0.0",
-    "react-bootstrap": "^2.4.0",
-    "react-dom": "^18.1.0",
-    "react-icons": "^4.3.1",
-    "react-intersection-observer": "^9.3.5",
-    "react-query": "^3.39.1",
-    "react-responsive": "^9.0.0-beta.10",
-    "react-router-dom": "6",
-    "react-scripts": "5.0.1",
-    "recoil": "^0.7.3-alpha.2",
-    "styled-components": "^5.3.5",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "front",
+    "version": "0.1.0",
+    "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+    "main": "index.js",
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "@emotion/react": "^11.9.0",
+        "@emotion/styled": "^11.8.1",
+        "@mui/icons-material": "^5.8.0",
+        "@mui/material": "^5.8.1",
+        "@mui/styles": "^5.8.0",
+        "@testing-library/jest-dom": "^5.16.4",
+        "@testing-library/react": "^13.2.0",
+        "@testing-library/user-event": "^14.2.0",
+        "@toast-ui/editor": "^3.1.7",
+        "@toast-ui/editor-plugin-code-syntax-highlight": "^3.0.0",
+        "@toast-ui/react-editor": "^3.1.7",
+        "axios": "^0.27.2",
+        "dompurify": "^2.3.8",
+        "markdown-to-jsx": "^7.1.7",
+        "moment": "^2.29.3",
+        "prismjs": "^1.28.0",
+        "react": "^18.0.0",
+        "react-bootstrap": "^2.4.0",
+        "react-dom": "^18.1.0",
+        "react-icons": "^4.3.1",
+        "react-intersection-observer": "^9.3.5",
+        "react-query": "^3.39.1",
+        "react-responsive": "^9.0.0-beta.10",
+        "react-router-dom": "6",
+        "react-scripts": "5.0.1",
+        "recoil": "^0.7.3-alpha.2",
+        "styled-components": "^5.3.5",
+        "web-vitals": "^2.1.4"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "GENERATE_SOURCEMAP=false react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
 }
