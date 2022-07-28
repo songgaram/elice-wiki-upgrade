@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+    frontend_server:
+        restart: "on-failure"
+        build:
+            context: "./front"
+            dockerfile: Dockerfile
+        container_name: "react-elice-wiki-app"
+        ports:
+            - 80:80
+        links:
+            - backend_server
+
+    backend_server:
+        restart: "on-failure"
+        build:
+            context: "./back"
+            dockerfile: Dockerfile
+        container_name: "node-elice-wiki-app"
+        ports:
+            - 5000:5000
