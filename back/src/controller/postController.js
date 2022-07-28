@@ -1,4 +1,5 @@
 import { postService } from "../services/postService";
+import { tagService } from "../services/tagService";
 import { userService } from "../services/userService";
 
 class postController {
@@ -124,8 +125,10 @@ class postController {
         const deleteResult = { success: 0, failed: 0 };
         Promise.all(
             postIdList.map(async (id) => {
+
                 try {
                     const result = await postService.deletePost({ postId: id });
+                    await tagService.deleteTag(id);
                     if (result === 0) {
                         deleteResult.failed += 1;
                     } else {
