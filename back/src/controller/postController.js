@@ -81,6 +81,7 @@ class postController {
         try {
             const postId = req.params.id;
             const userId = req.currentUser.userId;
+            await tagService.deleteTag(postId);
             const getUser = await userService.findUser({
                 userId,
             });
