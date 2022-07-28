@@ -52,6 +52,12 @@ class tagModel {
             payload: tagList,
         };
     }
+
+    static async deleteTag(postId) {
+        await models.Tag.destroy({
+            where: { post_id: postId },
+        })
+    }
 }
 
 export { tagModel };

@@ -10,5 +10,9 @@ class tagService {
         const tags = await tagModel.getAllTag();
         return tags;
     }
+
+    static async deleteTag(postId) {
+        await tagModel.deleteTag(postId);
+    }
 }
 export { tagService };
