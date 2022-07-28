@@ -16,10 +16,12 @@ import { useSetRecoilState, useRecoilValue } from "recoil";
 import { infoAtom, postAtom, tagAtom, titleAtom, weekAtom } from "state/atoms";
 
 import { useUpdatePost } from "queries/postQuery";
+import { useEffect } from "react";
 
 function PostEditForm() {
     const info = useRecoilValue(infoAtom);
     const post = useRecoilValue(postAtom);
+    const tags = info?.tag?.slice(1).split("#");
 
     const setTitle = useSetRecoilState(titleAtom);
     const setTag = useSetRecoilState(tagAtom);
@@ -30,7 +32,7 @@ function PostEditForm() {
     // onChange로 관리할 해시태그 문자열
     const [curHashtag, setCurHashtag] = useState("");
     // 해시태그를 담을 배열
-    const [curTag, setCurTag] = useState([info.tag]);
+    const [curTag, setCurTag] = useState(tags);
 
     const [curWeek, setCurWeek] = useState(info.week);
 
@@ -89,6 +91,26 @@ function PostEditForm() {
             setCurTag(curTag.filter((hashtag) => hashtag));
         });
     };
+
+    const loadTags = () => {
+        const $HashWrapOuter = document.querySelector(".HashWrapOuter");
+        if (curTag) {
+            curTag.map((tag) => {
+                const $HashWrapInner = document.createElement("div");
+                $HashWrapInner.className = "HashWrapInner";
+                $HashWrapInner.innerHTML = tag;
+                $HashWrapOuter.appendChild($HashWrapInner);
+                $HashWrapInner.addEventListener("click", () => {
+                    $HashWrapOuter?.removeChild($HashWrapInner);
+                    setCurTag(curTag.filter((hashtag) => hashtag));
+                });
+            });
+        }
+    };
+
+    useEffect(() => {
+        loadTags();
+    }, []);
 
     return (
         <>
