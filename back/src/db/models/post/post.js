@@ -4,7 +4,7 @@ const Op = Sequelize.Op;
 
 const getTagList = (tagString) => {
     // find 동작 시 post의 태그를 리스트로 변환
-    const tagList = tagString.replaceAll("#", " ").trim().split(" ");
+    const tagList = tagString.slice(1).split("#");
     return tagList;
 };
 
