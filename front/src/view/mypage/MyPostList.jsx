@@ -1,6 +1,8 @@
 import React from "react";
-import { CreateRounded, LibraryBooksRounded, CommentRounded } from "@mui/icons-material";
+import { BsFillPencilFill } from "react-icons/bs";
+import { IoIosPaper } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { BiCommentDetail } from "react-icons/bi";
 import styled from "styled-components";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
@@ -114,7 +116,7 @@ const MyPostList = ({ user }) => {
                             )
                         }
                     >
-                        <CreateRounded sx={{ fontSize: "3rem" }} />
+                        <BsFillPencilFill size="2.5rem" />
                         <Typo>포스팅</Typo>
                         <TypoExp>내가 작성한 포스트</TypoExp>
                     </AccordionSummary>
@@ -187,7 +189,7 @@ const MyPostList = ({ user }) => {
                             )
                         }
                     >
-                        <LibraryBooksRounded sx={{ fontSize: "3rem" }} />
+                        <IoIosPaper size="2.5rem" />
                         <Typo>게시판</Typo>
                         <TypoExp>내가 작성한 게시글</TypoExp>
                     </AccordionSummary>
@@ -260,7 +262,7 @@ const MyPostList = ({ user }) => {
                             )
                         }
                     >
-                        <CommentRounded sx={{ fontSize: "3rem" }} />
+                        <BiCommentDetail size="2.5rem" />
                         <Typo>댓글</Typo>
                         <TypoExp>내가 작성한 댓글</TypoExp>
                     </AccordionSummary>

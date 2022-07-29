@@ -8,8 +8,8 @@ import {
     IconButton,
     Button,
 } from "@mui/material/";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { AiTwotoneEdit } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 import { useDeleteBoard } from "queries/boardQuery";
 
 function BoardContents({ setIsEditing, isEditable, boardData }) {
@@ -49,10 +49,10 @@ function BoardContents({ setIsEditing, isEditable, boardData }) {
                                 onClick={() => setIsEditing(true)}
                                 sx={{ marginLeft: "auto" }}
                             >
-                                <EditIcon />
+                                <AiTwotoneEdit />
                             </IconButton>
                             <IconButton onClick={() => handleDelete()}>
-                                <DeleteIcon />
+                                <AiFillDelete />
                             </IconButton>
                         </>
                     )}

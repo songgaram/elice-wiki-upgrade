@@ -1,4 +1,4 @@
-import GoogleIcon from "@mui/icons-material/Google";
+import { BsGoogle } from "react-icons/bs";
 import { PrimaryBtn } from "view/Intro/Intro.style";
 
 export const handleGoogleLogin = () => {
@@ -16,7 +16,7 @@ function OAuthButton() {
     return (
         <>
             <PrimaryBtn onClick={handleGoogleLogin}>
-                <GoogleIcon sx={{ marginRight: "5px" }} /> 구글로 로그인하기
+                <BsGoogle style={{ marginRight: "10px" }} /> 구글로 로그인하기
             </PrimaryBtn>
         </>
     );

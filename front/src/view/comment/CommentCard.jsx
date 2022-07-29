@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 import { useNavigate } from "react-router";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { AiFillDelete } from "react-icons/ai";
 import { useDeleteComment } from "queries/commentQuery";
 import { useQueryClient } from "react-query";
 import styled from "styled-components";
@@ -41,7 +41,7 @@ function CommentCard({ commentData, onReplyClick, setshowReplyInput }) {
                 {isEditable && (
                     <IconContainer>
                         <IconButton onClick={handleDelete}>
-                            <DeleteIcon />
+                            <AiFillDelete />
                         </IconButton>
                     </IconContainer>
                 )}
