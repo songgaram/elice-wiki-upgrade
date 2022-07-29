@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Button, IconButton, Menu, MenuItem } from "@mui/material";
 import { HeaderWrapper, HeaderContainer, NavList } from "./header.style";
-import SearchIcon from "@mui/icons-material/Search";
+import { BiSearchAlt2 } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import logo_large from "assets/images/logo_large.png";
 import { useQueryClient } from "react-query";
-
 import { useMediaQuery } from "react-responsive";
 import { useTheme } from "styled-components";
 
@@ -64,7 +63,7 @@ function Header() {
                                 onClick={handleSearchNavigate}
                                 color="inherit"
                             >
-                                <SearchIcon color="black" />
+                                <BiSearchAlt2 />
                             </IconButton>
 
                             <Button color="black" onClick={() => navigate("/board")}>
@@ -127,7 +126,7 @@ function Header() {
                                 onClick={handleSearchNavigate}
                                 color="inherit"
                             >
-                                <SearchIcon color="black" />
+                                <BiSearchAlt2 />
                             </IconButton>
 
                             <IconButton

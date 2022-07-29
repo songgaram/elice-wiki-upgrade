@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import SearchIcon from "@mui/icons-material/Search";
+import { BiSearchAlt2 } from "react-icons/bi";
 import { useGetWholePostList } from "queries/postQuery";
 import { postList, filteredSearchList } from "./state";
 import useDebounce from "./useDebounce";
@@ -39,7 +39,7 @@ function Search() {
                     autoComplete="off"
                 />
                 <span type="submit">
-                    <SearchIcon fontSize="large" />
+                    <BiSearchAlt2 size="30" />
                 </span>
             </InputBox>
 
@@ -71,7 +71,7 @@ const InputBox = styled.div`
 
     span {
         position: absolute;
-        top: 15px;
+        top: 18px;
         right: 20px;
         font-size: 20px;
         cursor: pointer;

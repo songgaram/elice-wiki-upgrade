@@ -15,7 +15,7 @@ import {
     Stack,
     Pagination,
 } from "@mui/material";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
+import { AiTwotoneEdit } from "react-icons/ai";
 import Spinner from "components/Spinner";
 import styled from "styled-components";
 
@@ -76,7 +76,7 @@ function Board() {
                                     자유게시판
                                 </span>
                                 <IconButton onClick={() => navigate("/board/create")}>
-                                    <BorderColorIcon />
+                                    <AiTwotoneEdit />
                                 </IconButton>
                             </ListSubheader>
                         </List>
@@ -155,7 +155,7 @@ function Board() {
                         <Header>
                             <span>자유게시판</span>
                             <IconButton onClick={() => navigate("/board/create")}>
-                                <BorderColorIcon />
+                                <AiTwotoneEdit />
                             </IconButton>
                         </Header>
                         <TableContainer component={Paper} variant="outlined">
