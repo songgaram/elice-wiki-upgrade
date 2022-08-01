@@ -7,7 +7,7 @@ const SERVER_URL = `http://${window.location.hostname}:${SERVER_PORT_NUMBER}/`;
 // axios 생성
 const Api = axios.create({
     baseURL: SERVER_URL, // 데이터를 요청할 기본 주소
-    timeout: 5000,
+    timeout: 60000,
 });
 
 // axios request 처리
@@ -15,9 +15,7 @@ Api.interceptors.request.use(
     async (config) => {
         const userToken = sessionStorage.getItem("userToken");
 
-        if (
-            config.url === "authimage"
-        ) {
+        if (config.url === "authimage") {
             config.headers["Content-Type"] = "multipart/form-data";
             userToken && (config.headers["Authorization"] = `Bearer ${userToken}`);
 
