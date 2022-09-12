@@ -31,7 +31,6 @@ const ManageUsers = () => {
             setUser(data.payload);
         } catch (e) {
             setUser(null);
-            console.log(e);
         }
     });
 

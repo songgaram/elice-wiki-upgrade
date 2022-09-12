@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-const WeekNav = ({ setGoal }) => {
+const WeekNav = () => {
     const [isClicked, setIsClicked] = useState(new Array(25).fill(false));
     const navigate = useNavigate();
+    const params = useParams();
+    const WEEK = params.week;
+
+    useEffect(() => {
+        const newArr = new Array(25).fill(false);
+        newArr[WEEK - 1] = !newArr[WEEK - 1];
+        setIsClicked(newArr);
+    }, [WEEK]);
 
     const handleClick = (e) => {
         const newArr = new Array(25).fill(false);

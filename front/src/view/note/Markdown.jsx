@@ -19,7 +19,6 @@ const Mdfile = () => {
         try {
             const { data } = await Api.get(`post/id/${postId}`);
             setInfo(data.payload);
-            // console.log(data.payload);
         } catch (error) {
             console.log(error);
         }
