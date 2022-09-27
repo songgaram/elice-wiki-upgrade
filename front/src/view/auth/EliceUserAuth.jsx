@@ -5,7 +5,7 @@ import styled from "styled-components";
 import DOMPurify from "dompurify";
 import Spinner from "components/Spinner";
 import { usePostAuthAnswer } from "queries/userQuery";
-import { useGetAuthData } from "queries/authQuery";
+import { useGetAuthQuestion } from "queries/authQuery";
 import { useQueryClient } from "react-query";
 
 const EliceUserAuth = () => {
@@ -17,8 +17,8 @@ const EliceUserAuth = () => {
     const { userState } = queryClient.getQueryData("userState");
     const authorized = userState?.payload?.authorized;
 
-    const { data, status } = useGetAuthData();
-    const { url, source } = data?.authData?.payload || {};
+    const { data, status } = useGetAuthQuestion();
+    const { url, source } = data?.payload || {};
 
     const postAuthAnswer = usePostAuthAnswer();
 

@@ -8,9 +8,9 @@ export const useGetAuthData = (page, perPage) => {
     });
 };
 
-export const useGetAuthQuestion = (id) => {
-    return useQuery(["question", id], async () => {
-        const res = await Api.get(`auth/${id}`);
+export const useGetAuthQuestion = () => {
+    return useQuery(["question"], async () => {
+        const res = await Api.get("auth");
         return res.data;
     });
 };
