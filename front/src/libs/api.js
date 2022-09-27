@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const SERVER_PORT_NUMBER = 5000;
+const SERVER_PORT_NUMBER = 5001;
 const SERVER_URL = `http://${window.location.hostname}:${SERVER_PORT_NUMBER}/`;
 
 // axios 생성
