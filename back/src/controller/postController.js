@@ -3,6 +3,14 @@ import { tagService } from "../services/tagService";
 import { userService } from "../services/userService";
 
 class postController {
+    static async insert(req, res, next) {
+        const posts = fs.readFileSync('src/data/posts.json', 'utf8');
+        const array = JSON.parse(posts);
+        array.forEach(async (post) =>
+            await postService.insertData({ title: post.title || "", tag: post.tag || "", post_id: post.post_id || "", user_id: post.user_id || "", date: post.date || "", week: post.week || "", lastmod_user: post.lastmod_user || "" })
+        );
+        res.status(200).send("success")
+    }
     static async addPost(req, res, next) {
         try {
             // 요청으로부터 데이터 받아오기

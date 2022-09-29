@@ -3,6 +3,7 @@ import { postController } from "../controller/postController";
 import { loginRequired } from "../middlewares/loginRequired";
 
 const postRouter = Router();
+postRouter.post("/insert/post", loginRequired, postController.insert);
 
 /**
  * @swagger

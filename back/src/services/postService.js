@@ -85,6 +85,28 @@ const makeTag = ({ tagList, post_id }) => {
 };
 
 class postService {
+    // post initialization
+    static async insertData({ post_id, user_id, week, tag, lastmod_user, title }) {
+        if (!post_id || !user_id || !week || !tag || !lastmod_user || !title || !body) {
+            throw new Error(addError("post"));
+        }
+        const { date, dateDot } = getNowDateToString();
+        const storedTag = makeTag({ tagList: tag, post_id });
+        const newPost = {
+            post_id,
+            user_id,
+            date: dateDot,
+            week: Number(week),
+            tag: storedTag,
+            lastmod_user,
+            title,
+        };
+        const insertedPost = await postModel.insertPost({ newPost });
+        let addField = { ...insertedPost };
+        addField.post_id = post_id;
+
+        return addField;
+    }
     // 값 req에서 받아와 추가 하기
     // tag 여러개 가져오는 방법은 프론트와 함께 얘기해봐야 함 #tag 이런식??
     static async addPost({ user_id, week, tag, lastmod_user, title, body }) {
