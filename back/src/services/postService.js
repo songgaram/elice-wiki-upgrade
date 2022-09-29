@@ -87,7 +87,7 @@ const makeTag = ({ tagList, post_id }) => {
 class postService {
     // post initialization
     static async insertData({ post_id, user_id, week, tag, lastmod_user, title }) {
-        if (!post_id || !user_id || !week || !tag || !lastmod_user || !title || !body) {
+        if (!post_id || !user_id || !week || !tag || !lastmod_user || !title) {
             throw new Error(addError("post"));
         }
         const { date, dateDot } = getNowDateToString();
