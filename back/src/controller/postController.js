@@ -1,6 +1,7 @@
 import { postService } from "../services/postService";
 import { tagService } from "../services/tagService";
 import { userService } from "../services/userService";
+import fs from 'fs';
 
 class postController {
     static async insert(req, res, next) {
