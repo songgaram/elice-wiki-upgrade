@@ -202,7 +202,7 @@ class postService {
             throw new Error(addError("post"));
         }
 
-        writePost(postId, body);
+        // writePost(postId, body);
 
         const getTag = makeTag({ tagList: tag, post_id: postId });
         const update = {
@@ -211,6 +211,7 @@ class postService {
             week,
             tag: getTag,
             title,
+            body
         };
         const updatePost = await postModel.updatePost({ postId, update });
         return updatePost;
