@@ -12,29 +12,29 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
 
-const writePost = (postId, body) => {
-    const pwd = process.env.PWD;
-    // post  추가 시 content를 파일로 만들어 폴더에 저장
-    const savePath_post = `${pwd}/../front/src/_post`;
-    const exist_post = fs.existsSync(savePath_post);
-    if (!exist_post) {
-        fs.mkdirSync(savePath_post);
-    }
+// const writePost = (postId, body) => {
+//     const pwd = process.env.PWD;
+//     // post  추가 시 content를 파일로 만들어 폴더에 저장
+//     const savePath_post = `${pwd}/../front/src/_post`;
+//     const exist_post = fs.existsSync(savePath_post);
+//     if (!exist_post) {
+//         fs.mkdirSync(savePath_post);
+//     }
 
-    // front/src/_post에 md파일이 저장된다
-    fs.writeFile(
-        `${savePath_post}/${postId}.md`,
-        "\ufeff" + body,
-        {
-            encoding: "utf-8",
-        },
-        (err, data) => {
-            if (err) {
-                console.log(err);
-            }
-        }
-    );
-};
+//     // front/src/_post에 md파일이 저장된다
+//     fs.writeFile(
+//         `${savePath_post}/${postId}.md`,
+//         "\ufeff" + body,
+//         {
+//             encoding: "utf-8",
+//         },
+//         (err, data) => {
+//             if (err) {
+//                 console.log(err);
+//             }
+//         }
+//     );
+// };
 
 const getNowDateToString = () => {
     // 현재 시간을 받아오기
@@ -86,7 +86,7 @@ const makeTag = ({ tagList, post_id }) => {
 
 class postService {
     // post initialization
-    static async insertData({ post_id, user_id, week, tag, lastmod_user, title }) {
+    static async insertData({ post_id, user_id, week, tag, lastmod_user, title, body }) {
         if (!post_id || !user_id || !week || !tag || !lastmod_user || !title) {
             throw new Error(addError("post"));
         }
@@ -100,6 +100,7 @@ class postService {
             tag: storedTag,
             lastmod_user,
             title,
+            body
         };
         const insertedPost = await postModel.insertPost({ newPost });
         let addField = { ...insertedPost };
@@ -118,11 +119,11 @@ class postService {
 
         const { date, dateDot } = getNowDateToString();
         const post_id = uuidv4();
-        const createFile = writePost(post_id, body);
+        // const createFile = writePost(post_id, body);
 
-        if (createFile === "error") {
-            throw new Error("create file error");
-        }
+        // if (createFile === "error") {
+        //     throw new Error("create file error");
+        // }
 
         // tag 테이블에 추가하기
         const storedTag = makeTag({ tagList: tag, post_id });
@@ -135,6 +136,7 @@ class postService {
             tag: storedTag,
             lastmod_user,
             title,
+            body
         };
         const insertedPost = await postModel.insertPost({ newPost });
         let addField = { ...insertedPost };

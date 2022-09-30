@@ -47,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
             tag: { type: DataTypes.STRING, allowNull: false },
             title: { type: DataTypes.STRING, allowNull: false },
             lastmod_user: { type: DataTypes.STRING, allowNull: false },
+            body: { type: DataTypes.STRING, allowNull: false },
         },
         {
             sequelize,
