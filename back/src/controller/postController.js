@@ -5,12 +5,29 @@ import fs from 'fs';
 
 class postController {
     static async insert(req, res, next) {
-        const posts = fs.readFileSync('src/data/posts.json', 'utf8');
-        const array = JSON.parse(posts);
-        array.forEach(async (post) =>
-            await postService.insertData({ title: post.title || "", tag: post.tag || "", post_id: post.post_id || "", user_id: post.user_id || "", date: post.date || "", week: post.week || "", lastmod_user: post.lastmod_user || "" })
-        );
-        res.status(200).send("success")
+        try {
+            const user_id = req.currentUser.userId;
+            const getUser = await userService.findUser({
+                userId: user_id,
+            });
+            const lastmod_user = getUser.name;
+
+            const posts = fs.readFileSync('src/data/posts.json', 'utf8');
+            const array = JSON.parse(posts);
+            array.forEach(async (post) => {
+                await postService.addPost({
+                    user_id,
+                    week: post.week,
+                    tag: post.tag,
+                    body: post.body,
+                    lastmod_user,
+                    title: post.title,
+                });
+            }
+            );
+            res.status(200).send("success")
+        }
+        catch (err) { next(err); }
     }
     static async addPost(req, res, next) {
         try {
