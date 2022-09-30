@@ -19,20 +19,21 @@ const Mdfile = () => {
         try {
             const { data } = await Api.get(`post/id/${postId}`);
             setInfo(data.payload);
+            setPost(data.payload.body);
         } catch (error) {
             console.log(error);
         }
     };
     useEffect(() => {
         fetchboardsInfo();
-        import(`_post/${postId}.md`)
-            .then((res) => {
-                fetch(res.default)
-                    .then((res) => res.text())
-                    .then((res) => setPost(res))
-                    .catch((err) => console.log(err));
-            })
-            .catch((err) => console.log(err));
+        // import(`_post/${postId}.md`)
+        //     .then((res) => {
+        //         fetch(res.default)
+        //             .then((res) => res.text())
+        //             .then((res) => setPost(res))
+        //             .catch((err) => console.log(err));
+        //     })
+        //     .catch((err) => console.log(err));
     }, []);
     return (
         <TopContainer>
