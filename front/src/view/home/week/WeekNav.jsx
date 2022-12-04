@@ -1,26 +1,15 @@
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Divider } from "@mui/material";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const WeekNav = () => {
-    const [isClicked, setIsClicked] = useState(new Array(25).fill(false));
     const navigate = useNavigate();
     const params = useParams();
-    const WEEK = params.week;
-
-    useEffect(() => {
-        const newArr = new Array(25).fill(false);
-        newArr[WEEK - 1] = !newArr[WEEK - 1];
-        setIsClicked(newArr);
-    }, [WEEK]);
+    const week = Number(params.week);
 
     const handleClick = (e) => {
-        const newArr = new Array(25).fill(false);
-        const week = parseInt(e.target.value) + 1;
-        newArr[e.target.value] = !newArr[e.target.value];
-        setIsClicked(newArr);
+        const week = Number(e.target.value) + 1;
         navigate(`week/${week}`);
     };
 
@@ -37,7 +26,7 @@ const WeekNav = () => {
                             value={idx}
                             key={`week_${idx}`}
                             size="small"
-                            variant={isClicked[idx] ? "contained" : "text"}
+                            variant={week === idx + 1 ? "contained" : "text"}
                             sx={{
                                 minWidth: "35px",
                                 height: "20px",
