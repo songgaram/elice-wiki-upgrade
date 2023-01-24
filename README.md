@@ -1,37 +1,30 @@
 # Elice Wiki
+코딩 학습 자료를 기록하고 공유할 수 있는 위키 서비스(Elice Wiki)의 업그레이드 버전입니다.
 
-## Project Member
+## 목차
+- [Elice Wiki Page](#elice-wiki-page)
+- [기획 의도](#기획-의도)
+  - [서비스 목표](#서비스-목표)
+  - [서비스의 콘텐츠](#서비스의-콘텐츠)
+- [프로젝트 구조](#프로젝트-구조)
+  - [프로젝트 구조도](#프로젝트-구조도)
+  - [유저 구조도](#유저-구조도)
+- [리팩토링](#리팩토링)
+  - [리팩토링 폴더 구조](#리팩토링-폴더-구조)
+  - [기술 스택](#기술-스택-upgrade-ver)
+  - [리팩토링 멤버](#리팩토링-멤버)
+  - [리팩토링 목표](#리팩토링-목표)
+- [팀 프로젝트](#팀-프로젝트)
+  - [프로젝트 멤버](#프로젝트-멤버)
+  - [기술 스택](#기술-스택)
+  - [협업 도구](#협업-도구)
+  - [회의 방식](#회의-방식)
+  - [와이어 프레임](#와이어-프레임)
+  - [서비스 확장 계획](#서비스-확장-계획)
 
-| 이름   | 역할                    |
-| ----- | ---------------------- |
-| 송가람 | 프론트엔드/팀장/최종발표      |
-| 이영우 | 프론트엔드                |
-| 김현서 | 프론트엔드                |
-| 홍지운 | 백엔드/프론트엔드/리드미     |
-| 송경아 | 백엔드                   |
-| 이상원 | 백엔드                   |
-| 심은지 | 기획/문서작성              |
 
-
-## 기술 스택
-
-| Position                | Languages & Tools    | README.md |
-| ----------------------- | -------------------- | --------- |
-| Frontend                | <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/react query-FF4154?style=for-the-badge&logo=react query&logoColor=white"> <img alt="mui" src="https://img.shields.io/badge/mui-007FFF?style=for-the-badge&logo=mui&logoColor=white"> <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/>| [FrontEnd](https://github.com/songgaram/elice-wiki-upgrade/blob/master/front/README.md) |
-| Backend                 | <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"> <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white"> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <img src="https://img.shields.io/badge/sequelize-52B0E7?logo=sequelize&logoColor=white&style=for-the-badge"> <img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> <img src="https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black">| [BackEnd](https://github.com/songgaram/elice-wiki-upgrade/blob/master/back/README.md) |
-| Deploy                  | <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"> <img src="https://img.shields.io/badge/ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white"> <img src="https://img.shields.io/badge/ORACLE-F80000?style=for-the-badge&logo=oracle&logoColor=white"/>| |
-
-
-## 협업 도구
-
--   Gitlab: 프로젝트 코드 저장소
--   Discord: 팀 공지사항, 아이디어 회의
--   Figma: 디자인 회의, 아이디어 회의, 스크럼에 활용
-
-## 애자일 방법론: scrum
-
--   화 ~ 토 오전 10시 scrum 진행
--   각자 개발하고 있는 부분의 진행도를 공유
+## Elice Wiki Page
+[프로젝트 링크](http://elicewiki.kro.kr/)
 
 ## 기획 의도
 
@@ -60,6 +53,104 @@
 
 ### 유저 구조도
 ![USER HIERARCHY](https://user-images.githubusercontent.com/95666311/187865424-cef5d446-e144-4d31-b6a7-0b51006f7c50.png)
+
+## 리팩토링
+
+### 리팩토링 폴더 구조
+```
+// 📂 front
+
+📦src
+ ┣ 📂_post
+ ┣ 📂assets
+ ┃ ┗ 📂images
+ ┣ 📂components
+ ┃ ┣ 📂header
+ ┃ ┣ 📜Layout.jsx
+ ┃ ┣ 📜Loader.jsx
+ ┃ ┗ 📜Spinner.jsx
+ ┣ 📂hooks
+ ┣ 📂libs
+ ┃ ┣ 📜api.js
+ ┣ 📂queries
+ ┣ 📂state
+ ┃ ┗ 📜atoms.js
+ ┣ 📂style
+ ┣ 📂view
+ ┃ ┣ 📂Intro
+ ┃ ┣ 📂admin
+ ┃ ┣ 📂auth
+ ┃ ┣ 📂board
+ ┃ ┣ 📂comment
+ ┃ ┣ 📂home
+ ┃ ┣ 📂mypage
+ ┃ ┣ 📂note
+ ┃ ┗ 📂search
+ ┣ 📜App.jsx
+ ┗ 📜index.js
+ ```
+
+- 헤더, 레이아웃, 로딩과 같이 재사용이 가능한 컴포넌트는 따로 components 폴더로 분리하였습니다.
+- hooks에는 animation과 관련된 커스텀 훅을, lib폴더의 api.js는 axios를 사용하여 인스턴스를 생성하여 공통 api 코드를 구현했습니다.
+- style 폴더에는 전역으로 관리할 수 있도록 스타일 코드를 분리하였습니다.
+- views는 UI를 그리는 view 폴더로 분리하였습니다.
+ 
+
+### 기술 스택 (upgrade ver.)
+- Redux ⇒ **React-Query** 변경
+- Module CSS ⇒ **Styled Components** 변경
+ 
+
+### 리팩토링 멤버
+- [@송가람](https://github.com/songgaram)
+- [@홍지운](https://github.com/hongloans)
+
+### 리팩토링 목표
+- 상태관리 라이브러리 React-Query를 통해 서버와 클라이언트 데이터를 구분하고, 원하는 때 데이터를 업데이트 하기
+- 스타일 코드를 CSS in JS로 바꿔 직관적인 코드 사용이 가능하고, Props로 조건부 스타일을 적용하기
+- 무한스크롤 이슈 해결해서 적용하기
+- 코드 중복을 막고 에러 핸들을 공통으로 처리하기 위해 Axios API 추상화하기
+- 관심사 분리를 통해 유지보수가 쉬운 폴더 구조 설계하기
+- 읽기 쉬운 코드를 위해 비즈니스와 view 로직 분리하기
+
+<br/>
+
+# 팀 프로젝트
+
+## 프로젝트 멤버
+
+| 이름   | 역할                    |
+| ----- | ---------------------- |
+| 송가람 | 프론트엔드/팀장/최종발표      |
+| 이영우 | 프론트엔드                |
+| 김현서 | 프론트엔드                |
+| 홍지운 | 백엔드/프론트엔드/리드미     |
+| 송경아 | 백엔드                   |
+| 이상원 | 백엔드                   |
+| 심은지 | 기획/문서작성              |
+
+
+## 기술 스택
+
+| Position                | Languages & Tools    | README.md |
+| ----------------------- | -------------------- | --------- |
+| Frontend                | <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/react query-FF4154?style=for-the-badge&logo=react query&logoColor=white"> <img alt="mui" src="https://img.shields.io/badge/mui-007FFF?style=for-the-badge&logo=mui&logoColor=white"> <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/>| [FrontEnd](https://github.com/songgaram/elice-wiki-upgrade/blob/master/front/README.md) |
+| Backend                 | <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"> <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white"> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <img src="https://img.shields.io/badge/sequelize-52B0E7?logo=sequelize&logoColor=white&style=for-the-badge"> <img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> <img src="https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black">| [BackEnd](https://github.com/songgaram/elice-wiki-upgrade/blob/master/back/README.md) |
+| Deploy                  | <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"> <img src="https://img.shields.io/badge/ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white"> <img src="https://img.shields.io/badge/ORACLE-F80000?style=for-the-badge&logo=oracle&logoColor=white"/>| |
+
+
+## 협업 도구
+
+-   Gitlab: 프로젝트 코드 저장소
+-   Discord: 팀 공지사항, 아이디어 회의
+-   Figma: 디자인 회의, 아이디어 회의, 스크럼에 활용
+
+## 회의 방식
+### 애자일 방법론: scrum
+
+-   화 ~ 토 오전 10시 scrum 진행
+-   각자 개발하고 있는 부분의 진행도를 공유
+
 
 ## 와이어 프레임
 
